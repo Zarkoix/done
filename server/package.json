@@ -1,0 +1,36 @@
+{
+  "name": "done",
+  "version": "0.0.0",
+  "description": "A productivity application to keep you saying \"Done!\"",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "postgraphile": "^4.0.0-rc.4.1",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.4"
+  },
+  "scripts": {
+    "build": "babel -w src -d lib",
+    "start": "nodemon -r dotenv/config lib/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zarkoix/done.git"
+  },
+  "keywords": [
+    "productivity",
+    "todo"
+  ],
+  "author": "Adam Towers",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Zarkoix/done/issues"
+  },
+  "homepage": "https://github.com/Zarkoix/done#readme"
+}
