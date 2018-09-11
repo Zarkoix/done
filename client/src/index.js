@@ -16,7 +16,12 @@ import Login from "./routes/Login";
 
 
 const client = new ApolloClient({
-  uri: "https://w5xlvm3vzz.lp.gql.zone/graphql" // TODO: point this at server
+  uri: "https://w5xlvm3vzz.lp.gql.zone/graphql", // TODO: point this at server
+  clientState: {
+    defaults: {
+      JWT: localStorage.getItem('JWT')
+    }
+  }
 });
 
 ReactDOM.render(

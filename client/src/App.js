@@ -6,9 +6,16 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
+const GET_JWT = gql`
+  {
+    JWT @client
+  }
+`;
 
 const styles = theme => ({
   root: {
@@ -60,6 +67,16 @@ class App extends Component {
             </Button>
           </Toolbar>
         </AppBar>
+        <Query query={GET_JWT}>
+          {({ loading, error, data }) => {
+            if (loading) return "Loading...";
+            if (error) return `Error! ${error.message}`;
+
+            return (
+              <h1>{JSON.stringify(data)}</h1>
+            );
+          }}
+        </Query>
         {this.props.children}
       </div>
     );
