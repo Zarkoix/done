@@ -35,23 +35,11 @@ logger.info("Server is starting up");
 const app = express();
 app.use(morgan("tiny"));
 
-app.use(express.static(path.join(__dirname, "..", "..", "client", "build")));
-
 let rds = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${
   process.env.DB_HOST
 }:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 console.log(rds);
 let schema = "done_app";
-
-app.get("/ping", function(req, res) {
-  return res.send("pong");
-});
-
-app.get("/", function(req, res) {
-  res.sendFile(
-    path.join(__dirname, "..", "..", "client", "build", "index.html")
-  );
-});
 
 app.use(
   postgraphile(rds, schema, {
@@ -59,10 +47,25 @@ app.use(
     defaultRole: "myapp_anonymous",
     jwtPgTypeIdentifier: "done_app.jwt_token",
     watchPg: true,
-    graphiql: true,
+    graphiql: process.env.NODE_ENV !== "production",
     disableDefaultMutations: true
   })
 );
+
+// serve built file in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "..", "..", "client", "build")));
+
+  app.get("/", function(req, res) {
+    res.sendFile(
+      path.join(__dirname, "..", "..", "client", "build", "index.html")
+    );
+  });
+}
+
+app.get("/ping", function(req, res) {
+  return res.send("pong");
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port);
