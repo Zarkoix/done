@@ -9,7 +9,7 @@ import { ApolloProvider } from "react-apollo";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Dashboard from "./routes/Dashboard";
+import Home from "./routes/Home";
 import About from "./routes/About";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
@@ -28,7 +28,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
       <App>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
