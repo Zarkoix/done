@@ -1,30 +1,73 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import {
+  Link
+} from 'react-router-dom'
 
-const client = new ApolloClient({
-  uri: "https://w5xlvm3vzz.lp.gql.zone/graphql" // TODO: point this at server
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  grow: {
+    flexGrow: 1
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  }
 });
 
 class App extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
-      <ApolloProvider client={client}>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-        </div>
-      </ApolloProvider>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="title"
+              color="inherit"
+              className={classes.grow}
+            >
+              Done
+            </Typography>
+            <Button
+              variant="outlined"
+              color="inherit"
+              className={classes.button}
+              component={Link}
+              to={'Signup'}
+            >
+              Signup
+            </Button>
+            <Button
+              color="inherit"
+              className={classes.button}
+              component={Link}
+              to={'Login'}
+            >
+              Login
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {this.props.children}
+      </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(App);
