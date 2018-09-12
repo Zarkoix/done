@@ -17,15 +17,15 @@ class LoggedInElements extends Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleLogOut = (client) => {
+  handleLogOut = async (client) => {
+    // close menu
+    this.setState({ anchorEl: null });
+
     // clear localStorage
     jwtClearCache();
 
     // clear local state
     client.writeQuery({ query: GET_JWT, data: { JWT: null } });
-
-    // close menu
-    this.setState({ anchorEl: null });
   };
 
   render() {

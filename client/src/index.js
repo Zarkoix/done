@@ -17,9 +17,18 @@ import Login from "./routes/Login";
 
 import { jwtFromCache } from './auth.js'
 
-
 const client = new ApolloClient({
-  uri: "/graphql", // TODO: point this at server
+  uri: "/graphql",
+  request: async operation => {
+    const token = jwtFromCache();
+    if (token) {
+      operation.setContext({
+        headers: {
+          authorization: token ? `Bearer ${token}` : ''
+        }
+      });
+    }
+  },
   clientState: {
     defaults: {
       JWT: jwtFromCache()

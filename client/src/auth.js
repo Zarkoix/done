@@ -16,14 +16,14 @@ export const AUTHENTICATE = gql`
 
 const JWT_CACHE_LOC = 'JWT'
 
-export const jwtFromCache = () => {
+export function jwtFromCache(){
   return localStorage.getItem(JWT_CACHE_LOC)
 }
 
-export const jwtToCache = (jwt) => {
-  localStorage.setItem(JWT_CACHE_LOC, jwt)
+export function jwtToCache(jwt) {
+  return localStorage.setItem(JWT_CACHE_LOC, jwt)
 }
 
-export const jwtClearCache = () => {
-  localStorage.removeItem(JWT_CACHE_LOC)
+export function jwtClearCache() {
+  return localStorage.removeItem(JWT_CACHE_LOC)
 }
