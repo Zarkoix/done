@@ -65,3 +65,8 @@ end;
 $$ language plpgsql strict security definer;
 
 comment on function done_app.authenticate(text, text) is 'Creates a JWT token that will securely identify a user and give them certain permissions.';
+
+drop function if exists current_user_id;
+create function current_user_id() returns uuid as $$
+  select nullif(current_setting('jwt.claims.user_id', true), '')::uuid;
+$$ language sql stable security definer;

@@ -37,6 +37,13 @@ create table done_app.todo (
   priority        done_app.priority default null
 );
 
+drop policy if exists todo_author on done_app.todo;
+create policy todo_author
+  on done_app.todo
+  for ALL
+  using ("author_id" = current_user_id())
+  with check ("author_id" = current_user_id());
+
 comment on table done_app.todo is 'A todo created by a user.';
 comment on column done_app.todo.id is 'The primary key for the todo.';
 comment on column done_app.todo.author_id is 'The id of the author user.';
