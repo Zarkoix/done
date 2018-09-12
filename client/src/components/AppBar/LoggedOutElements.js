@@ -34,9 +34,9 @@ class LoggedOutElements extends Component {
           color="inherit"
           className={classes.button}
           component={Link}
-          to={"Log In"}
+          to={"Login"}
         >
-          Login
+          Log in
         </Button>
       </React.Fragment>
     );
