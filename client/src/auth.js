@@ -6,6 +6,14 @@ export const GET_JWT = gql`
   }
 `;
 
+const AUTHENTICATE = gql`
+  mutation Authenticate($email: String!, $password: String!) {
+    authenticate(input: { email: $email, password: $password }) {
+      jwtToken
+    }
+  }
+`;
+
 const JWT_CACHE_LOC = 'JWT'
 
 export const jwtFromCache = () => {

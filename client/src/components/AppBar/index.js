@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
+import MuiAppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 
-import { Link } from 'react-router-dom'
+import { Query } from "react-apollo";
+
+import { GET_JWT } from "../../auth.js";
+
+import LoggedInElements from "./LoggedInElements.js";
+import LoggedOutElements from "./LoggedOutElements.js";
 
 const styles = theme => ({
   root: {
@@ -24,13 +28,13 @@ const styles = theme => ({
   }
 });
 
-class App extends Component {
+class AppBar extends Component {
   render() {
     const { classes } = this.props;
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <MuiAppBar position="static">
           <Toolbar>
             <Typography
               variant="title"
@@ -39,33 +43,30 @@ class App extends Component {
             >
               Done
             </Typography>
-            <Button
-              variant="outlined"
-              color="inherit"
-              className={classes.button}
-              component={Link}
-              to={'Signup'}
-            >
-              Signup
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.button}
-              component={Link}
-              to={'Login'}
-            >
-              Login
-            </Button>
+
+            <Query query={GET_JWT}>
+              {({ loading, error, data, startPolling, stopPolling }) => {
+                if (loading) return null;
+                if (error) return `Error!: ${error}`;
+
+                if (data.JWT === null) {
+                  // not logged in
+                  return <LoggedOutElements />;
+                } else {
+                  return <LoggedInElements />;
+                }
+              }}
+            </Query>
           </Toolbar>
-        </AppBar>
+        </MuiAppBar>
         {this.props.children}
       </div>
     );
   }
 }
 
-App.propTypes = {
+AppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(AppBar);

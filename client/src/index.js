@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import AppBar from "./components/AppBar";
 
 import Root from "./routes/Root";
 import About from "./routes/About";
@@ -29,12 +30,12 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
-      <App>
+      <AppBar>
         <Route exact path="/" component={Root} />
         <Route path="/about" component={About} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-      </App>
+      </AppBar>
     </Router>
   </ApolloProvider>,
   document.getElementById("root")

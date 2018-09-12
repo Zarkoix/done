@@ -16,7 +16,7 @@ import { withRouter } from 'react-router-dom';
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
-import { GET_JWT, jwtToCache } from "../../auth.js";
+import { GET_JWT, jwtToCache, AUTHENTICATE } from "../../auth.js";
 
 const styles = theme => ({
   layout: {
@@ -50,14 +50,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   }
 });
-
-const AUTHENTICATE = gql`
-  mutation Authenticate($email: String!, $password: String!) {
-    authenticate(input: { email: $email, password: $password }) {
-      jwtToken
-    }
-  }
-`;
 
 class SignIn extends Component {
   constructor() {
