@@ -14,12 +14,14 @@ import About from "./routes/About";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
 
+import { jwtFromCache } from './auth.js'
+
 
 const client = new ApolloClient({
-  uri: "https://w5xlvm3vzz.lp.gql.zone/graphql", // TODO: point this at server
+  uri: "/graphql", // TODO: point this at server
   clientState: {
     defaults: {
-      JWT: localStorage.getItem('JWT')
+      JWT: jwtFromCache()
     }
   }
 });
