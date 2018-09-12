@@ -6,7 +6,7 @@ export const GET_JWT = gql`
   }
 `;
 
-const AUTHENTICATE = gql`
+export const AUTHENTICATE = gql`
   mutation Authenticate($email: String!, $password: String!) {
     authenticate(input: { email: $email, password: $password }) {
       jwtToken

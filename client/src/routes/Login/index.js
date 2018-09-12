@@ -14,7 +14,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from 'react-router-dom';
 
 import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
 
 import { GET_JWT, jwtToCache, AUTHENTICATE } from "../../auth.js";
 

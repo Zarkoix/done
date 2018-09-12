@@ -34,7 +34,7 @@ class LoggedOutElements extends Component {
           color="inherit"
           className={classes.button}
           component={Link}
-          to={"Login"}
+          to={"Log In"}
         >
           Login
         </Button>
