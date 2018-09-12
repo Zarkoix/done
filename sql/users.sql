@@ -66,5 +66,4 @@ $$ language plpgsql strict security definer;
 
 comment on function done_app.authenticate(text, text) is 'Creates a JWT token that will securely identify a user and give them certain permissions.';
 
-select done_app.register_user('adam@adamtowers.io', 'adam00');
 select * from done_app.user;
