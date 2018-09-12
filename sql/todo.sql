@@ -25,7 +25,7 @@ create type done_app.priority as enum (
 drop table if exists done_app.todo cascade;
 create table done_app.todo (
   id               serial primary key not null,
-  author_id        uuid not null references done_app.done_user(id) ON DELETE CASCADE,
+  author_id        uuid not null references done_app.user(id) ON DELETE CASCADE,
   headline         varchar(280),
   body             text,
   created_at       timestamp default now(),

@@ -1,7 +1,7 @@
 drop table if exists done_app.tag;
 create table done_app.tag (
   id               serial primary key not null,
-  author_id        uuid not null references done_app.done_user(id) ON DELETE CASCADE,
+  author_id        uuid not null references done_app.user(id) ON DELETE CASCADE,
   name             varchar(32)
 );
 
