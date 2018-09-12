@@ -17,6 +17,10 @@ class LoggedInElements extends Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  handleClose = event => {
+    this.setState({ anchorEl: null });
+  };
+
   handleLogOut = async (client) => {
     // close menu
     this.setState({ anchorEl: null });
