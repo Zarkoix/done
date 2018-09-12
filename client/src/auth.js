@@ -23,3 +23,7 @@ export const jwtFromCache = () => {
 export const jwtToCache = (jwt) => {
   localStorage.setItem(JWT_CACHE_LOC, jwt)
 }
+
+export const jwtClearCache = () => {
+  localStorage.removeItem(JWT_CACHE_LOC)
+}

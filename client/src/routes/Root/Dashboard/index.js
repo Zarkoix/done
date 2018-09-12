@@ -1,3 +1,16 @@
-import React from "react"
+import React from "react";
 
-export default () => <h1>Dashboard</h1>
+import { Query } from "react-apollo";
+
+import { GET_JWT } from "../../../auth.js";
+
+export default () => (
+  <Query query={GET_JWT}>
+    {({ loading, error, data, startPolling, stopPolling }) => {
+      if (loading) return null;
+      if (error) return `Error!: ${error}`;
+
+      return <p>{data.JWT}</p>;
+    }}
+  </Query>
+);

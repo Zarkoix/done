@@ -6,7 +6,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import { ApolloConsumer } from "react-apollo";
 
-import { jwtToCache, GET_JWT } from '../../auth.js'
+import { jwtClearCache, GET_JWT } from '../../auth.js'
 
 class LoggedInElements extends Component {
   state = {
@@ -19,7 +19,7 @@ class LoggedInElements extends Component {
 
   handleLogOut = (client) => {
     // clear localStorage
-    jwtToCache(null);
+    jwtClearCache();
 
     // clear local state
     client.writeQuery({ query: GET_JWT, data: { JWT: null } });
