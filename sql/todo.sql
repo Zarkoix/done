@@ -25,7 +25,7 @@ create type done_app.priority as enum (
 drop table if exists done_app.todo cascade;
 create table done_app.todo (
   id               serial primary key not null,
-  author_id        uuid not null references done_app.user(id) ON DELETE CASCADE,
+  author_id        uuid not null references done_app_private.user(id) ON DELETE CASCADE,
   headline         varchar(280),
   body             text,
   created_at       timestamp default now(),
@@ -33,7 +33,7 @@ create table done_app.todo (
   do_when_ts       done_app.do_when_time_style default null,
   deadline         timestamp default null,
   deadline_ts      done_app.deadline_time_style default null,
-  duration         integer constraint valid_duration default -1 check (duration > 0), -- time duration in minutes, -1 if not defined
+  duration         integer constraint valid_duration default -1 check (duration > 0 or duration = -1), -- time duration in minutes, -1 if not defined
   priority        done_app.priority default null
 );
 
@@ -43,6 +43,24 @@ create policy todo_author
   for ALL
   using ("author_id" = current_user_id())
   with check ("author_id" = current_user_id());
+
+drop function if exists done_app.createTodo;
+create function done_app.createTodo() returns done_app.todo as $$
+declare
+  usr done_app_private.user;
+  newTodo done_app.todo;
+begin
+  select u.* into usr
+    from done_app_private.user as u
+    where u.id = current_user_id();
+
+  if usr is not null then
+    insert into done_app.todo(author_id) VALUES (usr.id) returning * into newTodo;
+    return newTodo;
+  end if;
+  return null;
+end;
+$$ language plpgsql volatile;
 
 comment on table done_app.todo is 'A todo created by a user.';
 comment on column done_app.todo.id is 'The primary key for the todo.';
