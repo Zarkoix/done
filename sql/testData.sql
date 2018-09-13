@@ -3,7 +3,7 @@ select done_app.register_user('adam@towers.com', 'adam00');
 
 select * from done_app_private.user;
 
-insert into done_app.todo(author_id, headline) VALUES ('da1fd2c6-b630-11e8-a836-472f6813f32c', 'something to do');
+insert into done_app.todo(author_id, headline) VALUES ('e6445b3c-b782-11e8-a575-d3230a8865ed', 'something to do');
 
 
-insert into done_app.todo(author_id, headline) VALUES ('fb54436e-b6df-11e8-a7b6-e397187bde91', 'adamtowers');
+insert into done_app.todo(author_id, headline) VALUES ('e64743f6-b782-11e8-a576-57e341134458', 'adamtowers');
