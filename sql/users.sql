@@ -68,5 +68,15 @@ comment on function done_app.authenticate(text, text) is 'Creates a JWT token th
 
 drop function if exists current_user_id;
 create function current_user_id() returns uuid as $$
-  select nullif(current_setting('jwt.claims.user_id', true), '')::uuid;
-$$ language sql stable security definer;
+  declare
+    id uuid;
+  begin
+    select nullif(current_setting('jwt.claims.user_id', true), '')::uuid into id;
+    if id is not null then
+      return id;
+    else
+      RAISE EXCEPTION 'Nonexistent ID'
+      USING HINT = 'Please check that a JWT is being sent';
+    end if;
+  end;
+$$ language plpgsql stable security definer;
