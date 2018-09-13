@@ -45,7 +45,7 @@ app.use(
   postgraphile(rds, schema, {
     jwtSecret: process.env.JWT_SECRET,
     pgDefaultRole: "default_user",
-    jwtPgTypeIdentifier: "done_app_private.jwt_token",
+    jwtPgTypeIdentifier: "done_app_public.jwt_token",
     watchPg: true,
     graphiql: process.env.NODE_ENV !== "production",
     disableDefaultMutations: true

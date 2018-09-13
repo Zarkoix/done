@@ -28,8 +28,8 @@ create function done_app_public.register_user(
 $$ language plpgsql strict security definer;
 comment on function done_app_public.register_user(text, text) is 'Registers a single user and creates an account.';
 
-drop type if exists done_app_private.jwt_token;
-create type done_app_private.jwt_token as (
+drop type if exists done_app_public.jwt_token;
+create type done_app_public.jwt_token as (
   role text,
   user_id uuid
 );
@@ -38,7 +38,7 @@ drop function if exists done_app_public.authenticate;
 create function done_app_public.authenticate(
   email text,
   password text
-) returns done_app_private.jwt_token as $$
+) returns done_app_public.jwt_token as $$
 declare
   usr done_app_private.user;
 begin
@@ -47,7 +47,7 @@ begin
     where u.email = $1;
 
   if usr.password_digest = crypt(password, usr.password_digest) then
-    return ('done_user', usr.id)::done_app_private.jwt_token;
+    return ('done_user', usr.id)::done_app_public.jwt_token;
   else
     return null;
   end if;
