@@ -1,11 +1,5 @@
 import gql from "graphql-tag";
 
-export const GET_JWT = gql`
-  {
-    JWT @client
-  }
-`;
-
 export const AUTHENTICATE = gql`
   mutation Authenticate($email: String!, $password: String!) {
     authenticate(input: { email: $email, password: $password }) {

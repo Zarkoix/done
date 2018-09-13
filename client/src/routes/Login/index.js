@@ -15,7 +15,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Mutation } from "react-apollo";
 
-import { GET_JWT, jwtToCache, AUTHENTICATE } from "../../auth.js";
+import { jwtToCache, AUTHENTICATE } from "../../auth.js";
 
 const styles = theme => ({
   layout: {
@@ -65,12 +65,6 @@ class SignIn extends Component {
     return (
       <Mutation
         mutation={AUTHENTICATE}
-        update={(cache, { data: { authenticate } }) => {
-          cache.writeQuery({
-            query: GET_JWT,
-            data: { JWT: authenticate.jwtToken }
-          });
-        }}
       >
         {(authenticate, { data, loading, error }) => (
           <React.Fragment>

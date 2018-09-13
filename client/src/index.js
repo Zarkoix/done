@@ -28,11 +28,6 @@ const client = new ApolloClient({
         }
       });
     }
-  },
-  clientState: {
-    defaults: {
-      JWT: jwtFromCache()
-    }
   }
 });
 

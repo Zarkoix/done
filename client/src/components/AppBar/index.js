@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { Query } from "react-apollo";
 
-import { GET_JWT } from "../../auth.js";
+import { jwtFromCache } from "../../auth.js";
 
 import LoggedInElements from "./LoggedInElements.js";
 import LoggedOutElements from "./LoggedOutElements.js";
@@ -32,6 +32,8 @@ class AppBar extends Component {
   render() {
     const { classes } = this.props;
 
+    const loggedIn = !!jwtFromCache();
+
     return (
       <div className={classes.root}>
         <MuiAppBar position="static">
@@ -43,20 +45,7 @@ class AppBar extends Component {
             >
               Done
             </Typography>
-
-            <Query query={GET_JWT}>
-              {({ loading, error, data, startPolling, stopPolling }) => {
-                if (loading) return null;
-                if (error) return `Error!: ${error}`;
-
-                if (data.JWT === null) {
-                  // not logged in
-                  return <LoggedOutElements />;
-                } else {
-                  return <LoggedInElements />;
-                }
-              }}
-            </Query>
+            {loggedIn ? <LoggedInElements /> : <LoggedOutElements />}
           </Toolbar>
         </MuiAppBar>
         {this.props.children}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { GET_JWT } from "../../../auth.js";
+import { jwtFromCache } from "../../../auth.js";
 import Paper from '@material-ui/core/Paper';
 import gql from "graphql-tag";
 
@@ -24,14 +24,7 @@ export const AUTHENTICATE = gql`
 
 export default () => (
   <React.Fragment>
-    <Query query={GET_JWT}>
-      {({ loading, error, data, startPolling, stopPolling }) => {
-        if (loading) return null;
-        if (error) return `Error!: ${error}`;
-
-        return <Paper><p>{data.JWT}</p></Paper>;
-      }}
-    </Query>
+    <Paper><p>{jwtFromCache()}</p></Paper>
     <Query query={GET_ALL_TODOS}>
       {({ loading, error, data }) => {
         if (loading) return null;
