@@ -1,5 +1,6 @@
-create schema if not exists done_app;
-create schema if not exists done_app_private;
+create schema if not exists done_app; -- logged in
+create schema if not exists done_app_public; -- anyone
+create schema if not exists done_app_private; -- internal only
 
 create domain email as text check (value ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
 
@@ -25,8 +26,8 @@ create table done_app.user (
   featureFlag_dependency boolean default false
 );
 
-drop function if exists done_app.register_user;
-create function done_app.register_user(
+drop function if exists done_app_public.register_user;
+create function done_app_public.register_user(
   email text,
   pass text
 ) returns void as $$
@@ -34,7 +35,7 @@ create function done_app.register_user(
     insert into done_app_private.user (email, password_digest) values ($1, crypt($2, gen_salt('bf', 8)));
   end;
 $$ language plpgsql strict security definer;
-comment on function done_app.register_user(text, text) is 'Registers a single user and creates an account.';
+comment on function done_app_public.register_user(text, text) is 'Registers a single user and creates an account.';
 
 drop type if exists done_app_private.jwt_token;
 create type done_app_private.jwt_token as (
@@ -42,8 +43,8 @@ create type done_app_private.jwt_token as (
   user_id uuid
 );
 
-drop function if exists done_app.authenticate;
-create function done_app.authenticate(
+drop function if exists done_app_public.authenticate;
+create function done_app_public.authenticate(
   email text,
   password text
 ) returns done_app_private.jwt_token as $$
@@ -62,7 +63,7 @@ begin
 end;
 $$ language plpgsql strict security definer;
 
-comment on function done_app.authenticate(text, text) is 'Creates a JWT token that will securely identify a user and give them certain permissions.';
+comment on function done_app_public.authenticate(text, text) is 'Creates a JWT token that will securely identify a user and give them certain permissions.';
 
 drop function if exists current_user_id;
 create function current_user_id() returns uuid as $$

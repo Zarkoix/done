@@ -39,7 +39,7 @@ let rds = `postgres://graphile:postgraphile@${
   process.env.DB_HOST
 }:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 console.log(rds);
-let schema = "done_app";
+let schema = ["done_app", "done_app_public"];
 
 app.use(
   postgraphile(rds, schema, {
