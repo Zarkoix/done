@@ -1,8 +1,6 @@
 create schema if not exists done_app;
 create schema if not exists done_app_private;
 
-create role done_user;
-
 create domain email as text check (value ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
 
 create extension if not exists "uuid-ossp";

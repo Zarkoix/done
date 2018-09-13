@@ -35,7 +35,7 @@ logger.info("Server is starting up");
 const app = express();
 app.use(morgan("tiny"));
 
-let rds = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${
+let rds = `postgres://graphile:postgraphile@${
   process.env.DB_HOST
 }:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 console.log(rds);
@@ -44,8 +44,7 @@ let schema = "done_app";
 app.use(
   postgraphile(rds, schema, {
     jwtSecret: process.env.JWT_SECRET,
-    jwtRole: ["done_user"],
-    defaultRole: "myapp_anonymous",
+    pgDefaultRole: "default_user",
     jwtPgTypeIdentifier: "done_app_private.jwt_token",
     watchPg: true,
     graphiql: process.env.NODE_ENV !== "production",

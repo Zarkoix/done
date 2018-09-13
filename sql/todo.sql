@@ -37,8 +37,10 @@ create table done_app.todo (
   priority        done_app.priority default null
 );
 
-drop policy if exists todo_author on done_app.todo;
-create policy todo_author
+alter table done_app.todo enable row level security;
+
+drop policy if exists enforce_authorship on done_app.todo;
+create policy enforce_authorship
   on done_app.todo
   for ALL
   using ("author_id" = current_user_id())
