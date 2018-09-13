@@ -1,7 +1,7 @@
 create schema if not exists done_app;
 create schema if not exists done_app_private;
 
-
+create role done_user;
 
 create domain email as text check (value ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
 
@@ -57,7 +57,7 @@ begin
     where u.email = $1;
 
   if usr.password_digest = crypt(password, usr.password_digest) then
-    return ('user', usr.id)::done_app_private.jwt_token;
+    return ('done_user', usr.id)::done_app_private.jwt_token;
   else
     return null;
   end if;

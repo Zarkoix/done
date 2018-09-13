@@ -44,6 +44,7 @@ let schema = "done_app";
 app.use(
   postgraphile(rds, schema, {
     jwtSecret: process.env.JWT_SECRET,
+    jwtRole: ["done_user"],
     defaultRole: "myapp_anonymous",
     jwtPgTypeIdentifier: "done_app_private.jwt_token",
     watchPg: true,
