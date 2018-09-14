@@ -1,12 +1,26 @@
-import React from "react";
-import { Query } from "react-apollo";
-import Paper from '@material-ui/core/Paper';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Query, Mutation } from "react-apollo";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
 
-export const GET_ALL_TODOS = gql`
+const GET_ALL_TODOS = gql`
   query {
     allTodos {
       nodes {
+        headline
+      }
+    }
+  }
+`;
+
+const NEW_TODO = gql`
+  mutation {
+    createtodo(input: {}) {
+      todo {
         headline
       }
     }
@@ -21,17 +35,53 @@ export const AUTHENTICATE = gql`
   }
 `;
 
-export default () => (
-  <React.Fragment>
-    <h1>Todos</h1>
-    <Query query={GET_ALL_TODOS}>
-      {({ loading, error, data }) => {
-        if (loading) return null;
-        if (error) return `Error!: ${error}`;
-        return data.allTodos.nodes.map((todo, i) =>
-          <Paper key={i}><h2>{todo.headline}</h2></Paper>
-        )
-      }}
-    </Query>
-  </React.Fragment>
-);
+const styles = theme => ({
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  }
+});
+
+class Dashboard extends Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <h1>Todos</h1>
+        <Query query={GET_ALL_TODOS}>
+          {({ loading, error, data }) => {
+            if (loading) return null;
+            if (error) return `Error!: ${error}`;
+            return data.allTodos.nodes.map((todo, i) => (
+              <Paper key={i}>
+                <h2>{todo.headline}</h2>
+              </Paper>
+            ));
+          }}
+        </Query>
+        <Mutation
+          mutation={NEW_TODO}
+        >
+          {(newTodo, { data, loading, error }) => (
+            <Button
+              variant="fab"
+              color="primary"
+              aria-label="Add"
+              className={classes.fab}
+              onClick={newTodo}
+            >
+              <AddIcon />
+            </Button>
+          )}
+        </Mutation>
+      </div>
+    );
+  }
+}
+
+Dashboard.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Dashboard);
