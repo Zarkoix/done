@@ -16,6 +16,7 @@ create table done_app.user (
   featureFlag_priority boolean default false,
   featureFlag_dependency boolean default false
 );
+comment on table done_app.user is E'@omit create,delete\nTable for users, contains feature flag information.'
 
 drop function if exists done_app_public.register_user;
 create function done_app_public.register_user(

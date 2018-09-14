@@ -62,6 +62,7 @@ comment on column done_app.todo.id is 'The primary key for the todo.';
 comment on column done_app.todo.author_id is 'The id of the author user.';
 comment on column done_app.todo.headline is 'The title written by the user.';
 comment on column done_app.todo.body is 'The main body text of our todo.';
+comment on column done_app.todo.body is 'Whether the todo has been completed or not.';
 comment on column done_app.todo.created_at is 'The time this todo was created.';
 comment on column done_app.todo.do_when is 'The time this todo is expected to be started on.';
 comment on column done_app.todo.do_when_ts is 'The granularity with which the user defined `do_when`.';

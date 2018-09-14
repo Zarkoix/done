@@ -48,7 +48,7 @@ app.use(
     jwtPgTypeIdentifier: "done_app_public.jwt_token",
     watchPg: true,
     graphiql: process.env.NODE_ENV !== "production",
-    disableDefaultMutations: true
+    disableDefaultMutations: false
   })
 );
 
