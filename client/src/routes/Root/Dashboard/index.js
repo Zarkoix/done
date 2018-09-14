@@ -57,7 +57,7 @@ class Dashboard extends Component {
             if (error) return `Error!: ${error}`;
             console.log(data)
             return data.allTodos.nodes.map((data, i) => (
-              <Todo key={i} data={data} />
+              <Todo key={i} id={data.id} />
             ));
           }}
         </Query>
