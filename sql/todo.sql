@@ -28,6 +28,7 @@ create table done_app.todo (
   author_id        uuid not null references done_app_private.user(id) ON DELETE CASCADE,
   headline         varchar(280),
   body             text,
+  completed        boolean default False,
   created_at       timestamp default now(),
   do_when          timestamp default null,
   do_when_ts       done_app.do_when_time_style default null,
