@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Query, Mutation } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
+
+import Todo from '../../../components/Todo'
 
 const GET_ALL_TODOS = gql`
   query {
     allTodos {
       nodes {
+        id,
         headline
       }
     }
@@ -53,10 +55,9 @@ class Dashboard extends Component {
           {({ loading, error, data }) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
-            return data.allTodos.nodes.map((todo, i) => (
-              <Paper key={i}>
-                <h2>{todo.headline}</h2>
-              </Paper>
+            console.log(data)
+            return data.allTodos.nodes.map((data, i) => (
+              <Todo key={i} data={data} />
             ));
           }}
         </Query>
