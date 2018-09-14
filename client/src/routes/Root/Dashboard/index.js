@@ -9,21 +9,22 @@ import gql from "graphql-tag";
 import Todo from '../../../components/Todo'
 
 const GET_ALL_TODOS = gql`
-  query {
+  query GetAllTodos{
     allTodos {
       nodes {
-        id,
+        id
         headline
+        completed
       }
     }
   }
 `;
 
 const NEW_TODO = gql`
-  mutation {
+  mutation NewTodo{
     createtodo(input: {}) {
       todo {
-        headline
+        id
       }
     }
   }

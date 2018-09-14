@@ -11,6 +11,7 @@ const GET_TODO_DATA = gql`
     todoById(id: $id) {
       headline
       completed
+      id
     }
   }
 `;
