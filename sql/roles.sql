@@ -15,5 +15,6 @@ grant default_user to done_user;
 
 grant usage on schema done_app to done_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA done_app TO done_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA done_app TO done_user;
 
 grant usage on schema done_app_public to default_user;

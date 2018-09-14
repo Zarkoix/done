@@ -49,18 +49,10 @@ create policy enforce_authorship
 drop function if exists done_app.createTodo;
 create function done_app.createTodo() returns done_app.todo as $$
 declare
-  usr done_app_private.user;
   newTodo done_app.todo;
 begin
-  select u.* into usr
-    from done_app_private.user as u
-    where u.id = current_user_id();
-
-  if usr is not null then
-    insert into done_app.todo(author_id) VALUES (usr.id) returning * into newTodo;
-    return newTodo;
-  end if;
-  return null;
+  insert into done_app.todo(author_id) VALUES (current_user_id()) returning * into newTodo;
+  return newTodo;
 end;
 $$ language plpgsql volatile;
 
