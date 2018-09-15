@@ -35,9 +35,10 @@ const styles = theme => ({
     height: "auto",
     margin: theme.spacing.unit + "px " + theme.spacing.unit * 2 + "px",
     borderRadius: "5px",
-    transition: "box-shadow 0.2s ease-in",
+    transition: "box-shadow background-color 0.2s ease-in",
     "&:hover": {
-      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
+      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
+      backgroundColor: "white"
     }
   },
   topBar: {
@@ -82,7 +83,8 @@ class Todo extends Component {
               style={
                 this.state.expanded
                   ? {
-                      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
+                      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
+                      backgroundColor: "white"
                     }
                   : {
                       cursor: "pointer"

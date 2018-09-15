@@ -19,7 +19,8 @@ const styles = theme => ({
   input: {
     ...theme.typography.headline,
     border: "none",
-    outline: "none"
+    outline: "none",
+    backgroundColor: "transparent"
   }
 });
 
