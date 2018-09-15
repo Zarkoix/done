@@ -25,6 +25,8 @@ const NEW_TODO = gql`
     createtodo(input: {}) {
       todo {
         id
+        headline
+        completed
       }
     }
   }
@@ -64,6 +66,14 @@ class Dashboard extends Component {
         </Query>
         <Mutation
           mutation={NEW_TODO}
+          update={(cache, { data: { createtodo: {todo}}}) => {
+            const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
+            const newNodes = allTodos.nodes.concat([todo])
+            cache.writeQuery({
+              query: GET_ALL_TODOS,
+              data: { allTodos: {...allTodos, nodes: newNodes }}
+            });
+          }}
         >
           {(newTodo, { data, loading, error }) => (
             <Button
