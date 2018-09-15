@@ -8,7 +8,7 @@ import { ApolloProvider } from "react-apollo";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import AppBar from "./components/AppBar";
+import Navigation from "./components/Navigation";
 
 import Root from "./routes/Root";
 import About from "./routes/About";
@@ -34,12 +34,12 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
-      <AppBar>
+      <Navigation>
         <Route exact path="/" component={Root} />
         <Route path="/about" component={About} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-      </AppBar>
+      </Navigation>
     </Router>
   </ApolloProvider>,
   document.getElementById("root")
