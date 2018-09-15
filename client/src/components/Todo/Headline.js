@@ -42,6 +42,7 @@ class Headline extends Component {
         {setHeadline => (
           <input
             type="text"
+            placeholder="Title this todo!"
             maxLength="280"
             className={classes.input}
             value={this.state.text}
