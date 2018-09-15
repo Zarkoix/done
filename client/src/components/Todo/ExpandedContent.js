@@ -5,6 +5,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 import Body from "./Body.js";
+import ActionTray from "./ActionTray.js"
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
@@ -60,6 +61,7 @@ class ExpandedContent extends Component {
           return (
             <div className={classes.content}>
               <Body id={this.props.id} text={body} />
+              <ActionTray id={this.props.id} />
             </div>
           );
         }}

@@ -4,20 +4,10 @@ import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
 import gql from "graphql-tag";
 
+import { GET_ALL_TODOS } from '../../../queries'
+
 import Todo from '../../../components/Todo'
 import NewTodoButton from './NewTodoButton.js'
-
-export const GET_ALL_TODOS = gql`
-  query GetAllTodos{
-    allTodos {
-      nodes {
-        id
-        headline
-        completed
-      }
-    }
-  }
-`;
 
 export const AUTHENTICATE = gql`
   mutation Authenticate($email: String!, $password: String!) {
