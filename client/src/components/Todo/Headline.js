@@ -4,6 +4,15 @@ import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
+const GET_HEADLINE = gql`
+  query getTodoData($id: Int!) {
+    todoById(id: $id) {
+      id
+      headline
+    }
+  }
+`;
+
 const SET_HEADLINE = gql`
   mutation setHeadline($id: Int!, $headline: String!) {
     updateTodoById(input: { id: $id, todoPatch: { headline: $headline } }) {
@@ -33,6 +42,14 @@ class Headline extends Component {
 
   handleChange = event => {
     this.setState({ text: event.target.value });
+  };
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.text !== this.state.text) {
+      this.setState({
+        text: nextProps.text
+      });
+    }
   };
 
   render() {

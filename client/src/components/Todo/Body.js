@@ -37,6 +37,14 @@ class Body extends Component {
     this.setState({ text: event.target.value });
   };
 
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.text !== this.state.text) {
+      this.setState({
+        text: nextProps.text
+      });
+    }
+  };
+
   render() {
     const { classes } = this.props;
     return (
