@@ -18,7 +18,10 @@ const DELTE_TODO = gql`
 `;
 
 const styles = theme => ({
-  tray: {}
+  tray: {
+    display: 'flex',
+    flexDirection: 'row-reverse'
+  }
 });
 
 class ActionTray extends Component {
