@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
+import ExpandedContent from "./ExpandedContent.js";
+
 const GET_TODO_DATA = gql`
   query getTodoData($id: Int!) {
     todoById(id: $id) {
@@ -22,6 +24,7 @@ export const SET_COMPLETED = gql`
       todo {
         id
         completed
+        body
       }
     }
   }
@@ -29,14 +32,20 @@ export const SET_COMPLETED = gql`
 
 const styles = theme => ({
   paper: {
-    height: "48px",
-    margin: "theme.spacing.unit 0",
-    display: "flex",
-    flexDirection: "row",
+    height: "auto",
+    margin: theme.spacing.unit + "px " + theme.spacing.unit * 2 + "px",
+    borderRadius: "5px",
     transition: "box-shadow 0.2s ease-in",
     "&:hover": {
       boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
     }
+  },
+  topBar: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  expandedContent: {
+    padding: theme.spacing.unit + "px"
   },
   headline: {
     lineHeight: "48px",
@@ -45,6 +54,19 @@ const styles = theme => ({
 });
 
 class Todo extends Component {
+  constructor() {
+    super();
+    this.state = {
+      expanded: false
+    };
+  }
+
+  handleFocus = () => {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -54,23 +76,45 @@ class Todo extends Component {
           if (error) return `Error!: ${error}`;
           let { headline, completed } = data.todoById;
           return (
-            <div className={classes.paper}>
-              <Mutation mutation={SET_COMPLETED}>
-                {(setCompleted, { data, loading, error }) => (
-                  <Checkbox
-                    checked={completed}
-                    onClick={() => setCompleted({
-                      variables: {
-                        id: this.props.id,
-                        completed: !completed
-                      }
-                    })}
-                  />
-                )}
-              </Mutation>
-              <Typography variant="headline" className={classes.headline}>
-                {headline}
-              </Typography>
+            <div
+              className={classes.paper}
+              onClick={this.handleFocus}
+              style={
+                this.state.expanded
+                  ? {
+                      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
+                    }
+                  : {
+                      cursor: "pointer"
+                    }
+              }
+            >
+              <div className={classes.topBar}>
+                <Mutation mutation={SET_COMPLETED}>
+                  {(setCompleted, { data, loading, error }) => (
+                    <Checkbox
+                      checked={completed}
+                      onClick={e => {
+                        e.stopPropagation();
+                        setCompleted({
+                          variables: {
+                            id: this.props.id,
+                            completed: !completed
+                          }
+                        });
+                      }}
+                    />
+                  )}
+                </Mutation>
+                <Typography variant="headline" className={classes.headline}>
+                  {headline}
+                </Typography>
+              </div>
+              {this.state.expanded ? (
+                <div className={classes.expandedContent}>
+                  <ExpandedContent id={this.props.id} />
+                </div>
+              ) : null}
             </div>
           );
         }}
