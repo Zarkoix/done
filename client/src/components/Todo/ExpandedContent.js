@@ -61,7 +61,7 @@ class ExpandedContent extends Component {
             <div
               className={classes.content}
             >
-              <Typography variant="headline" className={classes.body}>
+              <Typography variant="body1" className={classes.body}>
                 {body}Expanded Content woo
               </Typography>
             </div>
