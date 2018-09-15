@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
+import Body from "./Body.js";
+
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
     todoById(id: $id) {
@@ -27,8 +29,7 @@ export const SET_COMPLETED = gql`
 `;
 
 const styles = theme => ({
-  content: {
-  },
+  content: {},
   body: {
     lineHeight: "14px",
     display: "block"
@@ -47,7 +48,7 @@ class ExpandedContent extends Component {
     this.setState({
       expanded: !this.state.expanded
     });
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -58,12 +59,8 @@ class ExpandedContent extends Component {
           if (error) return `Error!: ${error}`;
           let { body } = data.todoById;
           return (
-            <div
-              className={classes.content}
-            >
-              <Typography variant="body1" className={classes.body}>
-                {body}Expanded Content woo
-              </Typography>
+            <div className={classes.content}>
+              <Body id={this.props.id} text={body} />
             </div>
           );
         }}
