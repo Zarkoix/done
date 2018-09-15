@@ -8,6 +8,14 @@ export const AUTHENTICATE = gql`
   }
 `;
 
+export const REGISTER = gql`
+  mutation Register($email: String!, $pass: String!) {
+    registerUser(input: { email: $email, pass: $pass }) {
+      clientMutationId
+    }
+  }
+`;
+
 const JWT_CACHE_LOC = 'JWT'
 
 export function jwtFromCache(){
