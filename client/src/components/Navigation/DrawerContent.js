@@ -13,10 +13,10 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import CalendarIcon from "@material-ui/icons/CalendarViewDay";
 
 const routes = {
-  "/Today": <TodayIcon />,
-  "/Inbox": <InboxIcon />,
-  "/Upcoming": <CalendarIcon />,
-  "/Tags": <LabelIcon />
+  "Today": <TodayIcon />,
+  "Inbox": <InboxIcon />,
+  "Upcoming": <CalendarIcon />,
+  "Tags": <LabelIcon />
 };
 
 class DrawerContent extends Component {
@@ -34,9 +34,9 @@ class DrawerContent extends Component {
           <ListItem
             button
             component={Link}
-            to={e}
+            to={"/" + e}
             key={e}
-            selected={this.props.location.pathname === e}
+            selected={this.props.location.pathname === "/" + e}
           >
             <ListItemIcon>{routes[e]}</ListItemIcon>
             <ListItemText primary={e} />
