@@ -11,12 +11,14 @@ import TodayIcon from "@material-ui/icons/Today";
 import LabelIcon from "@material-ui/icons/Label";
 import InboxIcon from "@material-ui/icons/Inbox";
 import CalendarIcon from "@material-ui/icons/CalendarViewDay";
+import ProjectsIcon from "@material-ui/icons/Dashboard";
 
 const routes = {
-  "Today": <TodayIcon />,
-  "Inbox": <InboxIcon />,
-  "Upcoming": <CalendarIcon />,
-  "Tags": <LabelIcon />
+  Today: <TodayIcon />,
+  Inbox: <InboxIcon />,
+  Upcoming: <CalendarIcon />,
+  Projects: <ProjectsIcon />,
+  Tags: <LabelIcon />
 };
 
 class DrawerContent extends Component {
