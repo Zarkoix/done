@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import classNames from "classnames";
 
 const SET_HEADLINE = gql`
   mutation setHeadline($id: Int!, $headline: String!) {
@@ -53,7 +54,7 @@ class Headline extends Component {
             type="text"
             placeholder="Title this todo!"
             maxLength="280"
-            className={classes.input}
+            className={classNames(classes.input, this.props.className)}
             value={this.state.text}
             onChange={this.handleChange}
             onClick={e => e.stopPropagation()}

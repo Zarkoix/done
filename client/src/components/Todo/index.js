@@ -4,6 +4,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import classNames from "classnames";
+
+import IconButton from "@material-ui/core/IconButton";
+import DownIcon from "@material-ui/icons/KeyboardArrowDown";
+import UpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 import ExpandedContent from "./ExpandedContent.js";
 import Headline from "./Headline.js";
@@ -39,8 +44,11 @@ const styles = theme => ({
     "&:hover": {
       boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
       backgroundColor: theme.palette.background.paper,
-      opacity: '1 !important'
+      opacity: "1 !important"
     }
+  },
+  expandButton: {
+    transition: 'opacity ease-in 0.2s'
   },
   topBar: {
     display: "flex",
@@ -49,9 +57,10 @@ const styles = theme => ({
   expandedContent: {
     padding: theme.spacing.unit + "px"
   },
-  headline: {
+  headlineContent: {
     lineHeight: "48px",
-    display: "inline"
+    display: "inline",
+    flexGrow: 1
   }
 });
 
@@ -59,13 +68,19 @@ class Todo extends Component {
   constructor() {
     super();
     this.state = {
-      expanded: false
+      expanded: false,
+      hover: false
     };
   }
 
-  handleFocus = () => {
+  toggleExpanded = () =>
     this.setState({
       expanded: !this.state.expanded
+    });
+
+  handleHover = hover => {
+    this.setState({
+      hover: hover
     });
   };
 
@@ -83,15 +98,14 @@ class Todo extends Component {
                 backgroundColor: this.props.theme.palette.background.paper,
                 opacity: 1
               }
-            : {
-                cursor: "pointer"
-              };
+            : {};
           const stylesFromCompleted = completed ? { opacity: 0.5 } : {};
           return (
             <div
               className={classes.paper}
-              onClick={this.handleFocus}
               style={{ ...stylesFromCompleted, ...stylesFromExpanded }}
+              onMouseEnter={() => this.handleHover(true)}
+              onMouseLeave={() => this.handleHover(false)}
             >
               <div className={classes.topBar}>
                 <Mutation mutation={SET_COMPLETED}>
@@ -110,7 +124,23 @@ class Todo extends Component {
                     />
                   )}
                 </Mutation>
-                <Headline text={headline} id={this.props.id} />
+                <Headline
+                  text={headline}
+                  id={this.props.id}
+                  className={classes.headlineContent}
+                />
+                <IconButton
+                  className={classNames(classes.button, classes.expandButton)}
+                  component="span"
+                  onClick={this.toggleExpanded}
+                  style={
+                    this.state.hover
+                      ? { opacity: "1" }
+                      : { opacity: "0" }
+                  }
+                >
+                  {this.state.expanded ? <UpIcon /> : <DownIcon />}
+                </IconButton>
               </div>
               {this.state.expanded ? (
                 <div className={classes.expandedContent}>
