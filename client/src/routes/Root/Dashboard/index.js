@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import gql from "graphql-tag";
 
 import { GET_ALL_TODOS } from '../../../queries'
@@ -26,7 +27,7 @@ class Dashboard extends Component {
     // const { classes } = this.props;
     return (
       <div>
-        <h1>Todos</h1>
+        <Typography variant="display1">Today</Typography>
         <Query query={GET_ALL_TODOS}>
           {({ loading, error, data }) => {
             if (loading) return null;
