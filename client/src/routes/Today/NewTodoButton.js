@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Mutation } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
+import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
@@ -43,6 +44,9 @@ class NewTodoButton extends Component {
           }}
         >
           {(newTodo, { data, loading, error }) => (
+            <Zoom
+              in={true}
+            >
             <Button
               variant="fab"
               color="primary"
@@ -52,6 +56,7 @@ class NewTodoButton extends Component {
             >
               <AddIcon />
             </Button>
+            </Zoom>
           )}
         </Mutation>
     );
