@@ -16,6 +16,8 @@ import Signup from "./routes/Signup";
 import Login from "./routes/Login";
 import Settings from "./routes/Settings";
 
+import Today from "./routes/Today"
+
 import { jwtFromCache } from './auth.js'
 
 const client = new ApolloClient({
@@ -37,10 +39,11 @@ ReactDOM.render(
     <Router>
       <Navigation>
         <Route exact path="/" component={Root} />
-        <Route path="/about" component={About} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/settings" component={Settings} />
+        <Route path="/About" component={About} />
+        <Route path="/Signup" component={Signup} />
+        <Route path="/Login" component={Login} />
+        <Route path="/Settings" component={Settings} />
+        <Route path="/Today" component={Today} />
       </Navigation>
     </Router>
   </ApolloProvider>,

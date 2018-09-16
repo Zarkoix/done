@@ -5,9 +5,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import gql from "graphql-tag";
 
-import { GET_ALL_TODOS } from '../../../queries'
+import { GET_ALL_TODOS } from '../../queries'
 
-import Todo from '../../../components/Todo'
+import Todo from '../../components/Todo'
 import NewTodoButton from './NewTodoButton.js'
 
 export const AUTHENTICATE = gql`
@@ -22,7 +22,7 @@ const styles = theme => ({
 
 });
 
-class Dashboard extends Component {
+class Today extends Component {
   render() {
     // const { classes } = this.props;
     return (
@@ -44,8 +44,8 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Today.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+export default withStyles(styles)(Today);

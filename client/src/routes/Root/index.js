@@ -1,8 +1,9 @@
 import React from "react";
 
-import Dashboard from "./Dashboard";
+import { Redirect } from "react-router-dom";
+
 import Splash from "./Splash";
 
 import { jwtFromCache } from "../../auth.js";
 
-export default () => (!!jwtFromCache() ? <Dashboard /> : <Splash />);
+export default () => (Boolean(jwtFromCache()) ? <Redirect to="/Today" /> : <Splash />);
