@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 import Body from "./Body.js";
-import ActionTray from "./ActionTray.js"
+import ActionTray from "./ActionTray"
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {

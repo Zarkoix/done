@@ -5,7 +5,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { GET_ALL_TODOS } from '../../queries'
+import { GET_ALL_TODOS } from '../../../queries'
 
 const DELTE_TODO = gql`
   mutation deleteTodo($id: Int!) {
