@@ -6,7 +6,8 @@ import registerServiceWorker from "./registerServiceWorker";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme.js";
 
 import Navigation from "./components/Navigation";
 
@@ -16,9 +17,9 @@ import Signup from "./routes/Signup";
 import Login from "./routes/Login";
 import Settings from "./routes/Settings";
 
-import Today from "./routes/Today"
+import Today from "./routes/Today";
 
-import { jwtFromCache } from './auth.js'
+import { jwtFromCache } from "./auth.js";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -27,17 +28,11 @@ const client = new ApolloClient({
     if (token) {
       operation.setContext({
         headers: {
-          authorization: token ? `Bearer ${token}` : ''
+          authorization: token ? `Bearer ${token}` : ""
         }
       });
     }
   }
-});
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-  },
 });
 
 ReactDOM.render(
