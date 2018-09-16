@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -11,6 +12,13 @@ import LabelIcon from "@material-ui/icons/Label";
 import InboxIcon from "@material-ui/icons/Inbox";
 import CalendarIcon from "@material-ui/icons/CalendarViewDay";
 
+const routes = {
+  "/Today": <TodayIcon />,
+  "/Inbox": <InboxIcon />,
+  "/Upcoming": <CalendarIcon />,
+  "/Tags": <LabelIcon />
+};
+
 class DrawerContent extends Component {
   constructor() {
     super();
@@ -20,33 +28,20 @@ class DrawerContent extends Component {
   }
 
   render() {
-    console.log(this.props.location)
     return (
       <List>
-        <ListItem button selected={this.props.location.pathname === "/Today"}>
-          <ListItemIcon>
-            <TodayIcon />
-          </ListItemIcon>
-          <ListItemText primary="Today" />
-        </ListItem>
-        <ListItem button selected={this.state.selected === "/Inbox"}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem button selected={this.state.selected === "/Upcoming"}>
-          <ListItemIcon>
-            <CalendarIcon />
-          </ListItemIcon>
-          <ListItemText primary="Upcoming" />
-        </ListItem>
-        <ListItem button selected={this.state.selected === "/Tags"}>
-          <ListItemIcon>
-            <LabelIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tags" />
-        </ListItem>
+        {Object.keys(routes).map(e => (
+          <ListItem
+            button
+            component={Link}
+            to={e}
+            key={e}
+            selected={this.props.location.pathname === e}
+          >
+            <ListItemIcon>{routes[e]}</ListItemIcon>
+            <ListItemText primary={e} />
+          </ListItem>
+        ))}
       </List>
     );
   }

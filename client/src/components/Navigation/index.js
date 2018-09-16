@@ -110,7 +110,6 @@ class Navigation extends React.Component {
   }
 
   render() {
-    console.log(this.props.match, this.props.location)
     const { classes, theme } = this.props;
 
     const loggedIn = Boolean(jwtFromCache());
