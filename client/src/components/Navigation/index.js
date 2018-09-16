@@ -15,6 +15,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 import { jwtFromCache } from "../../auth.js";
 
+import DrawerContent from "./DrawerContent.js";
 import LoggedInElements from "./LoggedInElements.js";
 import LoggedOutElements from "./LoggedOutElements.js";
 
@@ -101,10 +102,10 @@ class Navigation extends React.Component {
     this.setState({ open: false });
   };
 
-  isGutterDisabled = (loggedIn) => {
+  isGutterDisabled = loggedIn => {
     if (!loggedIn) return false;
     return !this.state.open;
-  }
+  };
 
   render() {
     const { classes, theme } = this.props;
@@ -165,10 +166,7 @@ class Navigation extends React.Component {
                 )}
               </IconButton>
             </div>
-            <Divider />
-            <List />
-            <Divider />
-            <List />
+            <DrawerContent />
           </Drawer>
         )}
         <main className={classes.content}>
