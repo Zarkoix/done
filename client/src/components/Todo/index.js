@@ -48,7 +48,7 @@ const styles = theme => ({
     }
   },
   expandButton: {
-    transition: 'opacity ease-in 0.2s'
+    transition: "opacity ease-in 0.2s"
   },
   topBar: {
     display: "flex",
@@ -134,7 +134,7 @@ class Todo extends Component {
                   component="span"
                   onClick={this.toggleExpanded}
                   style={
-                    this.state.hover
+                    this.state.expanded || this.state.hover
                       ? { opacity: "1" }
                       : { opacity: "0" }
                   }
