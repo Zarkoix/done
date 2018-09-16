@@ -18,6 +18,7 @@ const SET_BODY = gql`
 const styles = theme => ({
   textarea: {
     ...theme.typography.body1,
+    background: "transparent",
     border: "none",
     outline: "none",
     resize: "none",

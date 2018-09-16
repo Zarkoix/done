@@ -5,8 +5,8 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Navigation from "./components/Navigation";
 
@@ -34,18 +34,26 @@ const client = new ApolloClient({
   }
 });
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router>
-      <Navigation>
-        <Route exact path="/" component={Root} />
-        <Route path="/About" component={About} />
-        <Route path="/Signup" component={Signup} />
-        <Route path="/Login" component={Login} />
-        <Route path="/Settings" component={Settings} />
-        <Route path="/Today" component={Today} />
-      </Navigation>
-    </Router>
+    <MuiThemeProvider theme={theme}>
+      <Router>
+        <Navigation>
+          <Route exact path="/" component={Root} />
+          <Route path="/About" component={About} />
+          <Route path="/Signup" component={Signup} />
+          <Route path="/Login" component={Login} />
+          <Route path="/Settings" component={Settings} />
+          <Route path="/Today" component={Today} />
+        </Navigation>
+      </Router>
+    </MuiThemeProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

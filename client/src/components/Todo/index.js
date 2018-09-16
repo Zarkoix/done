@@ -38,7 +38,7 @@ const styles = theme => ({
     transition: "box-shadow, background-color 0.2s ease-in",
     "&:hover": {
       boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
-      backgroundColor: "white"
+      backgroundColor: theme.palette.background.paper
     }
   },
   topBar: {
@@ -84,7 +84,7 @@ class Todo extends Component {
                 this.state.expanded
                   ? {
                       boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
-                      backgroundColor: "white"
+                      backgroundColor: this.props.theme.palette.background.paper
                     }
                   : {
                       cursor: "pointer"
@@ -125,7 +125,8 @@ class Todo extends Component {
 
 Todo.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(Todo);
+export default withStyles(styles, { withTheme: true })(Todo);

@@ -18,9 +18,10 @@ export const AUTHENTICATE = gql`
   }
 `;
 
-const styles = theme => ({
-
-});
+const styles = theme => {
+  console.log(theme)
+  return {}
+};
 
 class Today extends Component {
   render() {
