@@ -3,10 +3,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import { Link } from "react-router-dom";
 
 import { ApolloConsumer } from "react-apollo";
 
-import { jwtClearCache } from '../../auth.js'
+import { jwtClearCache } from "../../auth.js";
 
 class LoggedInElements extends Component {
   state = {
@@ -21,7 +22,7 @@ class LoggedInElements extends Component {
     this.setState({ anchorEl: null });
   };
 
-  handleLogOut = (client) => {
+  handleLogOut = client => {
     // close menu
     this.setState({ anchorEl: null });
 
@@ -65,7 +66,16 @@ class LoggedInElements extends Component {
               open={open}
               onClose={this.handleClose}
             >
-              <MenuItem onClick={() => this.handleLogOut(client)}>Log Out</MenuItem>
+              <MenuItem
+                component={Link}
+                to="/Settings"
+                onClick={this.handleClose}
+              >
+                Settings
+              </MenuItem>
+              <MenuItem onClick={() => this.handleLogOut(client)}>
+                Log Out
+              </MenuItem>
             </Menu>
           </React.Fragment>
         )}

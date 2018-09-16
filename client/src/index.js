@@ -14,6 +14,7 @@ import Root from "./routes/Root";
 import About from "./routes/About";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
+import Settings from "./routes/Settings";
 
 import { jwtFromCache } from './auth.js'
 
@@ -39,6 +40,7 @@ ReactDOM.render(
         <Route path="/about" component={About} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/settings" component={Settings} />
       </Navigation>
     </Router>
   </ApolloProvider>,
