@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router';
+
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -18,27 +20,28 @@ class DrawerContent extends Component {
   }
 
   render() {
+    console.log(this.props.location)
     return (
       <List>
-        <ListItem button selected={this.state.selected === "today"}>
+        <ListItem button selected={this.props.location.pathname === "/Today"}>
           <ListItemIcon>
             <TodayIcon />
           </ListItemIcon>
           <ListItemText primary="Today" />
         </ListItem>
-        <ListItem button selected={this.state.selected === "inbox"}>
+        <ListItem button selected={this.state.selected === "/Inbox"}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary="Inbox" />
         </ListItem>
-        <ListItem button selected={this.state.selected === "upcoming"}>
+        <ListItem button selected={this.state.selected === "/Upcoming"}>
           <ListItemIcon>
             <CalendarIcon />
           </ListItemIcon>
           <ListItemText primary="Upcoming" />
         </ListItem>
-        <ListItem button selected={this.state.selected === "tags"}>
+        <ListItem button selected={this.state.selected === "/Tags"}>
           <ListItemIcon>
             <LabelIcon />
           </ListItemIcon>
@@ -49,4 +52,4 @@ class DrawerContent extends Component {
   }
 }
 
-export default DrawerContent;
+export default withRouter(DrawerContent);

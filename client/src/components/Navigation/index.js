@@ -105,7 +105,12 @@ class Navigation extends React.Component {
     return !this.state.open;
   };
 
+  componentWillReceiveProps = (newProps) => {
+    console.log(newProps)
+  }
+
   render() {
+    console.log(this.props.match, this.props.location)
     const { classes, theme } = this.props;
 
     const loggedIn = Boolean(jwtFromCache());
