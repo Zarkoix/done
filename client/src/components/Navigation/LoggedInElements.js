@@ -4,6 +4,7 @@ import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import { ApolloConsumer } from "react-apollo";
 
@@ -33,7 +34,7 @@ class LoggedInElements extends Component {
     client.resetStore();
 
     // force refresh the page
-    document.location.reload(true);
+    this.props.history.push('/')
   };
 
   render() {
@@ -84,4 +85,4 @@ class LoggedInElements extends Component {
   }
 }
 
-export default LoggedInElements;
+export default withRouter(LoggedInElements);
