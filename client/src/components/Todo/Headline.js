@@ -38,7 +38,7 @@ class Headline extends Component {
   };
 
   componentWillReceiveProps = nextProps => {
-    if (nextProps.text !== this.state.text) {
+    if (nextProps.id !== this.props.id) {
       this.setState({
         text: nextProps.text ? nextProps.text : ""
       });
