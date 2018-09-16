@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   buttonOutline: {
@@ -10,7 +10,11 @@ const styles = theme => ({
     margin: theme.spacing.unit + "px",
     borderRadius: "5px",
     background: theme.palette.divider,
-    color: theme.palette.background.paper
+    color: theme.palette.background.paper,
+    transition: "color 0.1s ease-in",
+    "&:hover": {
+      color: theme.palette.text.primary
+    }
   }
 });
 
@@ -19,12 +23,12 @@ class DateTime extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Typography className={classes.buttonOutline} variant="button">
+        <Button size="small" className={classes.buttonOutline}>
           Sep. 24
-        </Typography>
-        <Typography className={classes.buttonOutline} variant="button">
+        </Button>
+        <Button size="small" className={classes.buttonOutline}>
           7:00
-        </Typography>
+        </Button>
       </React.Fragment>
     );
   }
