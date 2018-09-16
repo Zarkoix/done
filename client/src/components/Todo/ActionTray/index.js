@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import DeleteButton from "./DeleteButton.js";
-import DateTime from "./DateTime.js";
+import DateTime from "./DateTime";
 
 const styles = theme => ({
   tray: {
