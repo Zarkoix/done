@@ -38,7 +38,7 @@ export const SET_COMPLETED = gql`
 const styles = theme => ({
   paper: {
     height: "auto",
-    margin: theme.spacing.unit + "px " + theme.spacing.unit * 2 + "px",
+    margin: theme.spacing.unit / 4 + "px " + theme.spacing.unit * 2 + "px",
     borderRadius: "5px",
     transition: "opacity 0.2s, box-shadow 0.2s, background-color 0.2s ease-in",
     "&:hover": {
@@ -52,7 +52,9 @@ const styles = theme => ({
   },
   topBar: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    padding: theme.spacing.unit / 2 + "px",
+    paddingLeft: 0
   },
   expandedContent: {
     padding: theme.spacing.unit + "px"
