@@ -16,7 +16,7 @@ const DELTE_TODO = gql`
   }
 `;
 
-export default withStyles()(({ classes }) => (
+export default withStyles({})(({ classes, id }) => (
   <Mutation
     mutation={DELTE_TODO}
     update={(
@@ -44,7 +44,7 @@ export default withStyles()(({ classes }) => (
         onClick={() =>
           deleteTodo({
             variables: {
-              id: this.props.id
+              id: id
             }
           })
         }

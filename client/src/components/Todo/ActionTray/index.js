@@ -22,7 +22,7 @@ class ActionTray extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.tray}>
-        <DeleteButton />
+        <DeleteButton id={this.props.id} />
       </div>
     );
   }
