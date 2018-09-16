@@ -5,10 +5,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import gql from "graphql-tag";
 
-import { GET_ALL_TODOS } from '../../queries'
+import { GET_ALL_TODOS } from "../../queries";
 
-import Todo from '../../components/Todo'
-import NewTodoButton from './NewTodoButton.js'
+import Todo from "../../components/Todo";
+import NewTodoButton from "./NewTodoButton.js";
 
 export const AUTHENTICATE = gql`
   mutation Authenticate($email: String!, $password: String!) {
@@ -18,14 +18,20 @@ export const AUTHENTICATE = gql`
   }
 `;
 
-const styles = theme => ({});
+const styles = theme => ({
+  titleText: {
+    marginBottom: theme.spacing.unit + "px"
+  }
+});
 
 class Today extends Component {
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
       <div>
-        <Typography variant="display1">Today</Typography>
+        <Typography className={classes.titleText} variant="display1">
+          Today
+        </Typography>
         <Query query={GET_ALL_TODOS}>
           {({ loading, error, data }) => {
             if (loading) return null;
