@@ -6,7 +6,7 @@ import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
 import ExpandedContent from "./ExpandedContent.js";
-import Headline from "./Headline.js"
+import Headline from "./Headline.js";
 
 const GET_TODO_DATA = gql`
   query getTodoData($id: Int!) {
@@ -35,10 +35,11 @@ const styles = theme => ({
     height: "auto",
     margin: theme.spacing.unit + "px " + theme.spacing.unit * 2 + "px",
     borderRadius: "5px",
-    transition: "box-shadow, background-color 0.2s ease-in",
+    transition: "opacity 0.2s, box-shadow 0.2s, background-color 0.2s ease-in",
     "&:hover": {
       boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
-      backgroundColor: theme.palette.background.paper
+      backgroundColor: theme.palette.background.paper,
+      opacity: '1 !important'
     }
   },
   topBar: {
@@ -75,21 +76,22 @@ class Todo extends Component {
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return `Error!: ${error}`;
-          let { headline, completed } = data.todoById;
+          const { headline, completed } = data.todoById;
+          const stylesFromExpanded = this.state.expanded
+            ? {
+                boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
+                backgroundColor: this.props.theme.palette.background.paper,
+                opacity: 1
+              }
+            : {
+                cursor: "pointer"
+              };
+          const stylesFromCompleted = completed ? { opacity: 0.5 } : {};
           return (
             <div
               className={classes.paper}
               onClick={this.handleFocus}
-              style={
-                this.state.expanded
-                  ? {
-                      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
-                      backgroundColor: this.props.theme.palette.background.paper
-                    }
-                  : {
-                      cursor: "pointer"
-                    }
-              }
+              style={{ ...stylesFromCompleted, ...stylesFromExpanded }}
             >
               <div className={classes.topBar}>
                 <Mutation mutation={SET_COMPLETED}>
@@ -108,7 +110,7 @@ class Todo extends Component {
                     />
                   )}
                 </Mutation>
-                <Headline text={headline} id={this.props.id}/>
+                <Headline text={headline} id={this.props.id} />
               </div>
               {this.state.expanded ? (
                 <div className={classes.expandedContent}>
