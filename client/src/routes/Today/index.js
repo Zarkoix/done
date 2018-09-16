@@ -18,10 +18,7 @@ export const AUTHENTICATE = gql`
   }
 `;
 
-const styles = theme => {
-  console.log(theme)
-  return {}
-};
+const styles = theme => ({});
 
 class Today extends Component {
   render() {
@@ -33,7 +30,6 @@ class Today extends Component {
           {({ loading, error, data }) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
-            console.log(data)
             return data.allTodos.nodes.map((data, i) => (
               <Todo key={i} id={data.id} />
             ));

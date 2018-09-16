@@ -39,9 +39,7 @@ class ActionTray extends Component {
         <Mutation mutation={DELTE_TODO}
           update={(cache, { data: { deleteTodoById: {todo: { id }}} }) => {
             const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
-            console.log(allTodos.nodes, id)
             const newNodes = allTodos.nodes.filter(node => node.id !== id)
-            console.log(newNodes)
             cache.writeQuery({
               query: GET_ALL_TODOS,
               data: { allTodos: {...allTodos, nodes: newNodes }}
