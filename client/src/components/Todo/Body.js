@@ -41,7 +41,7 @@ class Body extends Component {
   componentWillReceiveProps = nextProps => {
     if (nextProps.text !== this.state.text) {
       this.setState({
-        text: nextProps.text
+        text: nextProps.text ? nextProps.text : ""
       });
     }
   };
