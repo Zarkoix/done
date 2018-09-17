@@ -32,7 +32,6 @@ export const SET_COMPLETED = gql`
       todo {
         id
         completed
-        body
       }
     }
   }
@@ -123,6 +122,16 @@ class Todo extends Component {
                           variables: {
                             id: this.props.id,
                             completed: !completed
+                          },
+                          optimisticResponse: {
+                            updateTodoById: {
+                              __typename: "UpdateTodoPayload",
+                              todo: {
+                                id: this.props.id,
+                                __typename: "todo",
+                                completed: !completed
+                              }
+                            }
                           }
                         });
                       }}
