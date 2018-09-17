@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import { Mutation } from "react-apollo";
-import { SET_DO_WHEN } from "./queries.js";
+import { SET_DO_WHEN_DATE } from "./queries.js";
 import moment from "moment";
 
 import DateSelect from "../../../Select/DateSelect.js";
@@ -50,10 +50,21 @@ class DateButton extends Component {
   };
 
   handleDone = (date, setDoWhen) => {
+    const newDate = date ? moment(date).format("YYYY-MM-DD") : null;
     setDoWhen({
       variables: {
         id: this.props.id,
-        doWhenDate: date ? moment(date).format("YYYY-MM-DD") : null
+        doWhenDate: newDate
+      },
+      optimisticResponse: {
+        updateTodoById: {
+          __typename: "UpdateTodoPayload",
+          todo: {
+            id: this.props.id,
+            __typename: "todo",
+            doWhenDate: newDate
+          }
+        }
       }
     });
     this.setState({
@@ -61,16 +72,16 @@ class DateButton extends Component {
     });
   };
 
-  handleSelect = (date) => {
+  handleSelect = date => {
     this.setState({
       pickerDate: date
-    })
-  }
+    });
+  };
 
   render() {
     const { classes } = this.props;
     return (
-      <Mutation mutation={SET_DO_WHEN}>
+      <Mutation mutation={SET_DO_WHEN_DATE}>
         {setDoWhen => (
           <React.Fragment>
             <Button

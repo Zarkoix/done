@@ -20,11 +20,24 @@ class CalendarButton extends Component {
   }
 
   handleClose = (date, time, setDoWhen) => {
+    const newDate = date ? moment(date).format("YYYY-MM-DD") : null;
+    const newTime = time ? moment(time).format("HH:mm") : null;
     setDoWhen({
       variables: {
         id: this.props.id,
-        doWhenDate: date ? moment(date).format("YYYY-MM-DD") : null,
-        doWhenTime: time ? moment(time).format("HH:mm") : null
+        doWhenDate: newDate,
+        doWhenTime: newTime
+      },
+      optimisticResponse: {
+        updateTodoById: {
+          __typename: "UpdateTodoPayload",
+          todo: {
+            id: this.props.id,
+            __typename: "todo",
+            doWhenDate: newDate,
+            doWhenTime: newTime
+          }
+        }
       }
     });
     this.setState({

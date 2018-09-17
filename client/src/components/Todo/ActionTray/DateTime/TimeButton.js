@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import { Mutation } from "react-apollo";
-import { SET_DO_WHEN } from "./queries.js";
+import { SET_DO_WHEN_TIME } from "./queries.js";
 import moment from "moment";
 
 import TimeSelect from "../../../Select/TimeSelect.js";
@@ -50,10 +50,21 @@ class TimeButton extends Component {
   };
 
   handleDone = (time, setDoWhen) => {
+    const newTime = time ? moment(time).format("HH:mm") : null;
     setDoWhen({
       variables: {
         id: this.props.id,
-        doWhenTime: time ? moment(time).format("HH:mm") : null
+        doWhenTime: newTime
+      },
+      optimisticResponse: {
+        updateTodoById: {
+          __typename: "UpdateTodoPayload",
+          todo: {
+            id: this.props.id,
+            __typename: "todo",
+            doWhenTime: newTime
+          }
+        }
       }
     });
     this.setState({
@@ -71,7 +82,7 @@ class TimeButton extends Component {
     const { classes } = this.props;
     const { pickerTime } = this.state;
     return (
-      <Mutation mutation={SET_DO_WHEN}>
+      <Mutation mutation={SET_DO_WHEN_TIME}>
         {setDoWhen => (
           <React.Fragment>
             <Button
