@@ -5,10 +5,17 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { withStyles } from "@material-ui/core/styles";
 
 import { ApolloConsumer } from "react-apollo";
 
 import { jwtClearCache } from "../../auth.js";
+
+const styles = theme => ({
+  gutterRight: {
+    marginRight: theme.spacing.unit + "px"
+  }
+});
 
 class LoggedInElements extends Component {
   state = {
@@ -34,12 +41,13 @@ class LoggedInElements extends Component {
     client.resetStore();
 
     // force refresh the page
-    this.props.history.push('/')
+    this.props.history.push("/");
   };
 
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
+    const { classes } = this.props;
 
     return (
       <ApolloConsumer>
@@ -78,6 +86,7 @@ class LoggedInElements extends Component {
                 Log Out
               </MenuItem>
             </Menu>
+            <div className={classes.gutterRight} />
           </React.Fragment>
         )}
       </ApolloConsumer>
@@ -85,4 +94,4 @@ class LoggedInElements extends Component {
   }
 }
 
-export default withRouter(LoggedInElements);
+export default withRouter(withStyles(styles)(LoggedInElements));
