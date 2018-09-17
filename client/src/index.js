@@ -5,14 +5,14 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme.js";
 
 import Navigation from "./components/Navigation";
 
-import Root from "./routes/Root";
 import About from "./routes/Static/About";
+import Splash from "./routes/Static/Splash";
 import Signup from "./routes/User/Signup";
 import Login from "./routes/User/Login";
 import Settings from "./routes/User/Settings";
@@ -41,7 +41,13 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <Router>
         <Navigation>
-          <Route exact path="/" component={Root} />
+          <Route
+            exact
+            path="/"
+            render={props =>
+              Boolean(jwtFromCache()) ? <Redirect to="/Today" /> : <Splash />
+            }
+          />
           <Route path="/About" component={About} />
           <Route path="/Signup" component={Signup} />
           <Route path="/Login" component={Login} />
