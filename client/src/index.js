@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme.js";
 
-import Navigation from "./components/Navigation";
+import { withNavigation } from "./components/Navigation";
 
 import About from "./routes/Static/About";
 import Splash from "./routes/Static/Splash";
@@ -40,7 +40,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <MuiThemeProvider theme={theme}>
       <Router>
-        <Navigation>
+        <React.Fragment>
           <Route
             exact
             path="/"
@@ -51,10 +51,10 @@ ReactDOM.render(
           <Route path="/About" component={About} />
           <Route path="/Signup" component={Signup} />
           <Route path="/Login" component={Login} />
-          <Route path="/Settings" component={Settings} />
-          <Route path="/Today" component={Today} />
-          <Route path="/Inbox" component={Inbox} />
-        </Navigation>
+          <Route path="/Settings" component={withNavigation(Settings)} />
+          <Route path="/Today" component={withNavigation(Today)} />
+          <Route path="/Inbox" component={withNavigation(Inbox)} />
+        </React.Fragment>
       </Router>
     </MuiThemeProvider>
   </ApolloProvider>,

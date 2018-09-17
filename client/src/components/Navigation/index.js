@@ -182,4 +182,14 @@ Navigation.propTypes = {
   children: PropTypes.any
 };
 
-export default withStyles(styles, { withTheme: true })(Navigation);
+const CNavigation = withStyles(styles, { withTheme: true })(Navigation);
+
+export default CNavigation;
+
+export function withNavigation(Component) {
+  return () => (
+    <CNavigation>
+      <Component />
+    </CNavigation>
+  );
+}
