@@ -8,7 +8,7 @@ import moment from "moment";
 import Todo from "../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 
-import { GET_TODOS_FOR_DATE } from '../../queries'
+import { GET_ALL_TODOS } from "../../queries";
 
 const styles = theme => ({
   titleText: {
@@ -17,6 +17,8 @@ const styles = theme => ({
 });
 
 class Today extends Component {
+  ifToday = todo => todo.doWhenDate === moment().format("YYYY-MM-DD");
+
   render() {
     const { classes } = this.props;
     return (
@@ -24,16 +26,13 @@ class Today extends Component {
         <Typography className={classes.titleText} variant="display1">
           Today
         </Typography>
-        <Query
-          query={GET_TODOS_FOR_DATE}
-          variables={{ date: moment().format("YYYY-MM-DD") }}
-        >
+        <Query query={GET_ALL_TODOS}>
           {({ loading, error, data }) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
-            return data.allTodos.nodes.map((data, i) => (
-              <Todo key={i} id={data.id} />
-            ));
+            return data.allTodos.nodes
+              .filter(this.ifToday)
+              .map((data, i) => <Todo key={i} id={data.id} />);
           }}
         </Query>
         <NewTodoButton />
