@@ -11,11 +11,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-import { jwtFromCache } from "../../auth.js";
-
 import DrawerContent from "./DrawerContent.js";
 import LoggedInElements from "./LoggedInElements.js";
-import LoggedOutElements from "./LoggedOutElements.js";
 
 const drawerWidth = 240;
 
@@ -87,7 +84,7 @@ const styles = theme => ({
   }
 });
 
-class Navigation extends React.Component {
+class AppNavigation extends React.Component {
   state = {
     open: false
   };
@@ -100,15 +97,8 @@ class Navigation extends React.Component {
     this.setState({ open: false });
   };
 
-  isGutterDisabled = loggedIn => {
-    if (!loggedIn) return false;
-    return !this.state.open;
-  };
-
   render() {
     const { classes, theme } = this.props;
-
-    const loggedIn = Boolean(jwtFromCache());
 
     return (
       <div className={classes.root}>
@@ -119,20 +109,18 @@ class Navigation extends React.Component {
             this.state.open && classes.appBarShift
           )}
         >
-          <Toolbar disableGutters={this.isGutterDisabled(loggedIn)}>
-            {loggedIn && (
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(
-                  classes.menuButton,
-                  this.state.open && classes.hide
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
+          <Toolbar disableGutters={!this.state.open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(
+                classes.menuButton,
+                this.state.open && classes.hide
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography
               variant="title"
               color="inherit"
@@ -141,32 +129,30 @@ class Navigation extends React.Component {
             >
               Done
             </Typography>
-            {loggedIn ? <LoggedInElements /> : <LoggedOutElements />}
+            <LoggedInElements />
           </Toolbar>
         </AppBar>
-        {loggedIn && (
-          <Drawer
-            variant="permanent"
-            classes={{
-              paper: classNames(
-                classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose
-              )
-            }}
-            open={this.state.open}
-          >
-            <div className={classes.toolbar}>
-              <IconButton onClick={this.handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
-            <DrawerContent />
-          </Drawer>
-        )}
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: classNames(
+              classes.drawerPaper,
+              !this.state.open && classes.drawerPaperClose
+            )
+          }}
+          open={this.state.open}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={this.handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          </div>
+          <DrawerContent />
+        </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {this.props.children}
@@ -176,20 +162,20 @@ class Navigation extends React.Component {
   }
 }
 
-Navigation.propTypes = {
+AppNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   children: PropTypes.any
 };
 
-const CNavigation = withStyles(styles, { withTheme: true })(Navigation);
+const CAppNavigation = withStyles(styles, { withTheme: true })(AppNavigation);
 
-export default CNavigation;
+export default CAppNavigation;
 
-export function withNavigation(Component) {
+export function withAppNavigation(Component) {
   return () => (
-    <CNavigation>
+    <CAppNavigation>
       <Component />
-    </CNavigation>
+    </CAppNavigation>
   );
 }

@@ -5,14 +5,20 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme.js";
 
-import { withNavigation } from "./components/Navigation";
+import { withAppNavigation } from "./components/AppNavigation";
+import { withStaticNavigation } from "./components/StaticNavigation";
 
-import About from "./routes/Static/About";
 import Splash from "./routes/Static/Splash";
+import NoMatch from "./routes/Static/NoMatch";
 import Signup from "./routes/User/Signup";
 import Login from "./routes/User/Login";
 import Settings from "./routes/User/Settings";
@@ -40,7 +46,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <MuiThemeProvider theme={theme}>
       <Router>
-        <React.Fragment>
+        <Switch>
           <Route
             exact
             path="/"
@@ -48,12 +54,13 @@ ReactDOM.render(
               Boolean(jwtFromCache()) ? <Redirect to="/Today" /> : <Splash />
             }
           />
-          <Route path="/Signup" component={Signup} />
-          <Route path="/Login" component={Login} />
-          <Route path="/Settings" component={withNavigation(Settings)} />
-          <Route path="/Today" component={withNavigation(Today)} />
-          <Route path="/Inbox" component={withNavigation(Inbox)} />
-        </React.Fragment>
+          <Route path="/Signup" component={withStaticNavigation(Signup)} />
+          <Route path="/Login" component={withStaticNavigation(Login)} />
+          <Route path="/Settings" component={withAppNavigation(Settings)} />
+          <Route path="/Today" component={withAppNavigation(Today)} />
+          <Route path="/Inbox" component={withAppNavigation(Inbox)} />
+          <Route component={withStaticNavigation(NoMatch)} />
+        </Switch>
       </Router>
     </MuiThemeProvider>
   </ApolloProvider>,
