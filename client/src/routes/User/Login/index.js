@@ -15,11 +15,11 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 import { Mutation } from "react-apollo";
 
-import { jwtToCache, AUTHENTICATE } from "../../auth.js";
+import { jwtToCache, AUTHENTICATE } from "../../../auth.js";
 
 const styles = theme => ({
   layout: {
@@ -71,9 +71,7 @@ class SignIn extends Component {
     const { classes } = this.props;
 
     return (
-      <Mutation
-        mutation={AUTHENTICATE}
-      >
+      <Mutation mutation={AUTHENTICATE}>
         {(authenticate, { data, loading, error }) => (
           <React.Fragment>
             <CssBaseline />
@@ -94,8 +92,8 @@ class SignIn extends Component {
                       }
                     });
                     if (data.authenticate.jwtToken !== null) {
-                      jwtToCache(data.authenticate.jwtToken)
-                      this.props.history.push('/');
+                      jwtToCache(data.authenticate.jwtToken);
+                      this.props.history.push("/");
                     } else {
                       // TODO: throw error
                     }

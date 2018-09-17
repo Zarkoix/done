@@ -20,7 +20,7 @@ import { withRouter, Redirect } from "react-router-dom";
 
 import { Mutation } from "react-apollo";
 
-import { REGISTER } from "../../auth.js";
+import { REGISTER } from "../../../auth.js";
 
 const styles = theme => ({
   layout: {

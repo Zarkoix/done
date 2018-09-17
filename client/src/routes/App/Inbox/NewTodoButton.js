@@ -6,7 +6,7 @@ import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
-import { GET_ALL_TODOS } from "../../queries";
+import { GET_ALL_TODOS } from "../../../queries";
 
 const NEW_TODO = gql`
   mutation NewTodo {

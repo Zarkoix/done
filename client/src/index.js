@@ -12,13 +12,13 @@ import theme from "./theme.js";
 import Navigation from "./components/Navigation";
 
 import Root from "./routes/Root";
-import About from "./routes/About";
-import Signup from "./routes/Signup";
-import Login from "./routes/Login";
-import Settings from "./routes/Settings";
+import About from "./routes/Static/About";
+import Signup from "./routes/User/Signup";
+import Login from "./routes/User/Login";
+import Settings from "./routes/User/Settings";
 
-import Today from "./routes/Today";
-import Inbox from "./routes/Inbox"
+import Today from "./routes/App/Today";
+import Inbox from "./routes/App/Inbox";
 
 import { jwtFromCache } from "./auth.js";
 
