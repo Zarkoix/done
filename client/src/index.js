@@ -18,6 +18,7 @@ import Login from "./routes/Login";
 import Settings from "./routes/Settings";
 
 import Today from "./routes/Today";
+import Inbox from "./routes/Inbox"
 
 import { jwtFromCache } from "./auth.js";
 
@@ -46,6 +47,7 @@ ReactDOM.render(
           <Route path="/Login" component={Login} />
           <Route path="/Settings" component={Settings} />
           <Route path="/Today" component={Today} />
+          <Route path="/Inbox" component={Inbox} />
         </Navigation>
       </Router>
     </MuiThemeProvider>
