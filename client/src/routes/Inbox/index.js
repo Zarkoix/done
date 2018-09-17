@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import gql from "graphql-tag";
 
 import Todo from "../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 
-import { GET_ALL_TODOS } from "../../queries" 
+import { GET_ALL_TODOS } from "../../queries";
 
 const styles = theme => ({
   titleText: {
