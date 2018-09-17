@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
 import Button from "@material-ui/core/Button";
-import { Clock } from "material-ui-next-pickers";
 import Dialog from "@material-ui/core/Dialog";
+import { Mutation } from "react-apollo";
+import { SET_DO_WHEN } from "./queries.js";
+import moment from "moment";
+
+import TimeSelect from "../../../Select/TimeSelect.js";
 
 const styles = theme => ({
   buttonOutline: {
@@ -18,27 +21,20 @@ const styles = theme => ({
     "&:hover": {
       color: theme.palette.text.primary
     }
-  },
-  dialogActions: {
-    display: "flex"
-  },
-  dialogAction: {
-    flexGrow: 1
   }
 });
 
 class TimeButton extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      time: null,
+      pickerTime: props.time,
       dialogOpen: false
     };
   }
 
-  onChangeDate = date => {
-    console.log("Date: ", date);
-    this.setState({ date });
+  onChangeTime = time => {
+    this.setState({ pickerTime: time });
   };
 
   handleClose = () => {
@@ -53,60 +49,61 @@ class TimeButton extends Component {
     });
   };
 
+  handleDone = (time, setDoWhen) => {
+    setDoWhen({
+      variables: {
+        id: this.props.id,
+        doWhenTime: time ? moment(time).format("HH:mm") : null
+      }
+    });
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
+  handleSelect = time => {
+    this.setState({
+      pickerTime: time
+    });
+  };
+
   render() {
     const { classes } = this.props;
-    const { date } = this.state;
-    const actionClassName = classNames(classes.button, classes.dialogAction);
+    const { pickerTime } = this.state;
     return (
-      <React.Fragment>
-        <Button
-          onClick={this.openDialog}
-          size="small"
-          className={classes.buttonOutline}
-        >
-          {date ? date.getHours() + ":" + date.getMinutes() : "Time"}
-        </Button>
+      <Mutation mutation={SET_DO_WHEN}>
+        {setDoWhen => (
+          <React.Fragment>
+            <Button
+              onClick={this.openDialog}
+              size="small"
+              className={classes.buttonOutline}
+            >
+              {this.props.time.format("hh:mm A")}
+            </Button>
 
-        <Dialog
-          onClose={this.handleClose}
-          aria-labelledby="date-dialog"
-          open={this.state.dialogOpen}
-        >
-          <Clock
-            name="date-input"
-            value={date}
-            onChange={this.onChangeDate}
-            closeCalendar={this.handleClose}
-          />
-          <div className={classes.dialogActions}>
-            <Button
-              onClick={() => {
-                this.onChangeDate(null);
-                this.handleClose();
-              }}
-              color="secondary"
-              className={actionClassName}
+            <Dialog
+              onClose={this.handleClose}
+              aria-labelledby="time-dialog"
+              open={this.state.dialogOpen}
             >
-              Clear
-            </Button>
-            <Button
-              onClick={() => {
-                this.handleClose();
-              }}
-              color="primary"
-              className={actionClassName}
-            >
-              Done
-            </Button>
-          </div>
-        </Dialog>
-      </React.Fragment>
+              <TimeSelect
+                time={pickerTime}
+                onSelect={this.handleSelect}
+                onDone={time => this.handleDone(time, setDoWhen)}
+              />
+            </Dialog>
+          </React.Fragment>
+        )}
+      </Mutation>
     );
   }
 }
 
 TimeButton.propTypes = {
-  classes: PropTypes.object.isRequired
+  id: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
+  time: PropTypes.object
 };
 
 export default withStyles(styles)(TimeButton);

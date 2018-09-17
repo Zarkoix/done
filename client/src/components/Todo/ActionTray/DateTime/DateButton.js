@@ -2,23 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { Calendar } from "material-ui-next-pickers";
 import Dialog from "@material-ui/core/Dialog";
+import { Mutation } from "react-apollo";
+import { SET_DO_WHEN } from "./queries.js";
+import moment from "moment";
 
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
+import DateSelect from "../../../Select/DateSelect.js";
 
 const styles = theme => ({
   buttonOutline: {
@@ -36,17 +25,16 @@ const styles = theme => ({
 });
 
 class DateButton extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      date: null,
+      pickerDate: props.date,
       dialogOpen: false
     };
   }
 
   onChangeDate = date => {
-    console.log("Date: ", date);
-    this.setState({ date });
+    this.setState({ pickerDate: date });
   };
 
   handleClose = () => {
@@ -61,50 +49,59 @@ class DateButton extends Component {
     });
   };
 
+  handleDone = (date, setDoWhen) => {
+    setDoWhen({
+      variables: {
+        id: this.props.id,
+        doWhenDate: date ? moment(date).format("YYYY-MM-DD") : null
+      }
+    });
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
+  handleSelect = (date) => {
+    this.setState({
+      pickerDate: date
+    })
+  }
+
   render() {
     const { classes } = this.props;
-    const { date } = this.state;
     return (
-      <React.Fragment>
-        <Button
-          onClick={this.openDialog}
-          size="small"
-          className={classes.buttonOutline}
-        >
-          {date
-            ? monthNames[date.getMonth()].substring(0, 3) + " " + date.getDate()
-            : "Date"}
-        </Button>
-
-        <Dialog
-          onClose={this.handleClose}
-          aria-labelledby="date-dialog"
-          open={this.state.dialogOpen}
-        >
-          <Calendar
-            name="date-input"
-            value={date}
-            onChange={this.onChangeDate}
-            closeCalendar={this.handleClose}
-          />
-          <Button
-            onClick={() => {
-              this.onChangeDate(null);
-              this.handleClose();
-            }}
-            color="secondary"
-            className={classes.button}
-          >
-            Clear
-          </Button>
-        </Dialog>
-      </React.Fragment>
+      <Mutation mutation={SET_DO_WHEN}>
+        {setDoWhen => (
+          <React.Fragment>
+            <Button
+              onClick={this.openDialog}
+              size="small"
+              className={classes.buttonOutline}
+            >
+              {this.props.date.format("MMM DD")}
+            </Button>
+            <Dialog
+              onClose={this.handleClose}
+              aria-labelledby="date-dialog"
+              open={this.state.dialogOpen}
+            >
+              <DateSelect
+                date={this.state.pickerDate}
+                onSelect={this.handleSelect}
+                onDone={date => this.handleDone(date, setDoWhen)}
+              />
+            </Dialog>
+          </React.Fragment>
+        )}
+      </Mutation>
     );
   }
 }
 
 DateButton.propTypes = {
-  classes: PropTypes.object.isRequired
+  id: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
+  date: PropTypes.object
 };
 
 export default withStyles(styles)(DateButton);

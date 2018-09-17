@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { withStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
+import moment from "moment";
 
-import CalendarIcon from "@material-ui/icons/CalendarToday";
+import CalendarButton from "./CalendarButton.js";
 import DateButton from "./DateButton.js";
 import TimeButton from "./TimeButton.js";
 
@@ -21,26 +21,28 @@ const GET_TODO_DATA = gql`
 
 class DateTime extends Component {
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <Query query={GET_TODO_DATA} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return `Error!: ${error}`;
-          let { do_when_date, do_when_time } = data.todoById;
-          console.log(do_when_date, do_when_time);
+          let { doWhenDate, doWhenTime } = data.todoById;
+          doWhenDate = doWhenDate ? moment(doWhenDate, "YYYY-MM-DD") : null;
+          doWhenTime = doWhenTime ? moment(doWhenTime, "HH:mm:SS") : null;
           return (
             <React.Fragment>
-              <IconButton
-                className={classes.button}
-                aria-label="Change planned time"
-              >
-                <CalendarIcon />
-              </IconButton>
-              {do_when_date && (
+              <CalendarButton
+                id={this.props.id}
+                doWhenDate={doWhenDate}
+                doWhenTime={doWhenTime}
+              />
+              {doWhenDate && (
                 <React.Fragment>
-                  <DateButton />
-                  {do_when_time && <TimeButton />}
+                  <DateButton id={this.props.id} date={doWhenDate} />
+                  {doWhenTime && (
+                    <TimeButton id={this.props.id} time={doWhenTime} />
+                  )}
                 </React.Fragment>
               )}
             </React.Fragment>
