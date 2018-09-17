@@ -29,7 +29,7 @@ create table done_app.todo (
   completed        boolean default False,
   created_at       timestamp default now(),
   do_when_date     date default null,
-  do_when_time     date default null,
+  do_when_time     time default null,
   do_when_ts       done_app.do_when_time_style default null,
   deadline_date     date default null,
   deadline_time     date default null,
