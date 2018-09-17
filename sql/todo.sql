@@ -1,16 +1,3 @@
-drop type if exists done_app.do_when_time_style;
-create type done_app.do_when_time_style as enum (
-  'Someday', -- useraims to complete this at an abitrary time
-  'Date', -- user has defined day granularity
-  'HourMinute' -- user has defined hour granularity
-);
-
-drop type if exists done_app.deadline_time_style;
-create type done_app.deadline_time_style as enum (
-  'Date', -- user has defined month granularity
-  'HourMinute' -- user has defined hour granularity
-);
-
 drop type if exists done_app.priority;
 create type done_app.priority as enum (
   'NotDefined', -- user has yet to define a priority
@@ -30,10 +17,8 @@ create table done_app.todo (
   created_at       timestamp default now(),
   do_when_date     date default null,
   do_when_time     time default null,
-  do_when_ts       done_app.do_when_time_style default null,
   deadline_date     date default null,
   deadline_time     date default null,
-  deadline_ts      done_app.deadline_time_style default null,
   duration         integer constraint valid_duration default -1 check (duration > 0 or duration = -1), -- time duration in minutes, -1 if not defined
   priority        done_app.priority default null
 );
