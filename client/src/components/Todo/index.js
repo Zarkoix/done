@@ -19,6 +19,9 @@ const GET_TODO_DATA = gql`
       headline
       completed
       id
+      body
+      doWhenDate
+      doWhenTime
     }
   }
 `;
