@@ -5,18 +5,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import gql from "graphql-tag";
 
-import { GET_ALL_TODOS } from "../../queries";
-
 import Todo from "../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 
-export const AUTHENTICATE = gql`
-  mutation Authenticate($email: String!, $password: String!) {
-    authenticate(input: { email: $email, password: $password }) {
-      jwtToken
-    }
-  }
-`;
+import { GET_ALL_TODOS } from "../../queries" 
 
 const styles = theme => ({
   titleText: {

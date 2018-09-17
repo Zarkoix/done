@@ -3,20 +3,12 @@ import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import gql from "graphql-tag";
-
-import { GET_ALL_TODOS } from "../../queries";
+import moment from "moment";
 
 import Todo from "../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 
-export const AUTHENTICATE = gql`
-  mutation Authenticate($email: String!, $password: String!) {
-    authenticate(input: { email: $email, password: $password }) {
-      jwtToken
-    }
-  }
-`;
+import { GET_TODOS_FOR_DATE } from '../../queries'
 
 const styles = theme => ({
   titleText: {
@@ -32,7 +24,10 @@ class Today extends Component {
         <Typography className={classes.titleText} variant="display1">
           Today
         </Typography>
-        <Query query={GET_ALL_TODOS}>
+        <Query
+          query={GET_TODOS_FOR_DATE}
+          variables={{ date: moment().format("YYYY-MM-DD") }}
+        >
           {({ loading, error, data }) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
