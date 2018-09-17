@@ -12,6 +12,8 @@ const GET_TODO_COMPLETE_DATA = gql`
     todoById(id: $id) {
       id
       body
+      doWhenDate
+      doWhenTime
     }
   }
 `;
