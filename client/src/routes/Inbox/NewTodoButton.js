@@ -6,15 +6,16 @@ import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
-import { GET_ALL_TODOS } from '../../queries'
+import { GET_ALL_TODOS } from "../../queries";
 
 const NEW_TODO = gql`
-  mutation NewTodo{
+  mutation NewTodo {
     createtodo(input: {}) {
       todo {
         id
         headline
         completed
+        doWhenDate
       }
     }
   }
@@ -22,9 +23,9 @@ const NEW_TODO = gql`
 
 const styles = theme => ({
   fab: {
-    position: 'absolute',
+    position: "absolute",
     bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2
   }
 });
 
@@ -32,21 +33,19 @@ class NewTodoButton extends Component {
   render() {
     const { classes } = this.props;
     return (
-        <Mutation
-          mutation={NEW_TODO}
-          update={(cache, { data: { createtodo: {todo}}}) => {
-            const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
-            const newNodes = allTodos.nodes.concat([todo])
-            cache.writeQuery({
-              query: GET_ALL_TODOS,
-              data: { allTodos: {...allTodos, nodes: newNodes }}
-            });
-          }}
-        >
-          {(newTodo, { data, loading, error }) => (
-            <Zoom
-              in={true}
-            >
+      <Mutation
+        mutation={NEW_TODO}
+        update={(cache, { data: { createtodo: { todo } } }) => {
+          const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
+          const newNodes = allTodos.nodes.concat([todo]);
+          cache.writeQuery({
+            query: GET_ALL_TODOS,
+            data: { allTodos: { ...allTodos, nodes: newNodes } }
+          });
+        }}
+      >
+        {(newTodo, { data, loading, error }) => (
+          <Zoom in={true}>
             <Button
               variant="fab"
               color="primary"
@@ -56,9 +55,9 @@ class NewTodoButton extends Component {
             >
               <AddIcon />
             </Button>
-            </Zoom>
-          )}
-        </Mutation>
+          </Zoom>
+        )}
+      </Mutation>
     );
   }
 }
