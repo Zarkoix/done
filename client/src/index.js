@@ -48,7 +48,6 @@ ReactDOM.render(
               Boolean(jwtFromCache()) ? <Redirect to="/Today" /> : <Splash />
             }
           />
-          <Route path="/About" component={About} />
           <Route path="/Signup" component={Signup} />
           <Route path="/Login" component={Login} />
           <Route path="/Settings" component={withNavigation(Settings)} />
