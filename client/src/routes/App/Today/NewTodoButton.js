@@ -15,6 +15,7 @@ const NEW_TODO = gql`
         id
         headline
         completed
+        doWhenDate
       }
     }
   }
@@ -29,6 +30,10 @@ const styles = theme => ({
 });
 
 class NewTodoButton extends Component {
+  handleNewTodo = newTodo => {
+    newTodo();
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -50,7 +55,7 @@ class NewTodoButton extends Component {
               color="primary"
               aria-label="Add"
               className={classes.fab}
-              onClick={newTodo}
+              onClick={() => this.handleNewTodo(newTodo)}
             >
               <AddIcon />
             </Button>
