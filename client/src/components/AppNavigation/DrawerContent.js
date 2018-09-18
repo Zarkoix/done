@@ -14,11 +14,26 @@ import CalendarIcon from "@material-ui/icons/CalendarViewDay";
 import ProjectsIcon from "@material-ui/icons/Dashboard";
 
 const routes = {
-  Today: <TodayIcon />,
-  Inbox: <InboxIcon />,
-  Upcoming: <CalendarIcon />,
-  Projects: <ProjectsIcon />,
-  Tags: <LabelIcon />
+  Today: {
+    icon: <TodayIcon />,
+    disabled: false
+  },
+  Inbox: {
+    icon: <InboxIcon />,
+    disabled: false
+  },
+  Upcoming: {
+    icon: <CalendarIcon />,
+    disabled: true
+  },
+  Projects: {
+    icon: <ProjectsIcon />,
+    disabled: true
+  },
+  Tags: {
+    icon: <LabelIcon />,
+    disabled: true
+  }
 };
 
 class DrawerContent extends Component {
@@ -35,12 +50,13 @@ class DrawerContent extends Component {
         {Object.keys(routes).map(e => (
           <ListItem
             button
+            disabled={routes[e].disabled}
             component={Link}
             to={"/" + e}
             key={e}
             selected={this.props.location.pathname === "/" + e}
           >
-            <ListItemIcon>{routes[e]}</ListItemIcon>
+            <ListItemIcon>{routes[e].icon}</ListItemIcon>
             <ListItemText primary={e} />
           </ListItem>
         ))}
