@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 
 import Todo from "../../../components/Todo";
-import NewTodoButton from "./NewTodoButton.js";
+import NewTodoTodayButton from "./NewTodoTodayButton.js";
 
 import { GET_ALL_TODOS } from "../../../queries";
 
@@ -35,7 +35,7 @@ class Today extends Component {
               .map((data, i) => <Todo key={i} id={data.id} />);
           }}
         </Query>
-        <NewTodoButton />
+        <NewTodoTodayButton />
       </div>
     );
   }

@@ -7,10 +7,12 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
 import { GET_ALL_TODOS } from "../../../queries";
+import moment from "moment";
+import { getUuid } from "../../../auth.js";
 
-const NEW_TODO = gql`
-  mutation NewTodo {
-    createtodo(input: {}) {
+const NEW_TODO_WITH_DO_DATE = gql`
+  mutation NewTodo($authorid: UUID!, $date: Date!) {
+    createTodo(input: { todo: { authorId: $authorid, doWhenDate: $date } }) {
       todo {
         id
         headline
@@ -31,15 +33,20 @@ const styles = theme => ({
 
 class NewTodoButton extends Component {
   handleNewTodo = newTodo => {
-    newTodo();
+    newTodo({
+      variables: {
+        authorid: getUuid(),
+        date: moment().format("YYYY-MM-DD")
+      }
+    });
   };
 
   render() {
     const { classes } = this.props;
     return (
       <Mutation
-        mutation={NEW_TODO}
-        update={(cache, { data: { createtodo: { todo } } }) => {
+        mutation={NEW_TODO_WITH_DO_DATE}
+        update={(cache, { data: { createTodo: { todo } } }) => {
           const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
           const newNodes = allTodos.nodes.concat([todo]);
           cache.writeQuery({
