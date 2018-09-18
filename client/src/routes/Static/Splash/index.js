@@ -9,11 +9,12 @@ import { jwtFromCache } from "../../../auth.js";
 
 import { Link } from "react-router-dom";
 
-// "linear-gradient(150deg,#53f 15%,#05d5ff 70%,#a6ffcb 94%)",
 const styles = theme => ({
   root: {
     background: theme.palette.background.default,
-    height: "100%"
+    height: "100%",
+    overflowX: "hidden",
+    position: "relative"
   },
   header: {
     height: "auto",
@@ -26,7 +27,7 @@ const styles = theme => ({
     overflow: "hidden",
     position: "absolute",
     background: theme.palette.primary.main,
-    transform: "skewY(-12deg)",
+    // transform: "skewY(-12deg)",
     transformOrigin: 0
   },
   toolbar: {
@@ -38,7 +39,8 @@ const styles = theme => ({
   },
   hero: {
     zIndex: 2,
-    position: "relative"
+    position: "relative",
+    boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
   },
   intro: {
     color: "white",
@@ -61,8 +63,11 @@ const styles = theme => ({
     zIndex: 3
   },
   render: {
-    transform: "translateY(-40%) translateX(40%)",
-    float: "right",
+    // transform: "translateY(-40%) translateX(40%)",
+    position: "absolute",
+    zIndex: 4,
+    top: "15%",
+    left: "50%",
     height: "500px",
     width: "auto"
   }
@@ -121,9 +126,8 @@ export default withStyles(styles)(props => {
           </div>
         </div>
       </header>
-      <main className={classes.main}>
-        <img className={classes.render} src="/splashRender.png" />
-      </main>
+      <img className={classes.render} src="/splashRender.png" />
+      <main className={classes.main} />
       <footer />
     </div>
   );
