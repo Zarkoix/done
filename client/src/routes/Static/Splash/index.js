@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -59,6 +60,12 @@ const styles = theme => ({
     position: "relative",
     zIndex: 3
   },
+  buildNoticePaper: {
+    maxWidth: "50%",
+    margin: "16px",
+    padding: "8px"
+  },
+  buildNoticeText: {},
   render: {
     // transform: "translateY(-40%) translateX(40%)",
     position: "absolute",
@@ -124,7 +131,22 @@ export default withStyles(styles)(props => {
         </div>
       </header>
       <img className={classes.render} src="/splashRender.png" alt="UX Render" />
-      <main className={classes.main} />
+      <main className={classes.main}>
+        <Paper className={classes.buildNoticePaper}>
+          <Typography color="textPrimary" variant="headline">
+            Pre-Alpha - build 1
+          </Typography>
+          <Typography
+            color="textPrimary"
+            variant="body1"
+            className={classes.buildNoticeText}
+          >
+            Passwords are hashed and salted, but I would <b>not</b> recommend
+            reusing a password. Data is <b>not</b> encrypted. DO NOT STORE
+            sensitive material
+          </Typography>
+        </Paper>
+      </main>
       <footer />
     </div>
   );
