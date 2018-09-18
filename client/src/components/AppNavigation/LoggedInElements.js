@@ -9,7 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { ApolloConsumer } from "react-apollo";
 
-import { jwtClearCache } from "../../auth.js";
+import { logout } from "../../auth.js";
 
 const styles = theme => ({
   gutterRight: {
@@ -35,7 +35,7 @@ class LoggedInElements extends Component {
     this.setState({ anchorEl: null });
 
     // clear localStorage
-    jwtClearCache();
+    logout();
 
     // clear local state
     client.resetStore();

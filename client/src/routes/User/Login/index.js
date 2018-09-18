@@ -19,7 +19,7 @@ import { withRouter } from "react-router-dom";
 
 import { Mutation } from "react-apollo";
 
-import { jwtToCache, AUTHENTICATE } from "../../../auth.js";
+import { login, AUTHENTICATE } from "../../../auth.js";
 
 const styles = theme => ({
   layout: {
@@ -92,7 +92,7 @@ class SignIn extends Component {
                       }
                     });
                     if (data.authenticate.jwtToken !== null) {
-                      jwtToCache(data.authenticate.jwtToken);
+                      login(data.authenticate.jwtToken);
                       this.props.history.push("/");
                     } else {
                       // TODO: throw error

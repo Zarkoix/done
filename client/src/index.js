@@ -26,12 +26,12 @@ import Settings from "./routes/User/Settings";
 import Today from "./routes/App/Today";
 import Inbox from "./routes/App/Inbox";
 
-import { jwtFromCache } from "./auth.js";
+import { isLoggedIn, getJwt } from "./auth.js";
 
 const client = new ApolloClient({
   uri: "/graphql",
   request: async operation => {
-    const token = jwtFromCache();
+    const token = getJwt();
     if (token) {
       operation.setContext({
         headers: {
@@ -51,7 +51,7 @@ ReactDOM.render(
             exact
             path="/"
             render={props =>
-              Boolean(jwtFromCache()) ? <Redirect to="/Today" /> : <Splash />
+              isLoggedIn() ? <Redirect to="/Today" /> : <Splash />
             }
           />
           <Route path="/Signup" component={withStaticNavigation(Signup)} />

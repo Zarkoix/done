@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 
 import LoggedOutElements from "../../../components/StaticNavigation/LoggedOutElements.js";
-import { jwtFromCache } from "../../../auth.js";
 
 import { Link } from "react-router-dom";
 
