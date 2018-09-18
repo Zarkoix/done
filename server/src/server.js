@@ -32,13 +32,13 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 logger.info("Server is starting up");
+logger.info("Environment " + process.env.NODE_ENV)
 const app = express();
 app.use(morgan("tiny"));
 
 let rds = `postgres://graphile:postgraphile@${
   process.env.DB_HOST
 }:${process.env.DB_PORT}/${process.env.DB_NAME}`;
-console.log(rds);
 let schema = ["done_app", "done_app_public"];
 
 app.use(
@@ -46,7 +46,7 @@ app.use(
     jwtSecret: process.env.JWT_SECRET,
     pgDefaultRole: "default_user",
     jwtPgTypeIdentifier: "done_app_public.jwt_token",
-    watchPg: true,
+    watchPg: process.env.NODE_ENV !== "production",
     graphiql: process.env.NODE_ENV !== "production",
     disableDefaultMutations: false
   })
