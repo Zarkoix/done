@@ -25,7 +25,7 @@ const styles = theme => ({
   }
 });
 
-class Headline extends Component {
+class ExpandedViewHeadline extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -73,10 +73,10 @@ class Headline extends Component {
   }
 }
 
-Headline.propTypes = {
+ExpandedViewHeadline.propTypes = {
   classes: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
   text: PropTypes.string
 };
 
-export default withStyles(styles)(Headline);
+export default withStyles(styles)(ExpandedViewHeadline);

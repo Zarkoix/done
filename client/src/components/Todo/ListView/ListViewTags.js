@@ -2,31 +2,36 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import Tag from "../Tag";
+import Tag from "../../Tag";
 
 const styles = theme => ({
-
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  }
 });
 
-class Tags extends Component {
+class ListViewTags extends Component {
   constructor(props) {
     super();
   }
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
-      <React.Fragment>
+      <div className={classes.container}>
         <Tag title="Red" color="#ffb3ba" />
         <Tag title="Orange" color="#ffdfba" />
         <Tag title="+3 more" color="#d8d8d8" />
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-Tags.propTypes = {
+ListViewTags.propTypes = {
   classes: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(Tags);
+export default withStyles(styles)(ListViewTags);

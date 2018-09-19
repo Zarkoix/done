@@ -4,29 +4,19 @@ import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import Body from "./Body.js";
+import ExpandedViewHeadline from "./ExpandedViewHeadline.js";
+import Notes from "./Notes.js";
+import ExpandedViewTags from "./ExpandedViewTags";
 import ActionTray from "./ActionTray";
-import Tag from "../Tag";
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
     todoById(id: $id) {
       id
       body
+      headline
       doWhenDate
       doWhenTime
-    }
-  }
-`;
-
-export const SET_COMPLETED = gql`
-  mutation setCompleted($id: Int!, $completed: Boolean!) {
-    updateTodoById(input: { id: $id, todoPatch: { completed: $completed } }) {
-      todo {
-        id
-        completed
-        body
-      }
     }
   }
 `;
@@ -36,9 +26,6 @@ const styles = theme => ({
   body: {
     lineHeight: "14px",
     display: "block"
-  },
-  tagsContainer: {
-    marginBottom: "8px"
   }
 });
 
@@ -63,17 +50,12 @@ class ExpandedContent extends Component {
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return `Error!: ${error}`;
-          let { body } = data.todoById;
+          let { body, headline } = data.todoById;
           return (
             <div className={classes.content}>
-              <Body id={this.props.id} text={body} />
-              <div className={classes.tagsContainer}>
-                <Tag title="Red" showDelete color="#ffb3ba" />
-                <Tag title="Orange" showDelete color="#ffdfba" />
-                <Tag title="Yellow" showDelete color="#ffffba" />
-                <Tag title="Green" showDelete color="#baffc9" />
-                <Tag title="Blue" showDelete color="#bae1ff" />
-              </div>
+              <ExpandedViewHeadline id={this.props.id} text={headline} />
+              <Notes id={this.props.id} text={body} />
+              <ExpandedViewTags id={this.props.id} />
               <ActionTray id={this.props.id} />
             </div>
           );

@@ -1,43 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import withWidth from "@material-ui/core/withWidth";
-import Checkbox from "@material-ui/core/Checkbox";
-import { Query, Mutation } from "react-apollo";
-import gql from "graphql-tag";
 import classNames from "classnames";
+import { withStyles } from "@material-ui/core/styles";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import withWidth from "@material-ui/core/withWidth";
 
-import IconButton from "@material-ui/core/IconButton";
-import DownIcon from "@material-ui/icons/KeyboardArrowDown";
-import UpIcon from "@material-ui/icons/KeyboardArrowUp";
-
-import Headline from "./Headline.js";
-import ExpandedContent from "./ExpandedContent.js";
-import Tags from "./Tags.js"
-
-const GET_TODO_DATA = gql`
-  query getTodoData($id: Int!) {
-    todoById(id: $id) {
-      headline
-      completed
-      id
-      body
-      doWhenDate
-      doWhenTime
-    }
-  }
-`;
-
-export const SET_COMPLETED = gql`
-  mutation setCompleted($id: Int!, $completed: Boolean!) {
-    updateTodoById(input: { id: $id, todoPatch: { completed: $completed } }) {
-      todo {
-        id
-        completed
-      }
-    }
-  }
-`;
+import ListView from "./ListView";
+import ExpandedView from "./ExpandedView";
 
 const styles = theme => ({
   paper: {
@@ -46,148 +15,97 @@ const styles = theme => ({
     borderRadius: "5px",
     transition: "opacity 0.2s, box-shadow 0.2s, background-color 0.2s ease-in",
     "&:hover": {
-      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
       backgroundColor: theme.palette.background.paper,
       opacity: "1 !important"
     }
   },
-  expandButton: {
-    transition: "opacity ease-in 0.2s"
+  paperSelected: {
+    opacity: "1 !important",
+    backgroundColor: theme.palette.background.paper,
   },
-  topBar: {
-    display: "flex",
-    flexDirection: "row",
-    padding: theme.spacing.unit / 2 + "px",
-    paddingLeft: 0
-  },
-  expandedContent: {
-    padding: theme.spacing.unit + "px",
-    paddingTop: 0
-  },
-  headlineContent: {
-    lineHeight: "48px",
-    display: "inline",
-    flexGrow: 1
-  },
-  headlineTags: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center"
+  paperExpanded: {
+    backgroundColor: theme.palette.background.paper,
+    opacity: "1 !important",
+    boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
   }
 });
 
-class Todo extends Component {
+class ToDo extends Component {
   constructor() {
     super();
     this.state = {
-      expanded: false,
-      hover: false
+      selected: false,
+      expanded: false
     };
   }
 
-  toggleExpanded = () =>
+  canSelect = () => {
+    return !this.state.expanded;
+  };
+
+  handleSelect = () => {
+    if (this.canSelect()) {
+      this.setState({
+        selected: true,
+        expanded: false
+      });
+    }
+  };
+
+  toggleExpand = () => {
     this.setState({
+      selected: false,
       expanded: !this.state.expanded
     });
+  };
 
-  handleHover = hover => {
+  handleClickAway = () => {
     this.setState({
-      hover: hover
+      selected: false
+    });
+  };
+
+  calculateClasses = classes => {
+    return classNames({
+      [classes.paper]: true,
+      [classes.paperSelected]: this.state.selected,
+      [classes.paperExpanded]: this.state.expanded
     });
   };
 
   render() {
-    const { classes, width } = this.props;
-    const isDense = width === "xs";
+    const { classes } = this.props;
     return (
-      <Query query={GET_TODO_DATA} variables={{ id: this.props.id }}>
-        {({ loading, error, data }) => {
-          if (loading) return null;
-          if (error) return `Error!: ${error}`;
-          const { headline, completed } = data.todoById;
-          const stylesFromExpanded = this.state.expanded
-            ? {
-                boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
-                backgroundColor: this.props.theme.palette.background.paper,
-                opacity: 1
-              }
-            : {};
-          const stylesFromCompleted = completed ? { opacity: 0.5 } : {};
-          return (
-            <div
-              className={classes.paper}
-              style={{ ...stylesFromCompleted, ...stylesFromExpanded }}
-              onMouseEnter={() => this.handleHover(true)}
-              onMouseLeave={() => this.handleHover(false)}
-            >
-              <div className={classes.topBar}>
-                <Mutation mutation={SET_COMPLETED}>
-                  {(setCompleted, { data, loading, error }) => (
-                    <Checkbox
-                      checked={completed}
-                      onClick={e => {
-                        e.stopPropagation();
-                        setCompleted({
-                          variables: {
-                            id: this.props.id,
-                            completed: !completed
-                          },
-                          optimisticResponse: {
-                            updateTodoById: {
-                              __typename: "UpdateTodoPayload",
-                              todo: {
-                                id: this.props.id,
-                                __typename: "todo",
-                                completed: !completed
-                              }
-                            }
-                          }
-                        });
-                      }}
-                    />
-                  )}
-                </Mutation>
-                <Headline
-                  text={headline}
-                  id={this.props.id}
-                  className={classes.headlineContent}
-                />
-                {!this.state.expanded && !isDense && (
-                  <div className={classes.headlineTags}>
-                    <Tags/>
-                  </div>
-                )}
-                <IconButton
-                  className={classNames(classes.button, classes.expandButton)}
-                  component="span"
-                  onClick={this.toggleExpanded}
-                  style={
-                    this.state.expanded || this.state.hover
-                      ? { opacity: "1" }
-                      : { opacity: "0" }
-                  }
-                >
-                  {this.state.expanded ? <UpIcon /> : <DownIcon />}
-                </IconButton>
-              </div>
-              {this.state.expanded ? (
-                <div className={classes.expandedContent}>
-                  <ExpandedContent id={this.props.id} />
-                </div>
-              ) : null}
-            </div>
-          );
-        }}
-      </Query>
+      <ClickAwayListener onClickAway={this.handleClickAway}>
+        <div
+          className={this.calculateClasses(classes)}
+          onClick={this.handleSelect}
+          onDoubleClick={this.toggleExpand}
+        >
+          {!this.state.expanded ? (
+            <ListView
+              id={this.props.id}
+              selected={this.state.selected}
+              isDense={false}
+            />
+          ) : (
+            <ExpandedView
+              id={this.props.id}
+              selected={this.state.selected}
+              isDense={false}
+            />
+          )}
+        </div>
+      </ClickAwayListener>
     );
   }
 }
 
-Todo.propTypes = {
+ToDo.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
   width: PropTypes.string.isRequired
 };
 
-export default withWidth()(withStyles(styles, { withTheme: true })(Todo));
+export default withWidth()(withStyles(styles, { withTheme: true })(ToDo));

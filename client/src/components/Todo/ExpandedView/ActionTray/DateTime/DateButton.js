@@ -7,7 +7,7 @@ import { Mutation } from "react-apollo";
 import { SET_DO_WHEN_DATE } from "./queries.js";
 import moment from "moment";
 
-import DateSelect from "../../../Select/DateSelect.js";
+import DateSelect from "../../../../Select/DateSelect.js";
 
 const styles = theme => ({
   buttonOutline: {

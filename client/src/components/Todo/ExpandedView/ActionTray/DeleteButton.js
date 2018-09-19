@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { GET_ALL_TODOS } from "../../../queries";
+import { GET_ALL_TODOS } from "../../../../queries";
 
 const DELTE_TODO = gql`
   mutation deleteTodo($id: Int!) {

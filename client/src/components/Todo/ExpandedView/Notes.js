@@ -26,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class Body extends Component {
+class Notes extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -73,10 +73,10 @@ class Body extends Component {
   }
 }
 
-Body.propTypes = {
+Notes.propTypes = {
   classes: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
   text: PropTypes.string
 };
 
-export default withStyles(styles)(Body);
+export default withStyles(styles)(Notes);
