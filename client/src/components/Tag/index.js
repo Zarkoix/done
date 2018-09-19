@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const styles = theme => ({
   tag: {
     display: "inline-block",
-    height: "24px",
     lineHeight: "24px",
     padding: "0px 8px",
     backgroundColor: theme.palette.background.default,
