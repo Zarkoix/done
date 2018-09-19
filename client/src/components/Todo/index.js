@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import withWidth from "@material-ui/core/withWidth";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
@@ -10,9 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DownIcon from "@material-ui/icons/KeyboardArrowDown";
 import UpIcon from "@material-ui/icons/KeyboardArrowUp";
 
-import ExpandedContent from "./ExpandedContent.js";
 import Headline from "./Headline.js";
-import Tag from "../Tag";
+import ExpandedContent from "./ExpandedContent.js";
+import Tags from "./Tags.js"
 
 const GET_TODO_DATA = gql`
   query getTodoData($id: Int!) {
@@ -96,7 +97,8 @@ class Todo extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, width } = this.props;
+    const isDense = width === "xs";
     return (
       <Query query={GET_TODO_DATA} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
@@ -150,11 +152,9 @@ class Todo extends Component {
                   id={this.props.id}
                   className={classes.headlineContent}
                 />
-                {!this.state.expanded && (
+                {!this.state.expanded && !isDense && (
                   <div className={classes.headlineTags}>
-                    <Tag title="Red" color="#ffb3ba" />
-                    <Tag title="Orange" color="#ffdfba" />
-                    <Tag title="+3 more" color="#d8d8d8" />
+                    <Tags/>
                   </div>
                 )}
                 <IconButton
@@ -186,7 +186,8 @@ class Todo extends Component {
 Todo.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  width: PropTypes.string.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(Todo);
+export default withWidth()(withStyles(styles, { withTheme: true })(Todo));

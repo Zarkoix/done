@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import CloseIcon from "@material-ui/icons/Close";
-import { Link } from "react-router-dom";
 
 const styles = theme => ({
   tag: {
@@ -21,7 +21,7 @@ const styles = theme => ({
   tagShowDelete: {
     transition: "padding-right 0.2s",
     "&:hover": {
-      paddingRight: "calc(1em + 14px)"
+      paddingRight: "calc(1em + 18px)"
     }
   },
   tagCloseBtn: {
@@ -64,8 +64,7 @@ class Tag extends Component {
   render() {
     const { classes, title, color, showDelete = false } = this.props;
     return (
-      <Link
-        to="/"
+      <ButtonBase
         className={classNames(classes.tag, {
           [`${classes.tagShowDelete}`]: showDelete
         })}
@@ -83,7 +82,7 @@ class Tag extends Component {
             <CloseIcon color="action" className={classes.tagCloseIcon} />
           </span>
         )}
-      </Link>
+      </ButtonBase>
     );
   }
 }
