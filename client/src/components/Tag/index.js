@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import CloseIcon from "@material-ui/icons/Close";
