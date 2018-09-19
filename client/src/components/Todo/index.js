@@ -12,6 +12,7 @@ import UpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 import ExpandedContent from "./ExpandedContent.js";
 import Headline from "./Headline.js";
+import Tag from "../Tag";
 
 const GET_TODO_DATA = gql`
   query getTodoData($id: Int!) {
@@ -66,6 +67,11 @@ const styles = theme => ({
     lineHeight: "48px",
     display: "inline",
     flexGrow: 1
+  },
+  headlineTags: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
@@ -144,6 +150,11 @@ class Todo extends Component {
                   id={this.props.id}
                   className={classes.headlineContent}
                 />
+                <div className={classes.headlineTags}>
+                  <Tag title="Red" color="#ffb3ba" />
+                  <Tag title="Orange" color="#ffdfba" />
+                  <Tag title="Yellow" color="#ffffba" />
+                </div>
                 <IconButton
                   className={classNames(classes.button, classes.expandButton)}
                   component="span"
