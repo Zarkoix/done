@@ -5,8 +5,6 @@ import List from "@material-ui/core/List";
 import ListItem from "./TagsNavigationItem";
 import produce from "immer";
 
-import Tag from "../../../components/Tag"
-
 const styles = theme => ({
   list: {
     borderRight: "1px solid " + theme.palette.divider,
