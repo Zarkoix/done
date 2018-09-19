@@ -16,7 +16,8 @@ const styles = theme => ({
     borderRadius: "16px",
     color: "inherit",
     textDecoration: "none",
-    height: theme.spacing.unit * 3
+    height: theme.spacing.unit * 3,
+    whiteSpace: "nowrap"
   },
   tagShowDelete: {
     transition: "padding-right 0.2s",

@@ -154,7 +154,7 @@ class Todo extends Component {
                   <div className={classes.headlineTags}>
                     <Tag title="Red" color="#ffb3ba" />
                     <Tag title="Orange" color="#ffdfba" />
-                    <Tag title="Yellow" color="#ffffba" />
+                    <Tag title="+3 more" color="#d8d8d8" />
                   </div>
                 )}
                 <IconButton
