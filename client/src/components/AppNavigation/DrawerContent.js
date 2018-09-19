@@ -32,7 +32,7 @@ const routes = {
   },
   Tags: {
     icon: <LabelIcon />,
-    disabled: true
+    disabled: false
   }
 };
 
