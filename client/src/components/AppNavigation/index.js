@@ -79,7 +79,9 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.default
+  },
+  mainPadding: {
     padding: theme.spacing.unit * 3
   }
 });
@@ -98,7 +100,7 @@ class AppNavigation extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, options: {withContentPadding=true} } = this.props;
 
     return (
       <div className={classes.root}>
@@ -153,10 +155,12 @@ class AppNavigation extends React.Component {
           </div>
           <DrawerContent />
         </Drawer>
-        <main className={classes.content}>
+        <div className={classes.content}>
           <div className={classes.toolbar} />
-          {this.props.children}
-        </main>
+          <main className={withContentPadding ? classes.mainPadding : ""}>
+            {this.props.children}
+          </main>
+        </div>
       </div>
     );
   }
@@ -165,16 +169,21 @@ class AppNavigation extends React.Component {
 AppNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  options: PropTypes.object,
   children: PropTypes.any
 };
+
+AppNavigation.defaultProps = {
+  options: {}
+}
 
 const CAppNavigation = withStyles(styles, { withTheme: true })(AppNavigation);
 
 export default CAppNavigation;
 
-export function withAppNavigation(Component) {
+export function withAppNavigation(Component, options) {
   return () => (
-    <CAppNavigation>
+    <CAppNavigation options={options}>
       <Component />
     </CAppNavigation>
   );

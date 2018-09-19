@@ -60,7 +60,10 @@ ReactDOM.render(
           <Route path="/Settings" component={withAppNavigation(Settings)} />
           <Route path="/Today" component={withAppNavigation(Today)} />
           <Route path="/Inbox" component={withAppNavigation(Inbox)} />
-          <Route path="/Tags" component={withAppNavigation(Tags)} />
+          <Route
+            path="/Tags"
+            component={withAppNavigation(Tags, { withContentPadding: false })}
+          />
           <Route component={withStaticNavigation(NoMatch)} />
         </Switch>
       </Router>
