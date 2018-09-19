@@ -7,7 +7,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import produce from "immer";
 
 const styles = theme => ({
-  root: {}
+  list: {
+    borderRight: "1px solid " + theme.palette.divider,
+    paddingTop: 0
+  },
+  listItem: {
+    backgroundColor: "transparent"
+  },
+  listItemSelected: {
+    backgroundColor: "transparent"
+  }
 });
 
 class TagsNavigation extends Component {
@@ -15,11 +24,26 @@ class TagsNavigation extends Component {
     super();
     this.state = {
       tags: {
-        red: true,
-        orange: false,
-        yellow: false,
-        green: false,
-        blue: false
+        red: {
+          selected: true,
+          color: "#ffb3ba"
+        },
+        orange: {
+          selected: false,
+          color: "#ffdfba"
+        },
+        yellow: {
+          selected: false,
+          color: "#ffffba"
+        },
+        green: {
+          selected: false,
+          color: "#baffc9"
+        },
+        blue: {
+          selected: false,
+          color: "#bae1ff"
+        }
       }
     };
   }
@@ -33,17 +57,40 @@ class TagsNavigation extends Component {
     );
   };
 
+  calculateTypographyProps = data => {
+    if (data.color) {
+      return {
+        style: {
+          color: "black"
+        }
+      };
+    } else {
+      return null;
+    }
+  };
+
   render() {
+    const { classes } = this.props;
     return (
-      <List component="nav">
-        {Object.entries(this.state.tags).map(([name, selected]) => (
+      <List component="nav" className={classes.list}>
+        {Object.entries(this.state.tags).map(([name, data]) => (
           <ListItem
+            style={{
+              backgroundColor: data.color
+            }}
             button
             key={name}
-            selected={selected}
+            selected={data.selected}
             onClick={() => this.handleListItemClick(name)}
+            classes={{
+              root: classes.listItem,
+              selected: classes.listItemSelected
+            }}
           >
-            <ListItemText primary={name} />
+            <ListItemText
+              primaryTypographyProps={this.calculateTypographyProps(data)}
+              primary={name}
+            />
           </ListItem>
         ))}
       </List>
