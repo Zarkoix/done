@@ -150,11 +150,13 @@ class Todo extends Component {
                   id={this.props.id}
                   className={classes.headlineContent}
                 />
-                <div className={classes.headlineTags}>
-                  <Tag title="Red" color="#ffb3ba" />
-                  <Tag title="Orange" color="#ffdfba" />
-                  <Tag title="Yellow" color="#ffffba" />
-                </div>
+                {!this.state.expanded && (
+                  <div className={classes.headlineTags}>
+                    <Tag title="Red" color="#ffb3ba" />
+                    <Tag title="Orange" color="#ffdfba" />
+                    <Tag title="Yellow" color="#ffffba" />
+                  </div>
+                )}
                 <IconButton
                   className={classNames(classes.button, classes.expandButton)}
                   component="span"

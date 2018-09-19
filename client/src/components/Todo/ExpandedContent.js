@@ -68,11 +68,11 @@ class ExpandedContent extends Component {
             <div className={classes.content}>
               <Body id={this.props.id} text={body} />
               <div className={classes.tagsContainer}>
-                <Tag title="Red" color="#ffb3ba" />
-                <Tag title="Orange" color="#ffdfba" />
-                <Tag title="Yellow" color="#ffffba" />
-                <Tag title="Green" color="#baffc9" />
-                <Tag title="Blue" color="#bae1ff" />
+                <Tag title="Red" showDelete color="#ffb3ba" />
+                <Tag title="Orange" showDelete color="#ffdfba" />
+                <Tag title="Yellow" showDelete color="#ffffba" />
+                <Tag title="Green" showDelete color="#baffc9" />
+                <Tag title="Blue" showDelete color="#bae1ff" />
               </div>
               <ActionTray id={this.props.id} />
             </div>

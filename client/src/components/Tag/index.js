@@ -16,8 +16,10 @@ const styles = theme => ({
     borderRadius: "16px",
     color: "inherit",
     textDecoration: "none",
+    height: theme.spacing.unit * 3
+  },
+  tagShowDelete: {
     transition: "padding-right 0.2s",
-    height: theme.spacing.unit * 3,
     "&:hover": {
       paddingRight: "calc(1em + 14px)"
     }
@@ -60,23 +62,27 @@ class Tag extends Component {
   }
 
   render() {
-    const { classes, title, color } = this.props;
+    const { classes, title, color, showDelete = false } = this.props;
     return (
       <Link
         to="/"
-        className={classes.tag}
+        className={classNames(classes.tag, {
+          [`${classes.tagShowDelete}`]: showDelete
+        })}
         onMouseEnter={() => this.setState({ hover: true })}
         onMouseLeave={() => this.setState({ hover: false })}
         style={color ? { backgroundColor: color } : {}}
       >
         {title}
-        <span
-          className={classNames(classes.tagCloseBtn, {
-            [`${classes.showTagCloseBtn}`]: this.state.hover
-          })}
-        >
-          <CloseIcon color="action" className={classes.tagCloseIcon} />
-        </span>
+        {showDelete && (
+          <span
+            className={classNames(classes.tagCloseBtn, {
+              [`${classes.showTagCloseBtn}`]: this.state.hover
+            })}
+          >
+            <CloseIcon color="action" className={classes.tagCloseIcon} />
+          </span>
+        )}
       </Link>
     );
   }
@@ -86,7 +92,8 @@ Tag.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   onMainClick: PropTypes.func,
-  onDeleteClick: PropTypes.func
+  onDeleteClick: PropTypes.func,
+  showDelete: PropTypes.bool
 };
 
 export default withStyles(styles)(Tag);
