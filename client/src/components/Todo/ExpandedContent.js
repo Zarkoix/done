@@ -5,7 +5,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 import Body from "./Body.js";
-import ActionTray from "./ActionTray"
+import ActionTray from "./ActionTray";
+import Tag from "../Tag";
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
@@ -35,6 +36,9 @@ const styles = theme => ({
   body: {
     lineHeight: "14px",
     display: "block"
+  },
+  tagsContainer: {
+    marginBottom: "8px"
   }
 });
 
@@ -63,6 +67,13 @@ class ExpandedContent extends Component {
           return (
             <div className={classes.content}>
               <Body id={this.props.id} text={body} />
+              <div className={classes.tagsContainer}>
+                <Tag title="Red" color="#ffb3ba" />
+                <Tag title="Orange" color="#ffdfba" />
+                <Tag title="Yellow" color="#ffffba" />
+                <Tag title="Green" color="#baffc9" />
+                <Tag title="Blue" color="#bae1ff" />
+              </div>
               <ActionTray id={this.props.id} />
             </div>
           );

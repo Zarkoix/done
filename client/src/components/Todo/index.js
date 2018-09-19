@@ -59,7 +59,8 @@ const styles = theme => ({
     paddingLeft: 0
   },
   expandedContent: {
-    padding: theme.spacing.unit + "px"
+    padding: theme.spacing.unit + "px",
+    paddingTop: 0
   },
   headlineContent: {
     lineHeight: "48px",
