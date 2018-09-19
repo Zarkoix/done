@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,12 @@ import LabelIcon from "@material-ui/icons/Label";
 import InboxIcon from "@material-ui/icons/Inbox";
 import CalendarIcon from "@material-ui/icons/CalendarViewDay";
 import ProjectsIcon from "@material-ui/icons/Dashboard";
+
+const styles = {
+  list: {
+    paddingTop: 0
+  }
+}
 
 const routes = {
   Today: {
@@ -45,8 +52,9 @@ class DrawerContent extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <List>
+      <List className={classes.list}>
         {Object.keys(routes).map(e => (
           <ListItem
             button
@@ -65,4 +73,4 @@ class DrawerContent extends Component {
   }
 }
 
-export default withRouter(DrawerContent);
+export default withRouter(withStyles(styles)(DrawerContent));
