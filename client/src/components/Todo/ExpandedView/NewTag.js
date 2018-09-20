@@ -18,14 +18,13 @@ class NewTag extends Component {
 
   render() {
     const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
     return (
       <React.Fragment>
         <IconTag ActionIcon={AddIcon} onClick={this.handleClick} />
         <AddTagMenu
           id={this.props.id}
           handleClose={this.handleClose}
-          anchorEl={this.state.anchorEl}
+          anchorEl={anchorEl}
         />
       </React.Fragment>
     );
