@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import DeleteButton from "./DeleteButton.js";
+import NewTagButton from "./NewTagButton.js";
 import DateTime from "./DateTime";
 
 const styles = theme => ({
@@ -27,6 +28,7 @@ class ActionTray extends Component {
     return (
       <div className={classes.tray}>
         <DateTime id={this.props.id} />
+        <NewTagButton id={this.props.id} />
         <div className={classes.spacer} />
         <DeleteButton id={this.props.id} />
       </div>
