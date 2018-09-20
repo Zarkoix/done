@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 
 import Tag from "../../Tag";
 import { GET_TODO_TAGS} from "../../Tag/queries.js"
