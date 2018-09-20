@@ -3,7 +3,24 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Tag from "../../Tag";
 import CloseIcon from "@material-ui/icons/Close";
-import NewTag from "./NewTag.js"
+import NewTag from "./NewTag.js";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
+const GET_TODO_TAGS = gql`
+  query getCompleteTodoData($id: Int!) {
+    todoById(id: $id) {
+      id
+      getTags {
+        nodes {
+          id
+          name
+          color
+        }
+      }
+    }
+  }
+`;
 
 const styles = theme => ({
   tagsContainer: {
@@ -13,16 +30,28 @@ const styles = theme => ({
 
 class ExpandedViewTags extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, id } = this.props;
     return (
-      <div className={classes.tagsContainer}>
-        <Tag title="Red" showAction ActionIcon={CloseIcon} color="#ffb3ba" />
-        <Tag title="Orange" showAction ActionIcon={CloseIcon} color="#ffdfba" />
-        <Tag title="Yellow" showAction ActionIcon={CloseIcon} color="#ffffba" />
-        <Tag title="Green" showAction ActionIcon={CloseIcon} color="#baffc9" />
-        <Tag title="Blue" showAction ActionIcon={CloseIcon} color="#bae1ff" />
-        <NewTag id={this.props.id} />
-      </div>
+      <Query query={GET_TODO_TAGS} variables={{ id: id }}>
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return `Error!: ${error}`;
+          let tags = data.todoById.getTags.nodes;
+          return (
+            <div className={classes.tagsContainer}>
+              {tags.map(tag => (
+                <Tag
+                  title={tag.name}
+                  showAction
+                  ActionIcon={CloseIcon}
+                  color={tag.color}
+                />
+              ))}
+              {tags.length > 1 && <NewTag id={this.props.id} />}
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
