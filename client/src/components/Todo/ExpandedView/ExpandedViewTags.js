@@ -21,7 +21,7 @@ class ExpandedViewTags extends Component {
         <Tag title="Yellow" showAction ActionIcon={CloseIcon} color="#ffffba" />
         <Tag title="Green" showAction ActionIcon={CloseIcon} color="#baffc9" />
         <Tag title="Blue" showAction ActionIcon={CloseIcon} color="#bae1ff" />
-        <NewTag />
+        <NewTag id={this.props.id} />
       </div>
     );
   }

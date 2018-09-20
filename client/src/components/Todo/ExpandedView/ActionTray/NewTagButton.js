@@ -1,58 +1,39 @@
-import React from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import TagIcon from "@material-ui/icons/Label";
-import { GET_ALL_TODOS } from "../../../../queries";
+import AddTagMenu from "../../../Tag/AddTagMenu";
 
-const ADD_TAG = gql`
-  mutation deleteTodo($id: Int!) {
-    deleteTodoById(input: { id: $id }) {
-      todo {
-        id
-      }
+class NewTagButton extends Component {
+  constructor() {
+    super();
+    this.state = {
+      anchorEl: null
     }
   }
-`;
+  handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
-// update={(
-//   cache,
-//   { // TODO: checkout apollo cache for tagmaps
-//     data: {
-//       deleteTodoById: {
-//         todo: { id }
-//       }
-//     }
-//   }
-// ) => {
-//   const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
-//   const newNodes = allTodos.nodes.filter(node => node.id !== id);
-//   cache.writeQuery({
-//     query: GET_ALL_TODOS,
-//     data: { allTodos: { ...allTodos, nodes: newNodes } }
-//   });
-// }}
+  handleClose = () => this.setState({ anchorEl: null });
 
-export default withStyles({})(({ classes, id }) => (
-  <Mutation
-    mutation={ADD_TAG}
-  >
-    {addTag => (
-      <IconButton
-        className={classes.button}
-        aria-label="New Tag"
-        onClick={() =>
-          addTag({
-            variables: {// TODO fix this
-              todoid: id,
-              tagid: id
-            }
-          })
-        }
-      >
-        <TagIcon />
-      </IconButton>
-    )}
-  </Mutation>
-));
+  render() {
+    const { classes, id } = this.props;
+    return (
+      <React.Fragment>
+        <IconButton
+          className={classes.button}
+          aria-label="New Tag"
+          onClick={this.handleClick}
+        >
+          <TagIcon />
+        </IconButton>
+        <AddTagMenu
+          id={this.props.id}
+          handleClose={this.handleClose}
+          anchorEl={this.state.anchorEl}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
+export default withStyles({})(NewTagButton);

@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+// import PropTypes from "prop-types";
 import AddIcon from "@material-ui/icons/Add";
 import IconTag from "../../Tag/IconTag.js";
-
-const options = ["red", "orange", "yellow", "green", "blue"];
+import AddTagMenu from "../../Tag/AddTagMenu";
 
 class NewTag extends Component {
   constructor() {
@@ -15,13 +12,9 @@ class NewTag extends Component {
     };
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+  handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  handleClose = () => this.setState({ anchorEl: null });
 
   render() {
     const { anchorEl } = this.state;
@@ -29,31 +22,16 @@ class NewTag extends Component {
     return (
       <React.Fragment>
         <IconTag ActionIcon={AddIcon} onClick={this.handleClick} />
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={this.handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: 400,
-              width: 200
-            }
-          }}
-        >
-          {options.map(option => (
-            <MenuItem
-              key={option}
-              selected={option === "Pyxis"}
-              onClick={this.handleClose}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu>
+        <AddTagMenu
+          id={this.props.id}
+          handleClose={this.handleClose}
+          anchorEl={this.state.anchorEl}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default NewTag
+// TODO: add proptypes
+
+export default NewTag;
