@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "./TagsNavigationItem";
 import produce from "immer";
 
 import Slide from "@material-ui/core/Slide";
@@ -46,12 +49,20 @@ const styles = theme => ({
     flexDirection: "row",
     height: "100%"
   },
+  navigation: {
+    display: "flex",
+    flexDirection: "column",
+    borderRight: "1px solid " + theme.palette.divider
+  },
   titleText: {
     marginBottom: theme.spacing.unit + "px"
   },
   content: {
     padding: theme.spacing.unit / 2,
     flexGrow: 1
+  },
+  editTagsBtn: {
+    borderRadius: 0
   }
 });
 
@@ -91,11 +102,15 @@ class Tags extends Component {
     return (
       <div className={classes.layout}>
         <Slide direction="right" in={true} mountOnEnter unmountOnExit>
-          <TagsNavigation
-            onTagClick={this.handleTagClick}
-            onTagDoubleClick={this.handleTagDoubleClick}
-            selected={selectedTags}
-          />
+          <div className={classes.navigation}>
+            <Button className={classes.editTagsBtn}>Edit Tags</Button>
+            <Divider />
+            <TagsNavigation
+              onTagClick={this.handleTagClick}
+              onTagDoubleClick={this.handleTagDoubleClick}
+              selected={selectedTags}
+            />
+          </div>
         </Slide>
         <div className={classes.content}>
           <Query query={GET_ALL_TODOS}>

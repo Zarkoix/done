@@ -5,12 +5,13 @@ import List from "@material-ui/core/List";
 import ListItem from "./TagsNavigationItem";
 import produce from "immer";
 import { Query } from "react-apollo";
-import { GET_ALL_TAGS } from "../../../components/Tag/queries.js"
+import { GET_ALL_TAGS } from "../../../components/Tag/queries.js";
 
 const styles = theme => ({
   list: {
-    borderRight: "1px solid " + theme.palette.divider,
-    paddingTop: 0
+    paddingTop: 0,
+    display: "flex",
+    flexDirection: "column"
   }
 });
 
