@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Tag from "../../Tag";
 import CloseIcon from "@material-ui/icons/Close";
 import NewTag from "./NewTag.js";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
 const GET_TODO_TAGS = gql`
@@ -22,6 +22,23 @@ const GET_TODO_TAGS = gql`
   }
 `;
 
+const TODO_DELETE_TAG = gql`
+  mutation todoAddTag($todoId: Int!, $tagId: Int!) {
+    todoDeleteTag(input: { todoId: $todoId, tagId: $tagId }) {
+      todo {
+        id
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
 const styles = theme => ({
   tagsContainer: {
     marginBottom: "8px"
@@ -29,6 +46,15 @@ const styles = theme => ({
 });
 
 class ExpandedViewTags extends Component {
+  handleClick = (tagId, deleteTag) => {
+    deleteTag({
+      variables: {
+        todoId: this.props.id,
+        tagId: tagId
+      }
+    });
+  };
+
   render() {
     const { classes, id } = this.props;
     return (
@@ -39,16 +65,23 @@ class ExpandedViewTags extends Component {
           let tags = data.todoById.getTags.nodes;
           return (
             <div className={classes.tagsContainer}>
-              {tags.map(tag => (
-                <Tag
-                  title={tag.name}
-                  key={tag.id}
-                  showAction
-                  ActionIcon={CloseIcon}
-                  color={tag.color}
-                />
-              ))}
-              {tags.length > 1 && <NewTag id={this.props.id} />}
+              <Mutation mutation={TODO_DELETE_TAG}>
+                {todoDeleteTag =>
+                  tags.map(tag => (
+                    <Tag
+                      title={tag.name}
+                      key={tag.id}
+                      showAction
+                      ActionIcon={CloseIcon}
+                      onActionClick={() =>
+                        this.handleClick(tag.id, todoDeleteTag)
+                      }
+                      color={tag.color}
+                    />
+                  ))
+                }
+              </Mutation>
+              {tags.length > 0 && <NewTag id={this.props.id} />}
             </div>
           );
         }}

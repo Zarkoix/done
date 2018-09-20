@@ -60,6 +60,16 @@ class Tag extends Component {
     };
   }
 
+  actionClick = (e) => {
+    e.stopPropagation();
+    this.props.onActionClick();
+  }
+
+  mainClick = (e) => {
+    e.stopPropagation();
+    this.props.onMainClick();
+  }
+
   render() {
     const { classes, title, color, showAction = false, ActionIcon } = this.props;
     return (
@@ -70,6 +80,7 @@ class Tag extends Component {
         onMouseEnter={() => this.setState({ hover: true })}
         onMouseLeave={() => this.setState({ hover: false })}
         style={color ? { backgroundColor: color } : {}}
+        onClick={this.mainClick}
       >
         {title}
         {showAction && (
@@ -77,6 +88,7 @@ class Tag extends Component {
             className={classNames(classes.tagActionBtn, {
               [`${classes.showTagActionBtn}`]: this.state.hover
             })}
+            onClick={this.actionClick}
           >
             <ActionIcon color="action" className={classes.tagActionIcon} />
           </span>

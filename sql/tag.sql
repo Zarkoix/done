@@ -65,7 +65,7 @@ returns done_app.todo as $$
 declare
 	todo done_app.todo;
 begin
-  insert into done_app.tagmap(todo_id, tag_id) VALUES (todo_id, tag_id);
+  insert into done_app.tagmap(todo_id, tag_id) VALUES ($1, $2);
   select * from done_app.todo where id = todo_id into todo;
   return todo;
 end;
@@ -79,8 +79,8 @@ returns done_app.todo as $$
 declare
 	todo done_app.todo;
 begin
-  delete from done_app.tagmap where todo_id = $1 and tag_id = $2;
-  select * from done_app.todo where id = todo_id into todo;
+  delete from done_app.tagmap where tagmap.todo_id = $1 and tagmap.tag_id = $2;
+  select * from done_app.todo where id = $1 into todo;
   return todo;
 end;
 $$ language plpgsql volatile;
