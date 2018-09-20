@@ -67,7 +67,9 @@ class Tag extends Component {
 
   mainClick = (e) => {
     e.stopPropagation();
-    this.props.onMainClick();
+    if (this.props.mainClick) {
+      this.props.onMainClick();
+    }
   }
 
   render() {
