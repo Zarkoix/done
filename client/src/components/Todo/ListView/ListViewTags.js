@@ -5,21 +5,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 import Tag from "../../Tag";
+import { GET_TODO_TAGS} from "../../Tag/queries.js"
 
-const GET_TODO_TAGS = gql`
-  query getCompleteTodoData($id: Int!) {
-    todoById(id: $id) {
-      id
-      getTags {
-        nodes {
-          id
-          name
-          color
-        }
-      }
-    }
-  }
-`;
 
 const styles = theme => ({
   container: {
