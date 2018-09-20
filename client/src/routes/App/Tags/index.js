@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
+import produce from "immer";
 
-import Slide from '@material-ui/core/Slide';
+import Slide from "@material-ui/core/Slide";
 
 import Todo from "../../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
@@ -27,12 +28,45 @@ const styles = theme => ({
 });
 
 class Tags extends Component {
+  constructor() {
+    super();
+    this.state = {
+      selectedTags: new Set()
+    };
+  }
+
+  handleTagClick = id => {
+    if (this.state.selectedTags.has(id)) {
+      this.setState(
+        produce(this.state, draftState => {
+          draftState.selectedTags.delete(id);
+        })
+      );
+    } else {
+      this.setState(
+        produce(this.state, draftState => {
+          draftState.selectedTags.add(id);
+        })
+      );
+    }
+  };
+
+  handleTagDoubleClick = id => {
+    this.setState({
+      selectedTags: new Set([id])
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.layout}>
-      <Slide direction="right" in={true} mountOnEnter unmountOnExit>
-          <TagsNavigation />
+        <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+          <TagsNavigation
+            onTagClick={this.handleTagClick}
+            onTagDoubleClick={this.handleTagDoubleClick}
+            selected={this.state.selectedTags}
+          />
         </Slide>
         <div className={classes.content}>
           <Query query={GET_ALL_TODOS}>

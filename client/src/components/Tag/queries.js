@@ -1,5 +1,17 @@
 import gql from "graphql-tag";
 
+const GET_ALL_TAGS = gql`
+  query {
+    allTags {
+      nodes {
+        name
+        color
+        id
+      }
+    }
+  }
+`;
+
 const GET_TODO_TAGS = gql`
   query getCompleteTodoData($id: Int!) {
     todoById(id: $id) {
@@ -32,4 +44,4 @@ const TODO_DELETE_TAG = gql`
   }
 `;
 
-export { GET_TODO_TAGS, TODO_DELETE_TAG };
+export { GET_TODO_TAGS, TODO_DELETE_TAG, GET_ALL_TAGS };

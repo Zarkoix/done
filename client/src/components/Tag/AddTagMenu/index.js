@@ -1,20 +1,8 @@
 import React from "react";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
-
 import AddTagMenu from "./AddTagMenu.js";
 
-const GET_ALL_TAGS = gql`
-  query {
-    allTags {
-      nodes {
-        name
-        color
-        id
-      }
-    }
-  }
-`;
+import { GET_ALL_TAGS } from "../queries.js"
 
 export default ({ ...props }) => (
   <Query query={GET_ALL_TAGS}>

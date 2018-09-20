@@ -4,78 +4,52 @@ import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "./TagsNavigationItem";
 import produce from "immer";
+import { Query } from "react-apollo";
+import { GET_ALL_TAGS } from "../../../components/Tag/queries.js"
 
 const styles = theme => ({
   list: {
     borderRight: "1px solid " + theme.palette.divider,
     paddingTop: 0
-  },
-  listItem: {
-    // backgroundColor: "transparent"
-  },
-  listItemSelected: {
-    // backgroundColor: "transparent"
   }
 });
 
 class TagsNavigation extends Component {
-  constructor() {
-    super();
-    this.state = {
-      tags: {
-        red: {
-          selected: true,
-          color: "#ffb3ba"
-        },
-        orange: {
-          selected: false,
-          color: "#ffdfba"
-        },
-        yellow: {
-          selected: false,
-          color: "#ffffba"
-        },
-        green: {
-          selected: false,
-          color: "#baffc9"
-        },
-        blue: {
-          selected: false,
-          color: "#bae1ff"
-        }
-      }
-    };
-  }
-
-  handleListItemClick = key => {
-    console.log('handling click for', key)
-    this.setState(
-      produce(this.state, draftState => {
-        draftState.tags[key].selected = !draftState.tags[key].selected;
-      })
-    );
-  };
-
   render() {
-    const { classes } = this.props;
+    const { id, classes, selected, onTagClick, onTagDoubleClick } = this.props;
     return (
       <List component="nav" className={classes.list}>
-        {Object.entries(this.state.tags).map(([name, data]) => (
-          <ListItem
-            button
-            key={name}
-            selected={data.selected}
-            selectedBackgroundColor={data.color}
-            textColor={data.color}
-            selectedTextColor="black"
-            onClick={() => this.handleListItemClick(name)}
-          >
-            {name}
-          </ListItem>
-        ))}
+        <Query query={GET_ALL_TAGS} variables={{ id: id }}>
+          {({ loading, error, data }) => {
+            if (loading) return null;
+            if (error) return `Error!: ${error}`;
+            let tags = data.allTags.nodes;
+            return tags.map(tag => (
+              <ListItem
+                button
+                key={tag.id}
+                selected={selected.has(tag.id)}
+                selectedBackgroundColor={tag.color}
+                textColor={tag.color}
+                selectedTextColor="black"
+                onClick={() => onTagClick(tag.id)}
+                onDoubleClick={() => onTagDoubleClick(tag.id)}
+              >
+                {tag.name}
+              </ListItem>
+            ));
+          }}
+        </Query>
       </List>
     );
   }
 }
+
+TagsNavigation.propTypes = {
+  classes: PropTypes.object.isRequired,
+  selected: PropTypes.instanceOf(Set).isRequired,
+  onTagClick: PropTypes.func.isRequired,
+  onTagDoubleClick: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(TagsNavigation);
