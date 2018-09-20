@@ -21,12 +21,12 @@ const styles = theme => ({
   },
   paperSelected: {
     opacity: "1 !important",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   paperExpanded: {
     backgroundColor: theme.palette.background.paper,
     opacity: "1 !important",
-    boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)",
+    boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
   }
 });
 
@@ -65,6 +65,21 @@ class ToDo extends Component {
     });
   };
 
+  // todo move to a switch
+  handleKeyDown = e => {
+    console.log(e)
+    if (e.keyCode === 13) {
+      this.setState({
+        selected: false,
+        expanded: true
+      });
+    } else if (e.keyCode === 27) {
+      this.setState({
+        expanded: false
+      });
+    }
+  };
+
   calculateClasses = classes => {
     return classNames({
       [classes.paper]: true,
@@ -81,6 +96,8 @@ class ToDo extends Component {
           className={this.calculateClasses(classes)}
           onClick={this.handleSelect}
           onDoubleClick={this.toggleExpand}
+          onKeyDown={this.handleKeyDown}
+          tabIndex="0"
         >
           {!this.state.expanded ? (
             <ListView
