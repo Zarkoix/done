@@ -27,7 +27,7 @@ class NewTagButton extends Component {
           <TagIcon />
         </IconButton>
         <AddTagMenu
-          id={this.props.id}
+          id={id}
           handleClose={this.handleClose}
           anchorEl={this.state.anchorEl}
         />
