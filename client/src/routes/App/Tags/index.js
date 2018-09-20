@@ -10,7 +10,35 @@ import Todo from "../../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 import TagsNavigation from "./TagsNavigation";
 
-import { GET_ALL_TODOS } from "../../../queries";
+import gql from "graphql-tag";
+
+export const GET_ALL_TODOS = gql`
+  query GetAllTodos {
+    allTodos {
+      nodes {
+        id
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
+function meetsFilters(todo, selectedTagIdSet) {
+  // check that every tag_id in `selectedTagIdSet` in in GET_TODO_TAGS
+  if (selectedTagIdSet.size === 0) return true;
+  let todoIds = new Set(todo.getTags.nodes.map(todo => todo.id));
+  let selectedIds = [...selectedTagIdSet];
+  for (let i = 0; i < selectedIds.length; i++) {
+    if (!todoIds.has(selectedIds[i])) return false;
+  }
+  return true;
+}
 
 const styles = theme => ({
   layout: {
@@ -59,13 +87,14 @@ class Tags extends Component {
 
   render() {
     const { classes } = this.props;
+    const { selectedTags } = this.state;
     return (
       <div className={classes.layout}>
         <Slide direction="right" in={true} mountOnEnter unmountOnExit>
           <TagsNavigation
             onTagClick={this.handleTagClick}
             onTagDoubleClick={this.handleTagDoubleClick}
-            selected={this.state.selectedTags}
+            selected={selectedTags}
           />
         </Slide>
         <div className={classes.content}>
@@ -73,9 +102,10 @@ class Tags extends Component {
             {({ loading, error, data }) => {
               if (loading) return null;
               if (error) return `Error!: ${error}`;
-              return data.allTodos.nodes.map((data, i) => (
-                <Todo key={i} id={data.id} />
-              ));
+              console.log(data.allTodos.nodes);
+              return data.allTodos.nodes
+                .filter(todo => meetsFilters(todo, selectedTags))
+                .map((data, i) => <Todo key={i} id={data.id} />);
             }}
           </Query>
           <NewTodoButton />
