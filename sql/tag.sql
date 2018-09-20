@@ -20,8 +20,8 @@ create policy enforce_authorship
   using ("author_id" = current_user_id())
   with check ("author_id" = current_user_id());
 
-drop function if exists done_app.createNewTag;
-create function done_app.createNewTag(name varchar(32), color char(7)) returns done_app.tag as $$
+drop function if exists done_app.create_new_tag;
+create function done_app.create_new_tag(name varchar(32), color char(7)) returns done_app.tag as $$
 declare
   newTag done_app.tag;
 begin
@@ -29,6 +29,8 @@ begin
   return newTag;
 end;
 $$ language plpgsql volatile;
+
+comment on function done_app.create_new_tag is 'Creates a new tag with the given name and color';
 
 ------------------------------------
 -- Tagmap SQL
@@ -41,12 +43,12 @@ create table done_app.tagmap (
   PRIMARY KEY (todo_id, tag_id)
 );
 
-comment on table done_app.tagmap is 'Table for tracking the tags on todos.';
+comment on table done_app.tagmap is E'@omit create,update,delete \nTable for tracking the tags on todos.';
 comment on column done_app.tagmap.todo_id is 'The id of the todo.';
 comment on column done_app.tagmap.tag_id is 'The id of the tag.';
 
-drop function if exists done_app.todo_getTags;
-create function done_app.todo_getTags(todo done_app.todo)
+drop function if exists done_app.todo_get_tags;
+create function done_app.todo_get_tags(todo done_app.todo)
 returns setof done_app.tag as $$
   select tag.*
   from done_app.tagmap
@@ -55,4 +57,32 @@ returns setof done_app.tag as $$
   where tagmap.todo_id = todo.id;
 $$ language sql stable;
 
-comment on function done_app.todo_getTags is 'Returns all the tags on the given todo';
+comment on function done_app.todo_get_tags is 'Returns all the tags on the given todo';
+
+drop function if exists done_app.todo_add_tag;
+create function done_app.todo_add_tag(todo_id integer, tag_id integer)
+returns done_app.todo as $$
+declare
+	todo done_app.todo;
+begin
+  insert into done_app.tagmap(todo_id, tag_id) VALUES (todo_id, tag_id);
+  select * from done_app.todo where id = todo_id into todo;
+  return todo;
+end;
+$$ language plpgsql volatile;
+
+comment on function done_app.todo_add_tag is 'Add tag to todo';
+
+drop function if exists done_app.todo_delete_tag;
+create function done_app.todo_delete_tag(todo_id integer, tag_id integer)
+returns done_app.todo as $$
+declare
+	todo done_app.todo;
+begin
+  delete from done_app.tagmap where todo_id = $1 and tag_id = $2;
+  select * from done_app.todo where id = todo_id into todo;
+  return todo;
+end;
+$$ language plpgsql volatile;
+
+comment on function done_app.todo_delete_tag is 'Delete tag from todo';

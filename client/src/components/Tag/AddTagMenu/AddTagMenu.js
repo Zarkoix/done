@@ -19,7 +19,7 @@ const defaultColor = "#ffd1dc";
 
 const CREATE_NEW_TAG = gql`
   mutation createnewtag($name: String!, $color: String!) {
-    createnewtag(input: { name: $name, color: $color }) {
+    createNewTag(input: { name: $name, color: $color }) {
       tag {
         name
         color
