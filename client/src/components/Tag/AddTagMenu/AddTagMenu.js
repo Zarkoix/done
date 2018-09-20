@@ -30,6 +30,23 @@ const CREATE_NEW_TAG = gql`
   }
 `;
 
+const TODO_ADD_TAG = gql`
+  mutation todoAddTag($todoId: Int!, $tagId: Int!) {
+    todoAddTag(input: { todoId: $todoId, tagId: $tagId }) {
+      todo {
+        id
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
 class AddTagMenu extends Component {
   constructor() {
     super();
@@ -46,7 +63,16 @@ class AddTagMenu extends Component {
 
   handleClose = () => this.props.handleClose();
 
-  handleClick = (e, tagId, addTag) => {};
+  handleClick = (e, tagId, addTag) => {
+    e.stopPropagation();
+    addTag({
+      variables: {
+        todoId: this.props.id,
+        tagId: tagId
+      }
+    })
+    this.handleClose();
+  };
 
   handleKeyDown = (e, createnewtag) => {
     e.stopPropagation();
@@ -92,11 +118,18 @@ class AddTagMenu extends Component {
             )}
           </Mutation>
         </ListItem>
-        {tags.map(tag => (
-          <ListItem key={tag.id} onClick={e => this.handleClick(e, tag.id)}>
-            {tag.name}
-          </ListItem>
-        ))}
+        <Mutation mutation={TODO_ADD_TAG}>
+          {todoAddTag =>
+            tags.map(tag => (
+              <ListItem
+                key={tag.id}
+                onClick={e => this.handleClick(e, tag.id, todoAddTag)}
+              >
+                {tag.name}
+              </ListItem>
+            ))
+          }
+        </Mutation>
       </Popover>
     );
   }

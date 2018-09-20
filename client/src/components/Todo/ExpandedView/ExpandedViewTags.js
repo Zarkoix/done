@@ -42,6 +42,7 @@ class ExpandedViewTags extends Component {
               {tags.map(tag => (
                 <Tag
                   title={tag.name}
+                  key={tag.id}
                   showAction
                   ActionIcon={CloseIcon}
                   color={tag.color}
