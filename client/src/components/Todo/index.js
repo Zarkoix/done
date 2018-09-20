@@ -67,7 +67,6 @@ class ToDo extends Component {
 
   // todo move to a switch
   handleKeyDown = e => {
-    console.log(e)
     if (e.keyCode === 13) {
       this.setState({
         selected: false,
