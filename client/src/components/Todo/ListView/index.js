@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -26,7 +27,7 @@ const styles = theme => ({
   }
 });
 
-const ListView = withStyles(styles)(({ classes, id, isDense }) => (
+const ListView = ({ classes, id, isDense }) => (
   <Query query={GET_TODO_LISTVIEW_DATA} variables={{ id: id }}>
     {({ loading, error, data }) => {
       if (loading) return null;
@@ -41,6 +42,12 @@ const ListView = withStyles(styles)(({ classes, id, isDense }) => (
       );
     }}
   </Query>
-));
+);
 
-export default ListView;
+ListView.propTypes = {
+  classes: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
+  isDense: PropTypes.bool
+};
+
+export default withStyles(styles)(ListView);

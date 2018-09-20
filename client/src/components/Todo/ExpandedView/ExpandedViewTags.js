@@ -10,10 +10,6 @@ const styles = theme => ({
 });
 
 class ExpandedViewTags extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
     return (

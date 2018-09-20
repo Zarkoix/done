@@ -13,10 +13,6 @@ const styles = theme => ({
 });
 
 class ListViewTags extends Component {
-  constructor(props) {
-    super();
-  }
-
   render() {
     const { classes } = this.props;
     return (

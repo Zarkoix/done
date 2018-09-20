@@ -1,7 +1,8 @@
 // import React, { Component } from "react";
 import React from "react";
 import PropTypes from "prop-types";
-import Typography from '@material-ui/core/Typography';
+import classNames from "classnames";
+import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -10,20 +11,29 @@ const styles = {
     display: "inline",
     flexGrow: 1,
     whiteSpace: "nowrap"
+  },
+  noHeadline: {
+    opacity: "0.8",
+    color: "grey"
   }
-}
-
-const ListViewHeadline = withStyles(styles)(({ text, classes }) => {
-  return (
-    <Typography variant="headline" className={classes.headline} >
-      { text }
-    </Typography>
-  );
-});
-
-ListViewHeadline.propTypes = {
-  classes: PropTypes.object.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
-export default ListViewHeadline;
+const ListViewHeadline = ({ text, classes }) => {
+  return (
+    <Typography
+      variant="headline"
+      className={classNames({
+        [classes.headline]: true,
+        [classes.noHeadline]: !Boolean(text)
+      })}
+    >
+      {text ? text : "Untitled Todo"}
+    </Typography>
+  );
+};
+
+ListViewHeadline.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ListViewHeadline);

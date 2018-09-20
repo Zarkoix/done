@@ -93,6 +93,7 @@ class ToDo extends Component {
               id={this.props.id}
               selected={this.state.selected}
               isDense={false}
+              onClose={this.toggleExpand}
             />
           )}
         </div>

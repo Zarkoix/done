@@ -21,7 +21,11 @@ const styles = theme => ({
     ...theme.typography.headline,
     border: "none",
     outline: "none",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    lineHeight: "48px",
+    display: "inline",
+    flexGrow: 1,
+    whiteSpace: "nowrap"
   }
 });
 
