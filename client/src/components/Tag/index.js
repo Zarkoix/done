@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import CloseIcon from "@material-ui/icons/Close";
 
 const styles = theme => ({
   tag: {
@@ -18,13 +17,13 @@ const styles = theme => ({
     height: theme.spacing.unit * 3,
     whiteSpace: "nowrap"
   },
-  tagShowDelete: {
+  tagShowAction: {
     transition: "padding-right 0.2s",
     "&:hover": {
       paddingRight: "calc(1em + 18px)"
     }
   },
-  tagCloseBtn: {
+  tagActionBtn: {
     opacity: "0.8",
     backgroundColor: theme.palette.background.paper,
     backgroundBlendMode: "darken",
@@ -42,11 +41,11 @@ const styles = theme => ({
       opacity: "1"
     }
   },
-  showTagCloseBtn: {
+  showTagActionBtn: {
     transform: "scale(1)",
     transition: "transform " + theme.transitions.duration.enteringScreen + "ms"
   },
-  tagCloseIcon: {
+  tagActionIcon: {
     opacity: "1",
     height: "20px",
     width: "20px"
@@ -62,24 +61,24 @@ class Tag extends Component {
   }
 
   render() {
-    const { classes, title, color, showDelete = false } = this.props;
+    const { classes, title, color, showAction = false, ActionIcon } = this.props;
     return (
       <ButtonBase
         className={classNames(classes.tag, {
-          [`${classes.tagShowDelete}`]: showDelete
+          [`${classes.tagShowAction}`]: showAction
         })}
         onMouseEnter={() => this.setState({ hover: true })}
         onMouseLeave={() => this.setState({ hover: false })}
         style={color ? { backgroundColor: color } : {}}
       >
         {title}
-        {showDelete && (
+        {showAction && (
           <span
-            className={classNames(classes.tagCloseBtn, {
-              [`${classes.showTagCloseBtn}`]: this.state.hover
+            className={classNames(classes.tagActionBtn, {
+              [`${classes.showTagActionBtn}`]: this.state.hover
             })}
           >
-            <CloseIcon color="action" className={classes.tagCloseIcon} />
+            <ActionIcon color="action" className={classes.tagActionIcon} />
           </span>
         )}
       </ButtonBase>
@@ -90,9 +89,11 @@ class Tag extends Component {
 Tag.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
   onMainClick: PropTypes.func,
-  onDeleteClick: PropTypes.func,
-  showDelete: PropTypes.bool
+  onActionClick: PropTypes.func,
+  showAction: PropTypes.bool,
+  ActionIcon: PropTypes.func
 };
 
 export default withStyles(styles)(Tag);

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Tag from "../../Tag";
+import CloseIcon from "@material-ui/icons/Close";
+import NewTag from "./NewTag.js"
 
 const styles = theme => ({
   tagsContainer: {
@@ -14,11 +16,12 @@ class ExpandedViewTags extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.tagsContainer}>
-        <Tag title="Red" showDelete color="#ffb3ba" />
-        <Tag title="Orange" showDelete color="#ffdfba" />
-        <Tag title="Yellow" showDelete color="#ffffba" />
-        <Tag title="Green" showDelete color="#baffc9" />
-        <Tag title="Blue" showDelete color="#bae1ff" />
+        <Tag title="Red" showAction ActionIcon={CloseIcon} color="#ffb3ba" />
+        <Tag title="Orange" showAction ActionIcon={CloseIcon} color="#ffdfba" />
+        <Tag title="Yellow" showAction ActionIcon={CloseIcon} color="#ffffba" />
+        <Tag title="Green" showAction ActionIcon={CloseIcon} color="#baffc9" />
+        <Tag title="Blue" showAction ActionIcon={CloseIcon} color="#bae1ff" />
+        <NewTag />
       </div>
     );
   }
