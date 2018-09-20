@@ -47,7 +47,7 @@ class IconTag extends Component {
   };
 
   render() {
-    const { classes, color, ActionIcon, onClick } = this.props;
+    const { classes, color, ActionIcon } = this.props;
     return (
       <ButtonBase
         className={classes.tag}
