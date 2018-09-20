@@ -27,7 +27,7 @@ const ListViewHeadline = ({ text, classes }) => {
         [classes.noHeadline]: !Boolean(text)
       })}
     >
-      {text ? text : "Untitled Todo"}
+      {text ? text : "Untitled To-Do"}
     </Typography>
   );
 };

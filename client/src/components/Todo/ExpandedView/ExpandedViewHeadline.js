@@ -56,7 +56,7 @@ class ExpandedViewHeadline extends Component {
         {setHeadline => (
           <input
             type="text"
-            placeholder="Title this todo!"
+            placeholder="Title this to-do!"
             maxLength="280"
             className={classNames(classes.input, this.props.className)}
             value={this.state.text}
