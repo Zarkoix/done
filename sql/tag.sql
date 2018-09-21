@@ -86,3 +86,16 @@ end;
 $$ language plpgsql volatile;
 
 comment on function done_app.todo_delete_tag is 'Delete tag from todo';
+
+drop function if exists done_app.todo_create_and_add_tag;
+create function done_app.todo_create_and_add_tag(todo_id integer, tag_name varchar(32), tag_color char(7))
+returns done_app.todo as $$
+declare
+	newTag done_app.tag;
+begin
+  newTag = done_app.create_new_tag(tag_name, tag_color);
+  return done_app.todo_add_tag(todo_id, newTag.id);
+end;
+$$ language plpgsql volatile;
+
+comment on function done_app.todo_create_and_add_tag is 'Creates a new tag and add to this todo';
