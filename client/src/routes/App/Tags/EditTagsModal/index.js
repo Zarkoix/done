@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import { Query } from "react-apollo";
 import { GET_ALL_TAGS } from "../../../../components/Tag/queries.js";
+import NewTagButton from "./NewTagButton.js"
 
 import EditTagsItem from "./EditTagsItem";
 
@@ -57,6 +58,7 @@ class EditTagsModal extends Component {
               }}
             </Query>
           </div>
+          <NewTagButton />
         </div>
       </Modal>
     );
