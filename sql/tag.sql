@@ -11,7 +11,7 @@ comment on column done_app.tag.author_id is 'The author of the tag.';
 comment on column done_app.tag.name is 'The name of the tag.';
 comment on column done_app.tag.color is 'The hexcode color of the tag.';
 
-alter table done_app.todo enable row level security;
+alter table done_app.tag enable row level security;
 
 drop policy if exists enforce_authorship on done_app.tag;
 create policy enforce_authorship
