@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import DeleteButton from "./DeleteButton"
+import DeleteButton from "./DeleteButton";
 
 const styles = theme => ({
   item: {
@@ -25,7 +25,8 @@ const styles = theme => ({
     width: "24px",
     height: "24px",
     borderRadius: "4px",
-    marginRight: "16px"
+    marginRight: "16px",
+    marginLeft: "8px"
   }
 });
 
@@ -69,7 +70,7 @@ class EditTagsItem extends Component {
           onChange={this.handleNameUpdate}
           className={classes.nameInput}
         />
-        <DeleteButton id={id}/>
+        <DeleteButton id={id} />
       </div>
     );
   }
@@ -81,7 +82,7 @@ EditTagsItem.propTypes = {
   name: PropTypes.string.isRequired,
   editName: PropTypes.func.isRequired,
   color: PropTypes.string.isRequired,
-  editColor: PropTypes.func.isRequired,
+  editColor: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(EditTagsItem);
