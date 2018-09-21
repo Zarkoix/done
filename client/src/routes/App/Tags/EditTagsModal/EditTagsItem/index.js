@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 import TagColorPicker from "./TagColorPicker.js";
-import DeleteButton from "./DeleteButton.js";
+import TagDeleteButton from "./TagDeleteButton.js";
 
 const styles = theme => ({
   item: {
@@ -57,7 +57,7 @@ class EditTagsItem extends Component {
           onChange={this.handleNameUpdate}
           className={classes.nameInput}
         />
-        <DeleteButton id={id} />
+        <TagDeleteButton id={id} />
       </div>
     );
   }
