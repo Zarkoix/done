@@ -7,6 +7,8 @@ import Popover from "@material-ui/core/Popover";
 // import List from "@material-ui/core/Menu";
 import ListItem from "@material-ui/core/MenuItem";
 
+import { GET_ALL_TAGS } from "../queries.js";
+
 const styles = {
   input: {
     backgroundColor: "transparent",
@@ -113,7 +115,43 @@ class AddTagMenu extends Component {
         }}
       >
         <ListItem>
-          <Mutation mutation={CREATE_AND_ADD_TAG}>
+          <Mutation
+            mutation={CREATE_AND_ADD_TAG}
+            update={(
+              cache,
+              {
+                data: {
+                  todoCreateAndAddTag: {
+                    todo: {
+                      getTags: { nodes }
+                    }
+                  }
+                }
+              }
+            ) => {
+              console.log(nodes);
+              // this is ineffecient as we update the store for every tag on
+              // the todo, not just the one that was added, but currently there
+              // is no way to know which that is
+              const { allTags } = cache.readQuery({ query: GET_ALL_TAGS });
+              const idFirstAllTags = allTags.nodes.reduce((obj, item) => {
+                obj[item["id"]] = item;
+                return obj;
+              }, {});
+              const idFirstNewTags = nodes.reduce((obj, item) => {
+                obj[item["id"]] = item;
+                return obj;
+              }, {});
+              const newNodes = Object.values({
+                ...idFirstAllTags,
+                ...idFirstNewTags
+              });
+              cache.writeQuery({
+                query: GET_ALL_TAGS,
+                data: { allTags: { ...allTags, nodes: newNodes } }
+              });
+            }}
+          >
             {createnewtag => (
               <input
                 className={classes.input}
