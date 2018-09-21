@@ -61,11 +61,6 @@ app.get("*", function(req, res) {
   );
 });
 
-
-app.get("/ping", function(req, res) {
-  return res.send("pong");
-});
-
 const port = process.env.PORT || 8080;
 app.listen(port);
 logger.info("Server listening on " + port);
