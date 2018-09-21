@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
+import gql from "graphql-tag";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import ListItem from "./TagsNavigationItem";
 import produce from "immer";
 
 import Slide from "@material-ui/core/Slide";
@@ -13,7 +13,7 @@ import Todo from "../../../components/Todo";
 import NewTodoButton from "./NewTodoButton.js";
 import TagsNavigation from "./TagsNavigation";
 
-import gql from "graphql-tag";
+import EditTagsModal from "./EditTagsModal";
 
 export const GET_ALL_TODOS = gql`
   query GetAllTodos {
@@ -70,7 +70,8 @@ class Tags extends Component {
   constructor() {
     super();
     this.state = {
-      selectedTags: new Set()
+      selectedTags: new Set(),
+      openEditModal: false
     };
   }
 
@@ -96,14 +97,31 @@ class Tags extends Component {
     });
   };
 
+  handleEditModalOpen = () => {
+    this.setState({
+      openEditModal: true
+    });
+  };
+
+  handleEditModalClose = () => {
+    this.setState({
+      openEditModal: false
+    });
+  };
+
   render() {
     const { classes } = this.props;
-    const { selectedTags } = this.state;
+    const { selectedTags, openEditModal } = this.state;
     return (
       <div className={classes.layout}>
         <Slide direction="right" in={true} mountOnEnter unmountOnExit>
           <div className={classes.navigation}>
-            <Button className={classes.editTagsBtn}>Edit Tags</Button>
+            <Button
+              className={classes.editTagsBtn}
+              onClick={this.handleEditModalOpen}
+            >
+              Edit Tags
+            </Button>
             <Divider />
             <TagsNavigation
               onTagClick={this.handleTagClick}
@@ -125,6 +143,10 @@ class Tags extends Component {
           </Query>
           <NewTodoButton />
         </div>
+        <EditTagsModal
+          open={openEditModal}
+          onClose={this.handleEditModalClose}
+        />
       </div>
     );
   }

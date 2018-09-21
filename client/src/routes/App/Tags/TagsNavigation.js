@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "./TagsNavigationItem";
-import produce from "immer";
 import { Query } from "react-apollo";
 import { GET_ALL_TAGS } from "../../../components/Tag/queries.js";
 
@@ -20,7 +19,7 @@ class TagsNavigation extends Component {
     const { id, classes, selected, onTagClick, onTagDoubleClick } = this.props;
     return (
       <List component="nav" className={classes.list}>
-        <Query query={GET_ALL_TAGS} variables={{ id: id }}>
+        <Query query={GET_ALL_TAGS}>
           {({ loading, error, data }) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
