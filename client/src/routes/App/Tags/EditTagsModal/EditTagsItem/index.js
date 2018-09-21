@@ -8,7 +8,7 @@ const styles = theme => ({
   item: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit,
-    marginBottom: theme.spacing.unit / 4,
+    marginBottom: theme.spacing.unit,
     borderRadius: "16px",
     display: "flex",
     flexDirection: "row",
