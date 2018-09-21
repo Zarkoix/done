@@ -134,16 +134,14 @@ export default withStyles(styles)(props => {
       <main className={classes.main}>
         <Paper className={classes.buildNoticePaper}>
           <Typography color="textPrimary" variant="headline">
-            Pre-Alpha - build 1
+            Pre-Alpha - build 2
           </Typography>
           <Typography
             color="textPrimary"
             variant="body1"
             className={classes.buildNoticeText}
           >
-            Passwords are hashed and salted, but I would <b>not</b> recommend
-            reusing a password. Data is <b>not</b> encrypted. DO NOT STORE
-            sensitive material
+            DO NOT STORE sensitive material, but enjoy the tags 🔥
           </Typography>
         </Paper>
       </main>
