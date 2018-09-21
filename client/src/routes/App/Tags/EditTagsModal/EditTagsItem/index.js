@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 import TagColorPicker from "./TagColorPicker.js";
+import TagName from "./TagName.js";
 import TagDeleteButton from "./TagDeleteButton.js";
 
 const styles = theme => ({
@@ -14,13 +15,6 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
-  },
-  nameInput: {
-    ...theme.typography.subheading,
-    background: "transparent",
-    outline: "none",
-    border: "none",
-    flexGrow: 1
   }
 });
 
@@ -50,13 +44,7 @@ class EditTagsItem extends Component {
     return (
       <div className={classes.item}>
         <TagColorPicker id={id} color={color}/>
-        <input
-          type="text"
-          maxLength="32"
-          value={name}
-          onChange={this.handleNameUpdate}
-          className={classes.nameInput}
-        />
+        <TagName id={id} name={name}/>
         <TagDeleteButton id={id} />
       </div>
     );
