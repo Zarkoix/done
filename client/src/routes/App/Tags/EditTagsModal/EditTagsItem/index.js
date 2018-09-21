@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import DeleteButton from "./DeleteButton";
+import TagColorPicker from "./TagColorPicker.js";
+import DeleteButton from "./DeleteButton.js";
 
 const styles = theme => ({
   item: {
@@ -20,13 +21,6 @@ const styles = theme => ({
     outline: "none",
     border: "none",
     flexGrow: 1
-  },
-  colorInput: {
-    width: "24px",
-    height: "24px",
-    borderRadius: "4px",
-    marginRight: "16px",
-    marginLeft: "8px"
   }
 });
 
@@ -34,8 +28,7 @@ class EditTagsItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: props.name,
-      color: props.color
+      name: props.name
     };
   }
 
@@ -52,17 +45,11 @@ class EditTagsItem extends Component {
   };
 
   render() {
-    const { classes, id } = this.props;
-    const { name, color } = this.state;
+    const { classes, id, color } = this.props;
+    const { name } = this.state;
     return (
       <div className={classes.item}>
-        <input
-          type="color"
-          name="color"
-          value={color}
-          onChange={this.handleColorUpdate}
-          className={classes.colorInput}
-        />
+        <TagColorPicker id={id} color={color}/>
         <input
           type="text"
           maxLength="32"
