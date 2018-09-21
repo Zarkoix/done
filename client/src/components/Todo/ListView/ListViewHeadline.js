@@ -10,7 +10,8 @@ const styles = {
     lineHeight: "48px",
     display: "inline",
     flexGrow: 1,
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    cursor: "pointer"
   },
   noHeadline: {
     opacity: "0.8",
