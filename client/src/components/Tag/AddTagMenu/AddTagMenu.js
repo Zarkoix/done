@@ -17,14 +17,20 @@ const styles = {
 
 const defaultColor = "#ffd1dc";
 
-const CREATE_NEW_TAG = gql`
-  mutation createnewtag($name: String!, $color: String!) {
-    createNewTag(input: { name: $name, color: $color }) {
-      tag {
-        name
-        color
+const CREATE_AND_ADD_TAG = gql`
+  mutation todoCreateAndAddTag($todoId: Int!, $name: String!, $color: String!) {
+    todoCreateAndAddTag(
+      input: { todoId: $todoId, tagName: $name, tagColor: $color }
+    ) {
+      todo {
         id
-        authorId
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
       }
     }
   }
@@ -70,7 +76,7 @@ class AddTagMenu extends Component {
         todoId: this.props.id,
         tagId: tagId
       }
-    })
+    });
     this.handleClose();
   };
 
@@ -80,7 +86,8 @@ class AddTagMenu extends Component {
       createnewtag({
         variables: {
           name: this.state.newTagText,
-          color: defaultColor
+          color: defaultColor,
+          todoId: this.props.id
         }
       });
       this.handleClose();
@@ -106,7 +113,7 @@ class AddTagMenu extends Component {
         }}
       >
         <ListItem>
-          <Mutation mutation={CREATE_NEW_TAG}>
+          <Mutation mutation={CREATE_AND_ADD_TAG}>
             {createnewtag => (
               <input
                 className={classes.input}
