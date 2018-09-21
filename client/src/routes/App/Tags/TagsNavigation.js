@@ -16,7 +16,7 @@ const styles = theme => ({
 
 class TagsNavigation extends Component {
   render() {
-    const { id, classes, selected, onTagClick, onTagDoubleClick } = this.props;
+    const { classes, selected, onTagClick, onTagDoubleClick } = this.props;
     return (
       <List component="nav" className={classes.list}>
         <Query query={GET_ALL_TAGS}>
