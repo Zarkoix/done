@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const SET_DO_WHEN = gql`
-  mutation setDoWhen($id: Int!, $doWhenDate: Date, $doWhenTime: Date) {
+  mutation setDoWhen($id: Int!, $doWhenDate: Date, $doWhenTime: Time) {
     updateTodoById(
       input: {
         id: $id
@@ -29,7 +29,7 @@ export const SET_DO_WHEN_DATE = gql`
 `;
 
 export const SET_DO_WHEN_TIME = gql`
-  mutation setDoWhen($id: Int!, $doWhenTime: Date) {
+  mutation setDoWhen($id: Int!, $doWhenTime: Time) {
     updateTodoById(input: { id: $id, todoPatch: { doWhenTime: $doWhenTime } }) {
       todo {
         id
