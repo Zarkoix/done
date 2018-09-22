@@ -8,17 +8,24 @@ import AddIcon from "@material-ui/icons/Add";
 import gql from "graphql-tag";
 import { GET_ALL_TODOS } from "../../../queries";
 
-const NEW_TODO = gql`
-  mutation NewTodo {
-    createtodo(input: {}) {
-      todo {
-        id
-        headline
-        completed
-        doWhenDate
+const NEW_TODO_WITH_TAGS = gql`
+mutation createTodoWithTags($tagIds: [Int]!){
+	todoCreateWithTags(input: {tagIds: $tagIds}) {
+    todo {
+      id
+      headline
+      completed
+      doWhenDate
+      getTags {
+        nodes {
+          name
+          id
+          color
+        }
       }
     }
   }
+}
 `;
 
 const styles = theme => ({
@@ -31,11 +38,11 @@ const styles = theme => ({
 
 class NewTodoButton extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, selectedTagIds } = this.props;
     return (
       <Mutation
-        mutation={NEW_TODO}
-        update={(cache, { data: { createtodo: { todo } } }) => {
+        mutation={NEW_TODO_WITH_TAGS}
+        update={(cache, { data: { todoCreateWithTags: { todo } } }) => {
           const { allTodos } = cache.readQuery({ query: GET_ALL_TODOS });
           const newNodes = allTodos.nodes.concat([todo]);
           cache.writeQuery({
@@ -44,14 +51,18 @@ class NewTodoButton extends Component {
           });
         }}
       >
-        {(newTodo, { data, loading, error }) => (
+        {(newTodoWithTags, { data, loading, error }) => (
           <Zoom in={true}>
             <Button
               variant="fab"
               color="primary"
               aria-label="Add"
               className={classes.fab}
-              onClick={newTodo}
+              onClick={() => newTodoWithTags({
+                variables: {
+                  tagIds: selectedTagIds
+                }
+              })}
             >
               <AddIcon />
             </Button>
@@ -63,7 +74,8 @@ class NewTodoButton extends Component {
 }
 
 NewTodoButton.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  selectedTagIds: PropTypes.arrayOf(PropTypes.number)
 };
 
 export default withStyles(styles)(NewTodoButton);

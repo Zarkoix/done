@@ -99,3 +99,21 @@ end;
 $$ language plpgsql volatile;
 
 comment on function done_app.todo_create_and_add_tag is 'Creates a new tag and add to this todo';
+
+drop function if exists done_app.todo_create_with_tags;
+create function done_app.todo_create_with_tags(tag_ids integer[])
+returns done_app.todo as $$
+declare
+	newTodo done_app.todo;
+	tag_id integer;
+begin
+  newTodo := done_app.createTodo();
+  FOREACH tag_id in array tag_ids
+  loop
+    newTodo = done_app.todo_add_tag(newTodo.id, tag_id);
+  end loop;
+  return newTodo;
+end;
+$$ language plpgsql volatile;
+
+comment on function done_app.todo_create_with_tags is 'Creates a new todo with the given tags';

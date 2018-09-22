@@ -20,6 +20,7 @@ export const GET_ALL_TODOS = gql`
     allTodos {
       nodes {
         id
+        doWhenDate
         getTags {
           nodes {
             id
@@ -141,7 +142,7 @@ class Tags extends Component {
                 .map((data, i) => <Todo key={i} id={data.id} />);
             }}
           </Query>
-          <NewTodoButton />
+          <NewTodoButton selectedTagIds={[...selectedTags]}/>
         </div>
         <EditTagsModal
           open={openEditModal}
