@@ -13,6 +13,23 @@ export const GET_ALL_TODOS = gql`
   }
 `;
 
+export const GET_ALL_TODOS_WITH_TAGS = gql`
+  query GetAllTodos {
+    allTodos {
+      nodes {
+        id
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_TODOS_FOR_DATE = gql`
   query GetTodosForDate($date: Date!) {
     allTodos(condition: { doWhenDate: $date }) {
