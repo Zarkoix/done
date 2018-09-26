@@ -59,7 +59,8 @@ class SignIn extends Component {
     super();
     this.state = {
       email: null,
-      password: null
+      password: null,
+      error: false
     };
   }
 
@@ -85,6 +86,9 @@ class SignIn extends Component {
                   className={classes.form}
                   onSubmit={async e => {
                     e.preventDefault();
+                    this.setState({
+                      error: false
+                    })
                     let { data } = await authenticate({
                       variables: {
                         email: this.state.email,
@@ -95,11 +99,18 @@ class SignIn extends Component {
                       login(data.authenticate.jwtToken);
                       this.props.history.push("/");
                     } else {
-                      // TODO: throw error
+                      this.setState({
+                        error: true
+                      })
                     }
                   }}
                 >
-                  <FormControl margin="normal" required fullWidth>
+                  <FormControl
+                    margin="normal"
+                    required
+                    fullWidth
+                    error={this.state.error}
+                  >
                     <InputLabel htmlFor="email">Email Address</InputLabel>
                     <Input
                       id="email"
@@ -111,7 +122,12 @@ class SignIn extends Component {
                       }
                     />
                   </FormControl>
-                  <FormControl margin="normal" required fullWidth>
+                  <FormControl
+                    margin="normal"
+                    required
+                    fullWidth
+                    error={this.state.error}
+                  >
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input
                       name="password"
