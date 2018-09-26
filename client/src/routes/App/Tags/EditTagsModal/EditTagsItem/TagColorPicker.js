@@ -20,7 +20,9 @@ const styles = theme => ({
     height: "24px",
     borderRadius: "4px",
     marginRight: "16px",
-    marginLeft: "8px"
+    marginLeft: "8px",
+    border: "none",
+    padding: "0"
   }
 });
 
@@ -34,21 +36,20 @@ class TagColorPicker extends Component {
             type="color"
             name="color"
             value={color}
-            onChange={(e) => {
+            onChange={e => {
               updateTagColor({
                 variables: {
                   tagId: id,
                   color: e.target.value
                 }
-              })
+              });
             }}
             className={classes.colorInput}
-
           />
         )}
       </Mutation>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(TagColorPicker)
+export default withStyles(styles)(TagColorPicker);
