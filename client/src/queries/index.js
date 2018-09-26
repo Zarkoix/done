@@ -1,5 +1,25 @@
 import gql from "graphql-tag";
 
+export const GET_COMPLETE_TODO_DATA = gql`
+  query GetAllTodos {
+    allTodos {
+      nodes {
+        id
+        headline
+        completed
+        doWhenDate
+        getTags {
+          nodes {
+            id
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_ALL_TODOS = gql`
   query GetAllTodos {
     allTodos {
