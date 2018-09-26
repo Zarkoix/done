@@ -1,28 +1,26 @@
 import React, { Component } from "react";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 import { ApolloConsumer } from "react-apollo";
 
-import { logout } from "../../auth.js";
+import { logout } from "../../../auth.js";
 
-const styles = theme => ({
-  gutterRight: {
-    marginRight: theme.spacing.unit + "px"
-  }
-});
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-class LoggedInElements extends Component {
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import SettingsIcon from "@material-ui/icons/Settings";
+
+class SettingsListItem extends Component {
   state = {
     anchorEl: null
   };
 
   handleMenu = event => {
+    console.log("handle menu called");
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -47,20 +45,16 @@ class LoggedInElements extends Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { classes } = this.props;
-
     return (
       <ApolloConsumer>
         {client => (
           <React.Fragment>
-            <IconButton
-              aria-owns={open ? "menu-appbar" : null}
-              aria-haspopup="true"
-              onClick={this.handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <ListItem button onClick={this.handleMenu}>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItem>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -86,7 +80,6 @@ class LoggedInElements extends Component {
                 Log Out
               </MenuItem>
             </Menu>
-            <div className={classes.gutterRight} />
           </React.Fragment>
         )}
       </ApolloConsumer>
@@ -94,4 +87,4 @@ class LoggedInElements extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(LoggedInElements));
+export default withRouter(SettingsListItem);

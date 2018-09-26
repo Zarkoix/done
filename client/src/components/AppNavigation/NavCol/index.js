@@ -14,11 +14,22 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import CalendarIcon from "@material-ui/icons/CalendarViewDay";
 import ProjectsIcon from "@material-ui/icons/Dashboard";
 
-const styles = {
+import SettingsListItem from "./SettingsListItem.js";
+
+const styles = theme => ({
   list: {
-    paddingTop: 0
+    height: "100%",
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: theme.palette.background.default,
+    borderRight: "1px solid " + theme.palette.divider,
+    display: "flex",
+    flexDirection: "column"
+  },
+  spacer: {
+    flexGrow: 1
   }
-}
+});
 
 const routes = {
   Today: {
@@ -43,7 +54,7 @@ const routes = {
   }
 };
 
-class DrawerContent extends Component {
+class NavCol extends Component {
   constructor() {
     super();
     this.state = {
@@ -68,9 +79,11 @@ class DrawerContent extends Component {
             <ListItemText primary={e} />
           </ListItem>
         ))}
+        <div className={classes.spacer} />
+        <SettingsListItem />
       </List>
     );
   }
 }
 
-export default withRouter(withStyles(styles)(DrawerContent));
+export default withRouter(withStyles(styles)(NavCol));
