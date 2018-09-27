@@ -41,6 +41,8 @@ class ExpandedViewHeadline extends Component {
     this.setState({ text: event.target.value });
   };
 
+  stopPropagation = event => event.stopPropagation();
+
   componentWillReceiveProps = nextProps => {
     if (nextProps.id !== this.props.id) {
       this.setState({
@@ -61,7 +63,8 @@ class ExpandedViewHeadline extends Component {
             className={classNames(classes.input, this.props.className)}
             value={this.state.text}
             onChange={this.handleChange}
-            onClick={e => e.stopPropagation()}
+            onClick={this.stopPropagation}
+            onDoubleClick={this.stopPropagation}
             onBlur={() => {
               setHeadline({
                 variables: {

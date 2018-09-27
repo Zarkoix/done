@@ -38,6 +38,8 @@ class Notes extends Component {
     this.setState({ text: event.target.value });
   };
 
+  stopPropagation = event => event.stopPropagation();
+
   componentWillReceiveProps = nextProps => {
     if (nextProps.id !== this.props.id) {
       this.setState({
@@ -57,7 +59,8 @@ class Notes extends Component {
             className={classes.textarea}
             value={this.state.text}
             onChange={this.handleChange}
-            onClick={e => e.stopPropagation()}
+            onClick={this.stopPropagation}
+            onDoubleClick={this.stopPropagation}
             onBlur={() => {
               setBody({
                 variables: {
