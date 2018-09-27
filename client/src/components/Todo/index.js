@@ -10,6 +10,7 @@ import ExpandedView from "./ExpandedView";
 
 const styles = theme => ({
   paper: {
+    outline: "none",
     height: "auto",
     overflow: "hidden",
     margin: theme.spacing.unit / 4 + "px " + theme.spacing.unit * 2 + "px",
@@ -38,15 +39,12 @@ class ToDo extends Component {
     this.state = {
       selected: false,
       expanded: false,
-      height: 56
     };
     this.todoContent = React.createRef();
   }
 
-  componentDidMount() {
-    const height = this.todoContent.current.clientHeight;
-    console.log(height);
-    this.setState({ height });
+  componentDidUpdate = (prevProps, prevState) => {
+
   }
 
   canSelect = () => {
@@ -54,7 +52,7 @@ class ToDo extends Component {
   };
 
   handleSelect = () => {
-    if (this.canSelect()) {
+    if (this.canSelect() && this.state.selected === false) {
       this.setState({
         selected: true,
         expanded: false
@@ -86,31 +84,20 @@ class ToDo extends Component {
   };
 
   expand = () => {
-    this.setState(
-      {
+    this.setState({
         selected: false,
         expanded: true
-      },
-      () => {
-        const height = this.todoContent.current.clientHeight;
-        console.log("expand", height);
-        this.setState({ height });
-      }
-    );
+      }, () => {
+        const expandedHeight = this.todoContent.current.clientHeight;
+        this.setState({ expandedHeight });
+      });
   };
 
   collapse = () => {
-    this.setState(
-      {
+    this.setState({
         selected: false,
         expanded: false
-      },
-      () => {
-        const height = this.todoContent.current.clientHeight;
-        console.log("collapse", height);
-        this.setState({ height });
-      }
-    );
+      });
   };
 
   calculateClasses = classes => {
@@ -120,6 +107,18 @@ class ToDo extends Component {
       [classes.paperExpanded]: this.state.expanded
     });
   };
+
+  calculateHeight = () => {
+    if (this.state.expanded) {
+      const calculatedHeight = this.state.expandedHeight
+      if (calculatedHeight && calculatedHeight !== 56) {
+        return this.todoContent.current.clientHeight
+      }
+      return '165px' // reasonable default while we calculate actual value
+    } else {
+      return '56px' // height of listView
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -131,7 +130,7 @@ class ToDo extends Component {
           onDoubleClick={this.toggleExpand}
           onKeyDown={this.handleKeyDown}
           tabIndex="0"
-          style={{ height: Math.max(this.state.height, 56) }}
+          style={{ height: this.calculateHeight()}}
         >
           <div ref={this.todoContent}>
             {!this.state.expanded ? (
