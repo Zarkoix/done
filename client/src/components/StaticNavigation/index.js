@@ -5,7 +5,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import LoggedOutElements from "./LoggedOutElements.js";
-import { isLoggedIn } from "../../auth.js";
 
 const styles = theme => ({
   root: {
@@ -54,7 +53,7 @@ const StaticNavigation = props => {
           >
             Done
           </Typography>
-          {isLoggedIn() && <LoggedOutElements />}
+          <LoggedOutElements />
         </Toolbar>
       </AppBar>
       <main className={classes.content}>

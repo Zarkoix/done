@@ -23,7 +23,7 @@ class LoggedOutElements extends Component {
       <React.Fragment>
         <Button
           variant="outlined"
-          color="inherit"
+          color="textPrimary"
           className={classes.button}
           component={Link}
           to={"Signup"}
@@ -31,7 +31,7 @@ class LoggedOutElements extends Component {
           Signup
         </Button>
         <Button
-          color="inherit"
+          color="textPrimary"
           className={classes.button}
           component={Link}
           to={"Login"}

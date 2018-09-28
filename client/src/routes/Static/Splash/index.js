@@ -24,7 +24,7 @@ const styles = theme => ({
     width: "100%",
     overflow: "hidden",
     position: "absolute",
-    background: theme.palette.primary.main,
+    background: theme.palette.background.paper,
     // transform: "skewY(-12deg)",
     transformOrigin: 0
   },
@@ -85,20 +85,23 @@ export default withStyles(styles)(props => {
         <div className={classes.slant} />
         <div className={classes.hero}>
           <Toolbar className={classes.toolbar}>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography variant="title" noWrap>
               Done
             </Typography>
             <div className={classes.spacer} />
             <Button
               variant="outlined"
-              color="inherit"
               className={classes.button}
               component={Link}
               to={"Signup"}
             >
               Signup
             </Button>
-            <Button className={classes.button} component={Link} to={"Login"}>
+            <Button
+              className={classes.button}
+              component={Link}
+              to={"Login"}
+            >
               Log in
             </Button>{" "}
           </Toolbar>
