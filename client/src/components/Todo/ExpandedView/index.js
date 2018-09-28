@@ -7,6 +7,8 @@ import gql from "graphql-tag";
 import IconButton from "@material-ui/core/IconButton";
 import UpArrow from "@material-ui/icons/KeyboardArrowUp";
 
+import clearHighlights from "../clearHighlights.js";
+
 import Completion from "../ListView/Completion.js";
 import ExpandedViewHeadline from "./ExpandedViewHeadline.js";
 import Notes from "./Notes.js";
@@ -41,6 +43,10 @@ const styles = theme => ({
 });
 
 class ExpandedContent extends Component {
+  componentDidMount() {
+    clearHighlights();
+  }
+
   render() {
     const { classes, onClose } = this.props;
     return (
