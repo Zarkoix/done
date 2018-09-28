@@ -43,12 +43,12 @@ class ToDo extends Component {
     this.todoContent = React.createRef();
   }
 
-  // shouldComponentUpdate = (newProps, newState) => {
-  //   if (this.state.selected !== newState.selected) return true;
-  //   if (this.state.expanded !== newState.expanded) return true;
-  //   if (this.props.id === newProps.id) return false;
-  //   return true;
-  // }
+  shouldComponentUpdate = (newProps, newState) => {
+    if (this.state.selected !== newState.selected) return true;
+    if (this.state.expanded !== newState.expanded) return true;
+    if (this.props.id === newProps.id) return false;
+    return true;
+  }
 
   canSelect = () => {
     return !this.state.expanded;
@@ -122,10 +122,10 @@ class ToDo extends Component {
 
   calculateHeight = () => {
     if (this.state.expanded) {
-      const calculatedHeight = this.state.expandedHeight
-      if (calculatedHeight && calculatedHeight !== 56) {
-        return this.todoContent.current.clientHeight
-      }
+      // const calculatedHeight = this.state.expandedHeight
+      // if (calculatedHeight && calculatedHeight !== 56) {
+      //   return this.todoContent.current.clientHeight
+      // }
       return 'auto' // reasonable default while we calculate actual value
     } else {
       return '56px' // height of listView
