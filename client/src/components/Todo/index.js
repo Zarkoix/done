@@ -43,21 +43,33 @@ class ToDo extends Component {
     this.todoContent = React.createRef();
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-
-  }
+  // shouldComponentUpdate = (newProps, newState) => {
+  //   if (this.state.selected !== newState.selected) return true;
+  //   if (this.state.expanded !== newState.expanded) return true;
+  //   if (this.props.id === newProps.id) return false;
+  //   return true;
+  // }
 
   canSelect = () => {
     return !this.state.expanded;
   };
 
-  handleSelect = () => {
+  handleClick = (e) => {
+    e.stopPropagation();
+    e.stopPropagation();
     if (this.canSelect() && this.state.selected === false) {
       this.setState({
         selected: true,
         expanded: false
       });
     }
+  };
+
+  handleDoubleClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    this.toggleExpand();
+    return false;
   };
 
   toggleExpand = () => {
@@ -114,7 +126,7 @@ class ToDo extends Component {
       if (calculatedHeight && calculatedHeight !== 56) {
         return this.todoContent.current.clientHeight
       }
-      return '165px' // reasonable default while we calculate actual value
+      return 'auto' // reasonable default while we calculate actual value
     } else {
       return '56px' // height of listView
     }
@@ -126,8 +138,8 @@ class ToDo extends Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
         <div
           className={this.calculateClasses(classes)}
-          onClick={this.handleSelect}
-          onDoubleClick={this.toggleExpand}
+          onClick={this.handleClick}
+          onDoubleClick={this.handleDoubleClick}
           onKeyDown={this.handleKeyDown}
           tabIndex="0"
           style={{ height: this.calculateHeight()}}
