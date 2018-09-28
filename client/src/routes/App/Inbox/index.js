@@ -1,45 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 
-import Todo from "../../../components/Todo";
-import NewTodoButton from "./NewTodoButton.js";
+import InboxTodoList from "./InboxTodoList.js";
 
-import { GET_ALL_TODOS } from "../../../queries";
+import { GET_ALL_TODO_IDS } from "../../../queries";
 
-const styles = theme => ({
-  titleText: {
-    marginBottom: theme.spacing.unit + "px"
-  }
-});
-
-class Inbox extends Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <Typography className={classes.titleText} variant="display1">
-          Inbox
-        </Typography>
-        <Query query={GET_ALL_TODOS}>
-          {({ loading, error, data }) => {
-            if (loading) return null;
-            if (error) return `Error!: ${error}`;
-            return data.allTodos.nodes.map((data, i) => (
-              <Todo key={i} id={data.id} />
-            ));
-          }}
-        </Query>
-        <NewTodoButton />
-      </div>
-    );
-  }
+export default () => {
+  return (<Query query={GET_ALL_TODO_IDS}>
+    {({ loading, error, data }) => {
+      if (loading) return null;
+      if (error) return `Error!: ${error}`;
+      return <InboxTodoList nodes={data.allTodos.nodes} />;
+    }}
+  </Query>)
 }
-
-Inbox.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(Inbox);

@@ -20,6 +20,16 @@ export const GET_COMPLETE_TODO_DATA = gql`
   }
 `;
 
+export const GET_ALL_TODO_IDS = gql`
+query GetAllTodos {
+  allTodos {
+    nodes {
+      id
+    }
+  }
+}
+`;
+
 export const GET_ALL_TODOS = gql`
   query GetAllTodos {
     allTodos {

@@ -4,8 +4,7 @@ import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 
 import ApolloClient from "apollo-boost";
-import { ApolloProvider, Query } from "react-apollo";
-import { GET_COMPLETE_TODO_DATA } from "./queries";
+import { ApolloProvider } from "react-apollo";
 import {
   BrowserRouter as Router,
   Route,
@@ -46,35 +45,31 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Query query={GET_COMPLETE_TODO_DATA}>
-      {({ loading, error, data }) => (
-        <MuiThemeProvider theme={theme}>
-          <Router>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={props =>
-                  isLoggedIn() ? <Redirect to="/Today" /> : <Splash />
-                }
-              />
-              <Route path="/Signup" component={withStaticNavigation(Signup)} />
-              <Route path="/Login" component={withStaticNavigation(Login)} />
-              <Route path="/Settings" component={withAppNavigation(Settings)} />
-              <Route path="/Today" component={withAppNavigation(Today)} />
-              <Route path="/Inbox" component={withAppNavigation(Inbox)} />
-              <Route
-                path="/Tags"
-                component={withAppNavigation(Tags, {
-                  withContentPadding: false
-                })}
-              />
-              <Route component={withStaticNavigation(NoMatch)} />
-            </Switch>
-          </Router>
-        </MuiThemeProvider>
-      )}
-    </Query>
+    <MuiThemeProvider theme={theme}>
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props =>
+              isLoggedIn() ? <Redirect to="/Today" /> : <Splash />
+            }
+          />
+          <Route path="/Signup" component={withStaticNavigation(Signup)} />
+          <Route path="/Login" component={withStaticNavigation(Login)} />
+          <Route path="/Settings" component={withAppNavigation(Settings)} />
+          <Route path="/Today" component={withAppNavigation(Today)} />
+          <Route path="/Inbox" component={withAppNavigation(Inbox)} />
+          <Route
+            path="/Tags"
+            component={withAppNavigation(Tags, {
+              withContentPadding: false
+            })}
+          />
+          <Route component={withStaticNavigation(NoMatch)} />
+        </Switch>
+      </Router>
+    </MuiThemeProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );
