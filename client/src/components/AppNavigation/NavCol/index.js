@@ -42,7 +42,7 @@ const routes = {
   },
   Upcoming: {
     icon: <CalendarIcon />,
-    disabled: true
+    disabled: false
   },
   Projects: {
     icon: <ProjectsIcon />,

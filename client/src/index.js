@@ -26,6 +26,7 @@ import Settings from "./routes/User/Settings";
 import Today from "./routes/App/Today";
 import Inbox from "./routes/App/Inbox";
 import Tags from "./routes/App/Tags";
+import Upcoming from "./routes/App/Upcoming";
 
 import { isLoggedIn, getJwt } from "./auth.js";
 
@@ -60,6 +61,7 @@ ReactDOM.render(
           <Route path="/Settings" component={withAppNavigation(Settings)} />
           <Route path="/Today" component={withAppNavigation(Today)} />
           <Route path="/Inbox" component={withAppNavigation(Inbox)} />
+          <Route path="/Upcoming" component={withAppNavigation(Upcoming)} />
           <Route
             path="/Tags"
             component={withAppNavigation(Tags, {
