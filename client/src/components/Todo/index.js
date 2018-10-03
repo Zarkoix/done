@@ -16,7 +16,7 @@ const styles = theme => ({
     margin: theme.spacing.unit / 4 + "px " + theme.spacing.unit * 2 + "px",
     borderRadius: "5px",
     transition:
-      "opacity 0.2s, box-shadow 0.2s, background-color 0.2s ease-in, height 0.2s ease-in",
+      "opacity 0.1s, box-shadow 0.2s, background-color 0.1s ease-in, height 0.2s ease-in",
     "&:hover": {
       backgroundColor: theme.palette.background.paper,
       opacity: "1 !important"
