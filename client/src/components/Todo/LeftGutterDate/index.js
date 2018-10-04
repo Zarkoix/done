@@ -33,7 +33,6 @@ class CLeftGutterDate extends PureComponent {
 }
 
 CLeftGutterDate.propTypes = {
-  classes: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
   onClose: PropTypes.func
 };
