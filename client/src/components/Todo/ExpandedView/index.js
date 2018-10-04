@@ -13,7 +13,7 @@ import Completion from "../ListView/Completion.js";
 import ExpandedViewHeadline from "./ExpandedViewHeadline.js";
 import Notes from "./Notes.js";
 import ExpandedViewTags from "./ExpandedViewTags";
-import DeleteButton from "./RightGutterComponents/DeleteButton.js";
+import RightGutterMenu from "./RightGutterMenu";
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
@@ -88,7 +88,7 @@ class ExpandedContent extends Component {
                   </IconButton>
                 )}
                 <div className={classes.spacer} />
-                <DeleteButton id={this.props.id} />
+                <RightGutterMenu id={this.props.id} />
               </div>
             </div>
           );
