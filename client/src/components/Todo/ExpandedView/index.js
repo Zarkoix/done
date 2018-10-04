@@ -13,7 +13,7 @@ import Completion from "../ListView/Completion.js";
 import ExpandedViewHeadline from "./ExpandedViewHeadline.js";
 import Notes from "./Notes.js";
 import ExpandedViewTags from "./ExpandedViewTags";
-import ActionTray from "./ActionTray";
+import DeleteButton from "./RightGutterComponents/DeleteButton.js";
 
 const GET_TODO_COMPLETE_DATA = gql`
   query getCompleteTodoData($id: Int!) {
@@ -29,9 +29,12 @@ const GET_TODO_COMPLETE_DATA = gql`
 `;
 
 const styles = theme => ({
-  content: {
-    padding: theme.spacing.unit / 2 + "px",
-    paddingLeft: 0
+  container: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  main: {
+    width: '100%'
   },
   body: {
     padding: theme.spacing.unit + "px",
@@ -39,6 +42,13 @@ const styles = theme => ({
   },
   topbar: {
     display: "flex"
+  },
+  rightGutter: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  spacer: {
+    flexGrow: 1
   }
 });
 
@@ -56,10 +66,18 @@ class ExpandedContent extends Component {
           if (error) return `Error!: ${error}`;
           let { body, headline, completed } = data.todoById;
           return (
-            <div className={classes.content}>
-              <div className={classes.topbar}>
-                <Completion id={this.props.id} completed={completed} />
-                <ExpandedViewHeadline id={this.props.id} text={headline} />
+            <div className={classes.container}>
+              <div className={classes.main}>
+                <div className={classes.topbar}>
+                  <Completion id={this.props.id} completed={completed} />
+                  <ExpandedViewHeadline id={this.props.id} text={headline} />
+                </div>
+                <div className={classes.body}>
+                  <Notes id={this.props.id} text={body} />
+                  <ExpandedViewTags id={this.props.id} />
+                </div>
+              </div>
+              <div className={classes.rightGutter}>
                 {onClose && (
                   <IconButton
                     className={classes.button}
@@ -69,11 +87,8 @@ class ExpandedContent extends Component {
                     <UpArrow />
                   </IconButton>
                 )}
-              </div>
-              <div className={classes.body}>
-                <Notes id={this.props.id} text={body} />
-                <ExpandedViewTags id={this.props.id} />
-                <ActionTray id={this.props.id} />
+                <div className={classes.spacer} />
+                <DeleteButton id={this.props.id} />
               </div>
             </div>
           );

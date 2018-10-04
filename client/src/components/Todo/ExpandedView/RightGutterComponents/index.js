@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import DeleteButton from "./DeleteButton.js";
 import NewTagButton from "./NewTagButton.js";
-import DateTime from "./DateTime";
 
 const styles = theme => ({
   tray: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "column"
   },
   spacer: {
     flexGrow: 1
   }
 });
 
-class ActionTray extends Component {
+class RightGutter extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -27,7 +26,6 @@ class ActionTray extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.tray}>
-        <DateTime id={this.props.id} />
         <NewTagButton id={this.props.id} />
         <div className={classes.spacer} />
         <DeleteButton id={this.props.id} />
@@ -36,9 +34,9 @@ class ActionTray extends Component {
   }
 }
 
-ActionTray.propTypes = {
+RightGutter.propTypes = {
   classes: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(ActionTray);
+export default withStyles(styles)(RightGutter);

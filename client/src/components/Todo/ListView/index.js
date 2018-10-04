@@ -23,9 +23,7 @@ const GET_TODO_LISTVIEW_DATA = gql`
 const styles = theme => ({
   topBar: {
     display: "flex",
-    flexDirection: "row",
-    padding: theme.spacing.unit / 2 + "px",
-    paddingLeft: 0
+    flexDirection: "row"
   }
 });
 

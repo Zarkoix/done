@@ -5,11 +5,14 @@ import { withStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import withWidth from "@material-ui/core/withWidth";
 
+import LeftGutterDate from "./LeftGutterDate";
 import ListView from "./ListView";
 import ExpandedView from "./ExpandedView";
 
 const styles = theme => ({
   paper: {
+    padding: theme.spacing.unit / 2 + "px",
+    paddingLeft: 0,
     outline: "none",
     height: "auto",
     overflow: "hidden",
@@ -20,7 +23,9 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: theme.palette.background.paper,
       opacity: "1 !important"
-    }
+    },
+    display: "flex",
+    flexDirection: "row"
   },
   paperSelected: {
     opacity: "1 !important",
@@ -30,6 +35,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     opacity: "1 !important",
     boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
+  },
+  todoMain: {
+    width: "100%"
   }
 });
 
@@ -38,7 +46,7 @@ class ToDo extends Component {
     super();
     this.state = {
       selected: false,
-      expanded: false,
+      expanded: false
     };
     this.todoContent = React.createRef();
   }
@@ -48,13 +56,13 @@ class ToDo extends Component {
     if (this.state.expanded !== newState.expanded) return true;
     if (this.props.id === newProps.id) return false;
     return true;
-  }
+  };
 
   canSelect = () => {
     return !this.state.expanded;
   };
 
-  handleClick = (e) => {
+  handleClick = e => {
     e.stopPropagation();
     e.stopPropagation();
     if (this.canSelect() && this.state.selected === false) {
@@ -65,7 +73,7 @@ class ToDo extends Component {
     }
   };
 
-  handleDoubleClick = (e) => {
+  handleDoubleClick = e => {
     e.stopPropagation();
     e.preventDefault();
     this.toggleExpand();
@@ -96,20 +104,23 @@ class ToDo extends Component {
   };
 
   expand = () => {
-    this.setState({
+    this.setState(
+      {
         selected: false,
         expanded: true
-      }, () => {
+      },
+      () => {
         const expandedHeight = this.todoContent.current.clientHeight;
         this.setState({ expandedHeight });
-      });
+      }
+    );
   };
 
   collapse = () => {
     this.setState({
-        selected: true,
-        expanded: false
-      });
+      selected: true,
+      expanded: false
+    });
   };
 
   calculateClasses = classes => {
@@ -126,11 +137,11 @@ class ToDo extends Component {
       // if (calculatedHeight && calculatedHeight !== 56) {
       //   return this.todoContent.current.clientHeight
       // }
-      return 'auto' // reasonable default while we calculate actual value
+      return "auto"; // reasonable default while we calculate actual value
     } else {
-      return '56px' // height of listView
+      return "48px"; // height of listView
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -142,9 +153,10 @@ class ToDo extends Component {
           onDoubleClick={this.handleDoubleClick}
           onKeyDown={this.handleKeyDown}
           tabIndex="0"
-          style={{ height: this.calculateHeight()}}
+          style={{ height: this.calculateHeight() }}
         >
-          <div ref={this.todoContent}>
+          <LeftGutterDate id={this.props.id} />
+          <div ref={this.todoContent} className={classes.todoMain}>
             {!this.state.expanded ? (
               <ListView
                 id={this.props.id}
