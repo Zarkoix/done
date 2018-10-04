@@ -107,7 +107,7 @@ class ToDo extends Component {
 
   collapse = () => {
     this.setState({
-        selected: false,
+        selected: true,
         expanded: false
       });
   };
