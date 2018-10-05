@@ -51,7 +51,7 @@ class DateButton extends Component {
 
   handleDone = (date, setDoWhen) => {
     const newDate = date ? moment(date).format("YYYY-MM-DD") : null;
-    setDoWhen({
+    this.props.setDoWhen({
       variables: {
         id: this.props.id,
         doWhenDate: newDate

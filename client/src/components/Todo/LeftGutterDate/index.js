@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import { SET_DO_WHEN } from "../DateTime/queries.js";
 
-import LeftGutterDate from './LeftGutterDate.js'
+import LeftGutterDate from "./LeftGutterDate.js";
 
 const GET_TODO_DATE = gql`
   query getCompleteTodoData($id: Int!) {
@@ -18,23 +19,30 @@ const GET_TODO_DATE = gql`
 class CLeftGutterDate extends PureComponent {
   render() {
     return (
-      <Query query={GET_TODO_DATE} variables={{ id: this.props.id }}>
-        {({ loading, error, data }) => {
-          if (loading) return null;
-          if (error) return `Error!: ${error}`;
-          let { doWhenDate } = data.todoById;
-          return (
-              <LeftGutterDate doWhenDate={doWhenDate} {...this.props} />
-          );
-        }}
-      </Query>
+      <Mutation mutation={SET_DO_WHEN}>
+        {setDoWhen => (
+          <Query query={GET_TODO_DATE} variables={{ id: this.props.id }}>
+            {({ loading, error, data }) => {
+              if (loading) return null;
+              if (error) return `Error!: ${error}`;
+              let { doWhenDate } = data.todoById;
+              return (
+                <LeftGutterDate
+                  setDoWhen={setDoWhen}
+                  doWhenDate={doWhenDate}
+                  {...this.props}
+                />
+              );
+            }}
+          </Query>
+        )}
+      </Mutation>
     );
   }
 }
 
 CLeftGutterDate.propTypes = {
-  id: PropTypes.number.isRequired,
-  showDate: PropTypes.bool.isRequired
+  id: PropTypes.number.isRequired
 };
 
 export default CLeftGutterDate;
