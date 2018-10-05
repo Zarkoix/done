@@ -14,7 +14,7 @@ const styles = theme => ({
     height: theme.spacing.unit * 6 + "px",
     width: theme.spacing.unit * 6 + "px",
     minWidth: theme.spacing.unit * 6 + "px",
-    lineHeight: theme.spacing.unit * 6 + "px",
+    lineHeight: "44px", // TODO: fix why this isn't 48px
     fontSize: theme.spacing.unit * 1.5,
     padding: "0 0 0 " + theme.spacing.unit + "px",
     textAlign: "center"
@@ -27,6 +27,8 @@ const styles = theme => ({
     opacity: 1
   },
   dateText: {
+    color: theme.palette.text.primary,
+    fontWeight: "bold",
     display: "inline",
     backgroundColor: "transparent",
     transition: "background-color 0.1s ease-in-out, opacity " + theme.transitions.duration.enteringScreen + "ms",
