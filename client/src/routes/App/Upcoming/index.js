@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Query } from "react-apollo";
 
 import UpcomingTodoList from "./UpcomingTodoList.js";
