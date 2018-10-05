@@ -23,6 +23,8 @@ const styles = theme => ({
     outline: "none",
     backgroundColor: "transparent",
     lineHeight: "48px",
+    fontSize: "1.5rem",
+    padding: "0",
     display: "inline",
     flexGrow: 1,
     whiteSpace: "nowrap"

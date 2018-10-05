@@ -8,6 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   headline: {
     lineHeight: "48px",
+    fontSize: "1.5rem",
     display: "inline",
     flexGrow: 1,
     whiteSpace: "nowrap",
