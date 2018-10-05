@@ -31,7 +31,7 @@ function renderTodosByDate(nodes, classes) {
     <div key={date} className={classes.dateGroup}>
       <DateHeader text={date} />
       {dates[date].map(todo => (
-        <Todo id={todo.id} key={todo.id} />
+        <Todo id={todo.id} key={todo.id} showDoWhenDateByDefault={false} />
       ))}
     </div>
   ));

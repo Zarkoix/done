@@ -80,14 +80,14 @@ class ToDo extends Component {
   handleMouseEnter = () => {
     this.setState({
       hovered: true
-    })
-  }
+    });
+  };
 
   handleMouseLeave = () => {
     this.setState({
       hovered: false
-    })
-  }
+    });
+  };
 
   handleDoubleClick = e => {
     e.stopPropagation();
@@ -160,8 +160,8 @@ class ToDo extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const {selected, hovered, expanded} = this.state;
+    const { classes, showDoWhenDateByDefault } = this.props;
+    const { selected, hovered, expanded } = this.state;
     return (
       <ClickAwayListener onClickAway={this.handleClickAway}>
         <div
@@ -175,7 +175,11 @@ class ToDo extends Component {
           tabIndex="0"
           style={{ height: this.calculateHeight() }}
         >
-          <LeftGutterDate id={this.props.id} showDate={hovered || selected || expanded}/>
+          <LeftGutterDate
+            id={this.props.id}
+            showDoWhenDateByDefault={showDoWhenDateByDefault}
+            showDate={hovered || selected || expanded}
+          />
           <div ref={this.todoContent} className={classes.todoMain}>
             {!this.state.expanded ? (
               <ListView
@@ -202,7 +206,8 @@ ToDo.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
-  width: PropTypes.string.isRequired
+  width: PropTypes.string.isRequired,
+  showDoWhenDateByDefault: PropTypes.bool
 };
 
 export default withWidth()(withStyles(styles, { withTheme: true })(ToDo));

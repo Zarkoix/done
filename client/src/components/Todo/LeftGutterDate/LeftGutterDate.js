@@ -29,12 +29,16 @@ const styles = theme => ({
   dateText: {
     display: "inline",
     backgroundColor: "transparent",
-    transition: "background-color 0.1s ease-in-out",
+    transition: "background-color 0.1s ease-in-out, opacity " + theme.transitions.duration.enteringScreen + "ms",
     borderRadius: "6px",
+    opacity: 0,
     padding: "8px",
     "&:hover": {
       backgroundColor: theme.palette.secondary.main
     }
+  },
+  showDateText: {
+    opacity: 1
   }
 });
 
@@ -107,9 +111,12 @@ class LeftGutterDate extends PureComponent {
 
   renderContents(doWhenDate) {
     if (doWhenDate) {
-      let date = doWhenDate.substring(5).replace("-", "/");
+      const date = doWhenDate.substring(5).replace("-", "/");
+      const {classes, showDoWhenDateByDefault=true, showDate } = this.props;
       return (
-        <ButtonBase component={"span"} className={this.props.classes.dateText}>
+        <ButtonBase component={"span"} className={classNames(classes.dateText,       {
+          [`${classes.showDateText}`]: showDoWhenDateByDefault || showDate 
+        })}>
           {date}
         </ButtonBase>
       );
@@ -152,7 +159,8 @@ LeftGutterDate.propTypes = {
   classes: PropTypes.object.isRequired,
   showDate: PropTypes.bool.isRequired,
   setDoWhen: PropTypes.func.isRequired,
-  doWhenDate: PropTypes.string
+  doWhenDate: PropTypes.string,
+  showDoWhenDateByDefault: PropTypes.bool
 };
 
 export default withStyles(styles)(LeftGutterDate);
