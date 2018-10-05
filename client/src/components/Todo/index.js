@@ -22,14 +22,16 @@ const styles = theme => ({
       "opacity 0.1s, box-shadow 0.2s, background-color 0.1s ease-in, height 0.2s ease-in",
     "&:hover": {
       backgroundColor: theme.palette.background.paper,
-      opacity: "1 !important"
+      opacity: "1 !important",
+      boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
     },
     display: "flex",
     flexDirection: "row"
   },
   paperSelected: {
     opacity: "1 !important",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: "0 2px 8px 0 rgba(0,0,0,.25)"
   },
   paperExpanded: {
     backgroundColor: theme.palette.background.paper,
