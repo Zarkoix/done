@@ -48,12 +48,14 @@ class ToDo extends Component {
     super();
     this.state = {
       selected: false,
-      expanded: false
+      expanded: false,
+      hovered: false
     };
     this.todoContent = React.createRef();
   }
 
   shouldComponentUpdate = (newProps, newState) => {
+    if (this.state.hovered !== newState.hovered) return true;
     if (this.state.selected !== newState.selected) return true;
     if (this.state.expanded !== newState.expanded) return true;
     if (this.props.id === newProps.id) return false;
@@ -74,6 +76,18 @@ class ToDo extends Component {
       });
     }
   };
+
+  handleMouseEnter = () => {
+    this.setState({
+      hovered: true
+    })
+  }
+
+  handleMouseLeave = () => {
+    this.setState({
+      hovered: false
+    })
+  }
 
   handleDoubleClick = e => {
     e.stopPropagation();
@@ -147,28 +161,32 @@ class ToDo extends Component {
 
   render() {
     const { classes } = this.props;
+    const {selected, hovered} = this.state;
     return (
       <ClickAwayListener onClickAway={this.handleClickAway}>
         <div
           className={this.calculateClasses(classes)}
           onClick={this.handleClick}
           onDoubleClick={this.handleDoubleClick}
+          //TODO: investigate why just passing in the function doesn't work for these
+          onMouseEnter={() => this.handleMouseEnter()}
+          onMouseLeave={() => this.handleMouseLeave()}
           onKeyDown={this.handleKeyDown}
           tabIndex="0"
           style={{ height: this.calculateHeight() }}
         >
-          <LeftGutterDate id={this.props.id} />
+          <LeftGutterDate id={this.props.id} showDate={hovered || selected}/>
           <div ref={this.todoContent} className={classes.todoMain}>
             {!this.state.expanded ? (
               <ListView
                 id={this.props.id}
-                selected={this.state.selected}
+                selected={selected}
                 isDense={false}
               />
             ) : (
               <ExpandedView
                 id={this.props.id}
-                selected={this.state.selected}
+                selected={selected}
                 isDense={false}
                 onClose={this.toggleExpand}
               />

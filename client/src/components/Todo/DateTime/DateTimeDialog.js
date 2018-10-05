@@ -7,8 +7,8 @@ import SwipeableViews from "react-swipeable-views";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import DateSelect from "../../../../Select/DateSelect.js";
-import TimeSelect from "../../../../Select/TimeSelect.js";
+import DateSelect from "../../Select/DateSelect.js";
+import TimeSelect from "../../Select/TimeSelect.js";
 
 const styles = theme => ({
   ftdialog: {

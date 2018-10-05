@@ -24,7 +24,7 @@ class CLeftGutterDate extends PureComponent {
           if (error) return `Error!: ${error}`;
           let { doWhenDate } = data.todoById;
           return (
-              <LeftGutterDate doWhenDate={doWhenDate} id={this.props.id} />
+              <LeftGutterDate doWhenDate={doWhenDate} {...this.props} />
           );
         }}
       </Query>
@@ -34,7 +34,7 @@ class CLeftGutterDate extends PureComponent {
 
 CLeftGutterDate.propTypes = {
   id: PropTypes.number.isRequired,
-  onClose: PropTypes.func
+  showDate: PropTypes.bool.isRequired
 };
 
 export default CLeftGutterDate;
