@@ -161,7 +161,7 @@ class ToDo extends Component {
 
   render() {
     const { classes } = this.props;
-    const {selected, hovered} = this.state;
+    const {selected, hovered, expanded} = this.state;
     return (
       <ClickAwayListener onClickAway={this.handleClickAway}>
         <div
@@ -175,7 +175,7 @@ class ToDo extends Component {
           tabIndex="0"
           style={{ height: this.calculateHeight() }}
         >
-          <LeftGutterDate id={this.props.id} showDate={hovered || selected}/>
+          <LeftGutterDate id={this.props.id} showDate={hovered || selected || expanded}/>
           <div ref={this.todoContent} className={classes.todoMain}>
             {!this.state.expanded ? (
               <ListView
