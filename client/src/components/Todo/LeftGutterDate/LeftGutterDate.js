@@ -26,7 +26,6 @@ const styles = theme => ({
 class LeftGutterDate extends PureComponent {
   render() {
     let { classes, id, doWhenDate, showDate } = this.props;
-    console.log("showDate", showDate)
     if (doWhenDate) {
       let date = doWhenDate.substring(5).replace("-", "/");
       return <div className={classes.container}>{date}</div>;
