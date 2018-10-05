@@ -40,7 +40,7 @@ function renderTodosByDate(nodes, classes) {
 class UpcomingTodoList extends Component {
   shouldComponentUpdate(newProps, newState) {
     const { nodes } = this.props;
-    const { newNodes } = newProps;
+    const { nodes: newNodes } = newProps;
     console.log(nodes, newNodes);
     if (nodes.length !== newNodes.length) return true;
     let length = nodes.length;
@@ -58,7 +58,7 @@ class UpcomingTodoList extends Component {
           Upcoming
         </Typography>
         {renderTodosByDate(nodes, classes)}
-        <NewTodoButton />
+        {/* <NewTodoButton /> */}
       </React.Fragment>
     );
   }

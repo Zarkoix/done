@@ -15,7 +15,7 @@ const styles = theme => ({
 class InboxTodoList extends Component {
   shouldComponentUpdate(newProps, newState) {
     const { nodes } = this.props;
-    const { newNodes } = newProps;
+    const { nodes: newNodes } = newProps;
     console.log(nodes, newNodes);
     if (nodes.length !== newNodes.length) return true;
     let length = nodes.length;
