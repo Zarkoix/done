@@ -68,12 +68,15 @@ class ExpandedViewHeadline extends Component {
             onClick={this.stopPropagation}
             onDoubleClick={this.stopPropagation}
             onBlur={() => {
-              setHeadline({
-                variables: {
-                  id: this.props.id,
-                  headline: this.state.text
-                }
-              });
+              // don't send a network request if value has not changed
+              if (this.state.text !== this.props.text) {
+                setHeadline({
+                  variables: {
+                    id: this.props.id,
+                    headline: this.state.text
+                  }
+                });
+              }
             }}
           />
         )}

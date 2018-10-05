@@ -62,12 +62,15 @@ class Notes extends Component {
             onClick={this.stopPropagation}
             onDoubleClick={this.stopPropagation}
             onBlur={() => {
-              setBody({
-                variables: {
-                  id: this.props.id,
-                  body: this.state.text
-                }
-              });
+              // don't send a network request if value has not changed
+              if (this.state.text !== this.props.text) {
+                setBody({
+                  variables: {
+                    id: this.props.id,
+                    body: this.state.text
+                  }
+                });
+              }
             }}
           />
         )}
