@@ -27,7 +27,8 @@ function renderTodosByDate(nodes, classes) {
       dates[todoData.doWhenDate].push(todoData); // add the todo to the proper place in dateMap
     }
   });
-  return Object.keys(dates).map(date => (
+
+  return Object.keys(dates).sort().map(date => (
     <div key={date} className={classes.dateGroup}>
       <DateHeader text={date} />
       {dates[date].map(todo => (
