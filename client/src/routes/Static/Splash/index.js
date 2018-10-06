@@ -97,11 +97,7 @@ export default withStyles(styles)(props => {
             >
               Signup
             </Button>
-            <Button
-              className={classes.button}
-              component={Link}
-              to={"Login"}
-            >
+            <Button className={classes.button} component={Link} to={"Login"}>
               Log in
             </Button>{" "}
           </Toolbar>
@@ -144,7 +140,10 @@ export default withStyles(styles)(props => {
             variant="body1"
             className={classes.buildNoticeText}
           >
-            DO NOT STORE sensitive material, but enjoy the tags 🔥
+            DO NOT STORE sensitive material, but enjoy the tags{" "}
+            <span role="img" aria-label="Fire Emoji">
+              🔥
+            </span>
           </Typography>
         </Paper>
       </main>
