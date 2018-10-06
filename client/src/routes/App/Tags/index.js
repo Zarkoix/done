@@ -51,6 +51,7 @@ const styles = theme => ({
     height: "100%"
   },
   navigation: {
+    minWidth: "120px",
     display: "flex",
     flexDirection: "column",
     borderRight: "1px solid " + theme.palette.divider
