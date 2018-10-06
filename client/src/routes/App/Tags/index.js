@@ -137,7 +137,6 @@ class Tags extends Component {
             {({ loading, error, data }) => {
               if (loading) return null;
               if (error) return `Error!: ${error}`;
-              console.log(data.allTodos.nodes);
               return data.allTodos.nodes
                 .filter(todo => meetsFilters(todo, selectedTags))
                 .map((data, i) => <Todo key={i} id={data.id} />);
