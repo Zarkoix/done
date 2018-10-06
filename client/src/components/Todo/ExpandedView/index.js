@@ -9,7 +9,7 @@ import UpArrow from "@material-ui/icons/KeyboardArrowUp";
 
 import clearHighlights from "../clearHighlights.js";
 
-import Completion from "../ListView/Completion.js";
+import CompletionCheckbox from "../ListView/CompletionCheckbox";
 import ExpandedViewHeadline from "./ExpandedViewHeadline.js";
 import Notes from "./Notes.js";
 import ExpandedViewTags from "./ExpandedViewTags";
@@ -69,7 +69,7 @@ class ExpandedContent extends Component {
             <div className={classes.container}>
               <div className={classes.main}>
                 <div className={classes.topbar}>
-                  <Completion id={this.props.id} completed={completed} />
+                  <CompletionCheckbox id={this.props.id} completed={completed} />
                   <ExpandedViewHeadline id={this.props.id} text={headline} />
                 </div>
                 <div className={classes.body}>

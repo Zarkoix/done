@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import Completion from "./Completion.js";
+import CompletionCheckbox from "./CompletionCheckbox";
 import ListViewHeadline from "./ListViewHeadline.js";
 import ListViewTags from "./ListViewTags.js";
 
@@ -37,7 +37,7 @@ const ListView = ({ classes, id, isDense }) => {
         let { completed, headline } = data.todoById;
         return (
           <div className={classes.topBar}>
-            <Completion completed={completed} id={id} />
+            <CompletionCheckbox completed={completed} id={id} />
             <ListViewHeadline text={headline} />
             {!isDense && <ListViewTags id={id} />}
           </div>
